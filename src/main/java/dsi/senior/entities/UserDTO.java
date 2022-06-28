@@ -7,10 +7,12 @@ public class UserDTO implements Serializable {
      * 
      */
     private static final long serialVersionUID = 1L;
+    private String name;
+    private String lastName;
     private String username;
     private String password;
     private String email ;
-    
+    private String fileId;
 
 
     public String getEmail() {
@@ -42,5 +44,31 @@ public class UserDTO implements Serializable {
     public void setPassword(String password) {
             this.password = password;
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
+	}
+    
+    
 
 }

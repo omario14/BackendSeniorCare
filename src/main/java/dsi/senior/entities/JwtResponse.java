@@ -10,15 +10,21 @@ public class JwtResponse implements Serializable {
 	 private String token;
 	  private String type = "Bearer";
 	  private int id;
+	  private String name;
+	  private String lastName;
 	  private String username;
 	  private String email;
+	  private String fileId;
 	  private List<String> roles;
 
-	public JwtResponse(String accessToken, int id, String username, String email, List<String> roles) {
+	public JwtResponse(String accessToken, int id,String name,String lastName, String username, String email,String fileId, List<String> roles) {
 	    this.token = accessToken;
 	    this.id = id;
+	    this.name=name;
+	    this.lastName=lastName;
 	    this.username = username;
 	    this.email = email;
+	    this.fileId=fileId;
 	    this.roles = roles;
 	  }
 
@@ -66,4 +72,36 @@ public class JwtResponse implements Serializable {
 	  public List<String> getRoles() {
 	    return roles;
 	  }
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getLastName() {
+		return lastName;
+	}
+
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
+	public String getFileId() {
+		return fileId;
+	}
+
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
+	}
+	  
+	  
 }

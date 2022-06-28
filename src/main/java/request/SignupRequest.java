@@ -7,6 +7,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class SignupRequest {
+	
+	private String name;
+	
+	private String lastName;
+	
+	private String fileId;
+	
   @NotBlank
   @Size(min = 3, max = 20)
   private String username;
@@ -53,4 +60,29 @@ public class SignupRequest {
   public void setRole(Set<String> role) {
     this.role = role;
   }
+
+public String getName() {
+	return name;
+}
+
+public void setName(String name) {
+	this.name = name;
+}
+
+public String getLastName() {
+	return lastName;
+}
+
+public void setLastName(String lastName) {
+	this.lastName = lastName;
+}
+
+public String getFileId() {
+	return fileId;
+}
+
+public void setFileId(String fileId) {
+	this.fileId = fileId;
+}
+  
 }

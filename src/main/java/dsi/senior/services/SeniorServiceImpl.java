@@ -84,6 +84,17 @@ public class SeniorServiceImpl implements ISeniorServiceImpl{
 		List<Senior> seniors = seniorDao.findSeniorsByResidance(place_resid);
 		return seniors;
 	}
-
+	@Override
+	public Boolean existByid(Long id){
+		return seniorDao.existsById(id);
+	}
+	
+	
+	/********************** DELETE method that delete All Senior from database***************/
+	@Override
+	public void deleteAllSenior() {
+		seniorDao.deleteAll();
+		
+	}
 
 }

@@ -28,7 +28,6 @@ public class RoleController {
 	
     @Autowired
     private RoleService roleService;
-    @Operation(security = {@SecurityRequirement(name = "bearer-key")})
     @PostMapping({"/createNewRole"})
     public Role createNewRole(@RequestBody Role role) {
         return roleService.createNewRole(role);
@@ -43,7 +42,6 @@ public class RoleController {
 		return list;
 	}
 	  //creating a put  mapping that upgrade rent annonce
-	@Operation(security = {@SecurityRequirement(name = "bearer-key")})
 	@PutMapping("/update-role/{id}")
   	@ResponseBody
   	public ResponseEntity<String> updateRentAnnonce(

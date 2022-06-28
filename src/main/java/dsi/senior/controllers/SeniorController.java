@@ -12,15 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import dsi.senior.entities.FileDB;
 import dsi.senior.entities.Senior;
-import dsi.senior.services.FileStorageService;
 import dsi.senior.services.ISeniorServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -32,8 +27,6 @@ public class SeniorController {
 	@Autowired
 	ISeniorServiceImpl seniorServiceImpl;
 	
-	 @Autowired
-	  private FileStorageService storageService;
 	
 	// http://localhost:8081/api/addSenior
 		@PostMapping("/addSenior")
@@ -107,6 +100,27 @@ public class SeniorController {
  		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
  			public List<Senior> findSeniorByResidance(@PathVariable("resid")String residance) {
  				return seniorServiceImpl.findByResidance(residance);
+ 			}
+ 		 
+ 		@DeleteMapping("/deleteSeniorsByIds/{ids}")
+		@ResponseBody
+		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
+ 		public ResponseEntity<?> deleteByIds(@PathVariable("ids") List<String> ids){
+ 			 ids.forEach(d->{
+ 				 System.out.println(" hedhi id array list " +d);
+ 				 if(seniorServiceImpl.existByid(Long.parseLong(d))){
+ 					seniorServiceImpl.deleteSenior(Long.parseLong(d));
+ 				 }
+ 			 });
+ 			 return ResponseEntity.ok().body("Customers has been removed");
+ 		}
+ 		
+ 	// http://localhost:8081/api/removeSenior
+ 			@DeleteMapping("/removeAllSeniors")
+ 			@ResponseBody
+ 			 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
+ 			public void deleteAllSeniors() {
+ 				seniorServiceImpl.deleteAllSenior();
  			}
   	
 	

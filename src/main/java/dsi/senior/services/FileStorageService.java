@@ -45,4 +45,8 @@ public class FileStorageService {
 		  Spliterator<FileDB> spliterator = fileDBRepository.findAll().spliterator();
 		  return StreamSupport.stream(spliterator, false);
 	  }
+	  
+	  public void deleteFile(String id) {
+		   fileDBRepository.deleteById(id);
+	  }
 }

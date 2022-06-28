@@ -46,7 +46,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         roleDao.save(adminRole);
 
         Role userRole = new Role();
-        userRole.setName(ERole.ROLE_USER);
+        userRole.setName(ERole.ROLE_CHEF);
         roleDao.save(userRole);
 
         DAOUser adminUser = new DAOUser();
@@ -82,6 +82,8 @@ public class JwtUserDetailsService implements UserDetailsService {
 	}
 	public void UpdateAccountUserByUsername(String username,DAOUser user) {
 		DAOUser role2 = userDao.findByUsername(username);
+		role2.setName(user.getName());
+		role2.setLastName(user.getLastName());
 		role2.setUsername(user.getUsername());
 		role2.setEmail(user.getEmail());
 		role2.setPassword(user.getPassword());
@@ -118,5 +120,6 @@ public class JwtUserDetailsService implements UserDetailsService {
 			
 			
 		}
+		
 	 
 }

@@ -11,7 +11,8 @@ public interface ISeniorServiceImpl   {
 	public List<Senior> retrieveAllSenior();
 	public Senior retrieveSeniorById (long id);
 	public Senior findSeniorByName(String name);	
-	//public Senior affecterRayProduct(int idp, int idr,int qut);
 	public List<Senior> findByResidance(String lieu_resid);
-
+	public Boolean existByid(Long id);
+	public void deleteAllSenior() ;
+		
 }

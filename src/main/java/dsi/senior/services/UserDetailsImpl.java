@@ -17,21 +17,30 @@ public class UserDetailsImpl implements UserDetails {
   private static final long serialVersionUID = 1L;
 
   private int id;
+  
+  private String name;
+  private String lastName;
+  
 
   private String username;
 
   private String email;
 
+  private String fileId;
+  
   @JsonIgnore
   private String password;
 
   private Collection<? extends GrantedAuthority> authorities;
 
-  public UserDetailsImpl(int id, String username, String email, String password,
+  public UserDetailsImpl(int id,String name,String lastName, String username, String email,String fileId, String password,
       Collection<? extends GrantedAuthority> authorities) {
     this.id = id;
+    this.name=name;
+    this.lastName=lastName;
     this.username = username;
     this.email = email;
+    this.fileId=fileId;
     this.password = password;
     this.authorities = authorities;
   }
@@ -42,15 +51,21 @@ public class UserDetailsImpl implements UserDetails {
 		        .collect(Collectors.toList());
 System.out.println("TEST 1"+new UserDetailsImpl(
 		        user.getId(), 
+		        user.getName(),
+		        user.getLastName(),
 		        user.getUsername(), 
 		        user.getEmail(),
+		        user.getFileId(),
 		        user.getPassword(), 
 		        authorities));
 		    return new UserDetailsImpl(
-		        user.getId(), 
-		        user.getUsername(), 
-		        user.getEmail(),
-		        user.getPassword(), 
+		    		user.getId(), 
+			        user.getName(),
+			        user.getLastName(),
+			        user.getUsername(), 
+			        user.getEmail(),
+			        user.getFileId(),
+			        user.getPassword(), 
 		        authorities);
   }
 
@@ -62,8 +77,50 @@ System.out.println("TEST 1"+new UserDetailsImpl(
   public int getId() {
     return id;
   }
+  
+  
 
-  public String getEmail() {
+  public String getName() {
+	return name;
+}
+
+public void setName(String name) {
+	this.name = name;
+}
+
+public String getLastName() {
+	return lastName;
+}
+
+public void setLastName(String lastName) {
+	this.lastName = lastName;
+}
+
+public String getFileId() {
+	return fileId;
+}
+
+public void setFileId(String fileId) {
+	this.fileId = fileId;
+}
+
+public void setId(int id) {
+	this.id = id;
+}
+
+public void setUsername(String username) {
+	this.username = username;
+}
+
+public void setEmail(String email) {
+	this.email = email;
+}
+
+public void setPassword(String password) {
+	this.password = password;
+}
+
+public String getEmail() {
     return email;
   }
 

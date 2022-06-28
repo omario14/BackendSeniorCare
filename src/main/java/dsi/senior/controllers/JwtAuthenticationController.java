@@ -81,10 +81,13 @@ public class JwtAuthenticationController {
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
-		return ResponseEntity.ok(new JwtResponse(jwt, 
+		return ResponseEntity.ok(new JwtResponse(jwt,
 												 userDetails.getId(),
+												 userDetails.getName(),
+												 userDetails.getLastName(),
 												 userDetails.getUsername(),
 												 userDetails.getEmail(), 
+												 userDetails.getFileId(),
 												 roles));
 	}
 
@@ -105,35 +108,40 @@ public class JwtAuthenticationController {
 	    }
 
 	    // Create new user's account
-	    DAOUser user = new DAOUser(signUpRequest.getUsername(), 
+	    DAOUser user = new DAOUser(
+	    		signUpRequest.getName(),
+	    		signUpRequest.getLastName(),	    		
+	    		signUpRequest.getUsername(), 
 	               signUpRequest.getEmail(),
+	               signUpRequest.getFileId(),
 	               encoder.encode(signUpRequest.getPassword()));
-	    System.out.println(signUpRequest.getRole());
+	    System.out.println(signUpRequest);
 
 	    Set<String> strRoles = signUpRequest.getRole();
+	    System.out.println("this is the set of rolesaaaaaaaaaaa "+strRoles);
 	    Set<Role> roles = new HashSet<>();
 
-	    if (strRoles == null) {
-	      Role userRole = roleDao.findByName(ERole.ROLE_USER)
+	    if (strRoles.isEmpty()) {
+	      Role userRole = roleDao.findByName(ERole.ROLE_CHEF)
 	          .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 	      roles.add(userRole);
 	    } else {
 	      strRoles.forEach(role -> {
 	        switch (role) {
-	        case "admin":
+	        case "ROLE_ADMIN":
 	          Role adminRole = roleDao.findByName(ERole.ROLE_ADMIN)
 	              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 	          roles.add(adminRole);
 
 	          break;
-	        case "accomp":
+	        case "ROLE_ACCOMPAGNANT":
 	          Role modRole = roleDao.findByName(ERole.ROLE_ACCOMPAGNANT)
 	              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 	          roles.add(modRole);
 
 	          break;
 	        default:
-	          Role userRole = roleDao.findByName(ERole.ROLE_USER)
+	          Role userRole = roleDao.findByName(ERole.ROLE_CHEF)
 	              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 	          roles.add(userRole);
 	        }
@@ -197,10 +205,12 @@ public class JwtAuthenticationController {
 	@Operation(security = {@SecurityRequirement(name = "bearer-key")})
 	@DeleteMapping("/delete-user/{id}")
   	@ResponseBody
-  	public ResponseEntity<String>  deleteRenting(@PathVariable("id")int id) {
+  	public ResponseEntity<String>  deleteUser(@PathVariable("id")int id) {
 		userDetailsService.DeleteUser(id);
   	    return new ResponseEntity<String>("Piece deleted successfully",HttpStatus.ACCEPTED);
   		
   	}
+	
+	
 
 }

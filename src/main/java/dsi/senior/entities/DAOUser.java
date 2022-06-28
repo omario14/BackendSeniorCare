@@ -19,6 +19,9 @@ public class DAOUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private String name;
+	
+	private String lastName;
 	@NotBlank
 	@Size(max = 20)
 	private String username;
@@ -34,13 +37,32 @@ public class DAOUser {
 				joinColumns = @JoinColumn(name = "user_id",nullable=false), 
 				inverseJoinColumns = @JoinColumn(name = "role_id",nullable=false))
 	private Set<Role> roles = new HashSet<>();
+	private String fileId;
+	
+	
+	
 	public DAOUser() {
 	}
-	public DAOUser(String username, String email, String password) {
+	
+	
+	
+	
+	
+	public DAOUser(String name, String lastName,  String username,
+			 String email,  
+			String fileId,
+			String password) {
+		super();
+		
+		this.name = name;
+		this.lastName = lastName;
 		this.username = username;
 		this.email = email;
+		this.fileId = fileId;
 		this.password = password;
 	}
+
+
 	public int getId() {
 		return id;
 	}
@@ -71,4 +93,54 @@ public class DAOUser {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
+
+
+
+
+
+	public String getName() {
+		return name;
+	}
+
+
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+
+
+	public String getLastName() {
+		return lastName;
+	}
+
+
+
+
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
+
+
+
+	public String getFileId() {
+		return fileId;
+	}
+
+
+
+
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
+	}
+	
+	
 }
