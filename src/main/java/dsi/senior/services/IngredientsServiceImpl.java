@@ -17,7 +17,6 @@ public class IngredientsServiceImpl implements IIngredientsService {
 	
 	@Override
 	public void addIngredient(Ingredients ing) {
-		System.out.println("categoryyyyyyyyy : "+ing.getFile().getName());
 		ingRepository.save(ing);
 	}
 

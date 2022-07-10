@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import dsi.senior.entities.Illnesses;
-import dsi.senior.entities.Symptoms;
 import dsi.senior.services.IIllnessService;
-import dsi.senior.services.ISymptomsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
