@@ -26,7 +26,9 @@ public class MealServiceImpl implements IMealService {
 		meal.setLabel(m.getLabel());
 		meal.setDescription(m.getDescription());
 		meal.setType(m.getType());
+		meal.setChecked(m.isChecked());
 		meal.setImage(m.getImage());
+		meal.setIngredients(m.getIngredients());
 		mealRepository.save(meal);
 		
 	}

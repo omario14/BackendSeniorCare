@@ -24,6 +24,7 @@ public class IngredientsServiceImpl implements IIngredientsService {
 	public void updateIngredient(Ingredients ing, long idIngredient) {
 		Ingredients ingredient = ingRepository.findById(idIngredient).get();
 		ingredient.setLabel(ing.getLabel());
+		ingredient.setChecked(ing.isChecked());
 		ingredient.setDescription(ing.getDescription());
 		ingredient.setCategory(ing.getCategory());
 		ingRepository.save(ingredient);
@@ -36,18 +37,14 @@ public class IngredientsServiceImpl implements IIngredientsService {
 	}
 
 	@Override
-	public List<Ingredients> getAllIngredients(String keyword) {
-		if (keyword!= null) {
+	public List<Ingredients> getAllIngredients() {
 		
-			return ingRepository.findAll(keyword);
-		}
 		return (List<Ingredients>)ingRepository.findAll();
 	}
 
 	@Override
 	public Ingredients getIngredientById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return ingRepository.findById(id).get();
 	}
 
 	@Override

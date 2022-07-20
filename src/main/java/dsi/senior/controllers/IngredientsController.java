@@ -1,8 +1,6 @@
 package dsi.senior.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,15 +54,12 @@ public class IngredientsController {
 				
 			}
 			//creating a get mapping that retrieves all the ingredient details from the database   
-			@GetMapping("/get-all-ingredient/{keyword}")
+			@GetMapping("/get-all-ingredient")
 			@Operation(security = {@SecurityRequirement(name = "bearer-key")})
 			@ResponseBody
-			public List<Ingredients>  getAllProduct(@PathVariable("keyword")String keyword) {
-				List<Ingredients> ingredient = new ArrayList<>();
-				for(Ingredients ing :ingredientsServices .getAllIngredients(keyword)) {
-					ingredient.add(ing);
-				}
-				return ingredient;
+			public List<Ingredients>  getAllProduct() {
+				
+				return ingredientsServices.getAllIngredients();
 			}
 			
 			

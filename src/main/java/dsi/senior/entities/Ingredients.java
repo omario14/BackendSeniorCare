@@ -15,6 +15,7 @@ public class Ingredients {
 	private long id;
 	private String label;
 	private String description;
+	private boolean checked;
 	
 	@OneToOne
 	private FileDB file;
@@ -34,13 +35,15 @@ public class Ingredients {
 
 
 
-	public Ingredients(long id, String label, String description, FileDB file, IngredientsCategories category) {
+	public Ingredients(long id, String label, String description,boolean checked, FileDB file, IngredientsCategories category) {
 		super();
 		this.id = id;
 		this.label = label;
 		this.description = description;
+		this.checked = checked;
 		this.file = file;
 		this.Category = category;
+		
 	}
 
 
@@ -54,6 +57,27 @@ public class Ingredients {
 	public void setId(long id) {
 		this.id = id;
 	}
+	
+
+
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+
+
+
+
+
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+
+
+
+
 
 
 

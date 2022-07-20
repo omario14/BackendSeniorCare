@@ -1,6 +1,8 @@
 package dsi.senior.controllers;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import dsi.senior.entities.EMealType;
+import dsi.senior.entities.Ingredients;
 import dsi.senior.entities.Meal;
 import dsi.senior.entities.MealType;
 import dsi.senior.repositories.MealTypeDao;
+import dsi.senior.services.IIngredientsService;
 import dsi.senior.services.IMealService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -32,31 +36,59 @@ public class MealController {
 	@Autowired
 	MealTypeDao  mealTypeDao;
 	
+	@Autowired
+	IIngredientsService ingredientsService;
+	
 	//creating post mapping method that insert Meal into database
 	 @PostMapping("/add-Meal")
 	 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
 	 @ResponseBody
 	 public void addMeal(@RequestBody mealRequest m) {
+		 Set<Long> ingredientsIds =  m.getIngredients();
+		 System.out.println("from frontEnd"+ingredientsIds);
+		 Set<Ingredients> ingredients =  new HashSet<>();
+		 
+		 ingredientsIds.forEach(ingId-> {
+		 Ingredients ingred = ingredientsService.getIngredientById(ingId);
+		 System.out.println("from backend"+ingId);
+		 ingredients.add(ingred);
+		 System.out.println("from backend"+ingred);
+		 });
+		 
 		Meal meal=new Meal(
 				m.getLabel(),
 				m.getDescription(),
-				m.getImage());
+				m.isChecked(),
+				m.getImage(),
+				ingredients);
 		String typeM = m.getType();
 		MealType type=new MealType();
 		
 		switch (typeM) {
 		
 		case "BREAKFAST":
-			MealType mtype = mealTypeDao.findBylabel(EMealType.BREAKFAST);
-			type=mtype;
-			break;
-		case "LUNCH":
-			MealType mtype1 = mealTypeDao.findBylabel(EMealType.LUNCH);
+			MealType mtype1 = mealTypeDao.findBylabel(EMealType.BREAKFAST);
 			type=mtype1;
 			break;
-		default:
-			MealType mtype3 = mealTypeDao.findBylabel(EMealType.DINNER);
+		case "DESSERTS":
+			MealType mtype2 = mealTypeDao.findBylabel(EMealType.DESSERTS);
+			type=mtype2;
+			break;
+		case "LUNCH":
+			MealType mtype3 = mealTypeDao.findBylabel(EMealType.LUNCH);
 			type=mtype3;
+			break;
+		case "DINNER":
+			MealType mtype4 = mealTypeDao.findBylabel(EMealType.DINNER);
+			type=mtype4;
+			break;
+		case "DRINKS":
+			MealType mtype5 = mealTypeDao.findBylabel(EMealType.DRINKS);
+			type=mtype5;
+			break;
+		default:
+			MealType mtype = mealTypeDao.findBylabel(EMealType.OTHER);
+			type=mtype;
 			break;
 		}
 		meal.setType(type);

@@ -17,7 +17,7 @@ public interface IIngredientsService  {
 	void deleteIngredient(long idIngredient);
 	
 	/***************Creating getAll method that retrieve all Ingredient from database **************/
-	List<Ingredients> getAllIngredients(String keyword);
+	List<Ingredients> getAllIngredients();
 
 	/**************Creating getByid method that retrieve Ingredient detail from database************/
 	Ingredients getIngredientById(long id);
