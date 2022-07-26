@@ -9,7 +9,6 @@ public class mealRequest {
 	
 	private String label;
 	private String description;
-	private boolean checked;
 	private FileDB image;
 	private Set<Long> ingredients; 
 	private String type;
@@ -43,13 +42,6 @@ public class mealRequest {
 	public void setIngredients(Set<Long> ingredients) {
 		this.ingredients = ingredients;
 	}
-	public boolean isChecked() {
-		return checked;
-	}
-	public void setSelect(boolean checked) {
-		this.checked = checked;
-	}
-	
 	
 	
 

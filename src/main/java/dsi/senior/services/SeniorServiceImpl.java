@@ -47,12 +47,13 @@ public class SeniorServiceImpl implements ISeniorServiceImpl{
 		sa.setName(s.getName());
 		sa.setLastname(s.getLastname());
 		sa.setDateOfBirth(s.getDateOfBirth());
-		sa.setResidance(s.getResidance());
 		sa.setSex(s.getSex());
 		sa.setCin(s.getCin());
-		sa.setCenterOfInterest(s.getCenterOfInterest());
-		sa.setFamillySituation(s.getFamillySituation());
 		sa.setTelephone(s.getTelephone());
+		sa.setFile(s.getFile());
+		sa.setCheckedBreakfast(s.isCheckedBreakfast());
+		sa.setCheckedLunch(s.isCheckedLunch());
+		sa.setCheckedDinner(s.isCheckedDinner());
 		seniorDao.save(sa);
 		
 	}

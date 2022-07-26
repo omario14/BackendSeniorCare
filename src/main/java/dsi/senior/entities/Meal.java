@@ -25,7 +25,9 @@ public class Meal {
 	private String label;
 	@Column(name="description")
 	private String description;
-	private boolean checked;
+	private boolean checkedBreakfast;
+	private boolean checkedLunch;
+	private boolean checkedDinner;
 	@ManyToOne
 	@JoinColumn(name = "type")
 	private MealType type;
@@ -49,26 +51,43 @@ public class Meal {
 
 
 
-	public Meal(String label, String description, FileDB image) {
+	public Meal(String label, String description, FileDB image,Set<Ingredients> ingredients) {
 		super();
 		this.label = label;
 		this.description = description;
-		this.image = image;
-	}
-	
-	
-
-
-
-
-	public Meal(String label, String description,boolean checked, FileDB image, Set<Ingredients> ingredients) {
-		super();
-		this.label = label;
-		this.description = description;
-		this.checked= checked;
 		this.image = image;
 		this.ingredients = ingredients;
 	}
+	
+	
+
+
+
+
+
+	public Meal(String label, String description, boolean checkedBreakfast, boolean checkedLunch, boolean checkedDinner,
+			 FileDB image, Set<Ingredients> ingredients) {
+		super();
+		this.label = label;
+		this.description = description;
+		this.checkedBreakfast = checkedBreakfast;
+		this.checkedLunch = checkedLunch;
+		this.checkedDinner = checkedDinner;
+		this.image = image;
+		this.ingredients = ingredients;
+	}
+
+	public Meal(String label, String description, boolean checkedBreakfast,
+			 FileDB image, Set<Ingredients> ingredients) {
+		super();
+		this.label = label;
+		this.description = description;
+		this.checkedBreakfast = checkedBreakfast;
+		this.image = image;
+		this.ingredients = ingredients;
+	}
+	
+
 
 
 
@@ -168,16 +187,48 @@ public class Meal {
 
 
 
-	public boolean isChecked() {
-		return checked;
+	public boolean isCheckedBreakfast() {
+		return checkedBreakfast;
 	}
 
 
 
 
-	public void setChecked(boolean checked) {
-		this.checked = checked;
+	public void setCheckedBreakfast(boolean checkedBreakfast) {
+		this.checkedBreakfast = checkedBreakfast;
 	}
+
+
+
+
+	public boolean isCheckedLunch() {
+		return checkedLunch;
+	}
+
+
+
+
+	public void setCheckedLunch(boolean checkedLunch) {
+		this.checkedLunch = checkedLunch;
+	}
+
+
+
+
+	public boolean isCheckedDinner() {
+		return checkedDinner;
+	}
+
+
+
+
+	public void setCheckedDinner(boolean checkedDinner) {
+		this.checkedDinner = checkedDinner;
+	}
+
+
+
+
 
 
 

@@ -16,9 +16,9 @@ public class MenuServiceImpl  {
 	
 	
 	
-	public List<Menu> addToMenu(Menu m) {
+	public void addToMenu(Menu m) {
 		menurepository.save(m);
-		return getMenus();
+		
 	}
 	
 	public List<Menu> getMenus(){
@@ -29,15 +29,13 @@ public class MenuServiceImpl  {
 		
 	}
 	
-	public void updateMenu(long id,Menu m) {
-		Menu menu = menurepository.findById(id).get();
-		
-		
+	public void updateMenu(Menu m,long idMenu) {
+		Menu menu= menurepository.findById(idMenu).get();
+		 System.out.println("this is menu"+m.toString());
 		menu.setBreakfastMenu(m.getBreakfastMenu());
-		
 		menurepository.save(menu);
-		
-		
+		 
+	
 	}
 	
 	

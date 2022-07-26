@@ -1,12 +1,18 @@
 package dsi.senior.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -40,6 +46,15 @@ public class Senior implements Serializable{
 	private String centerOfInterest;
 	private String fileId;
 	
+	private boolean checkedBreakfast;
+	private boolean checkedLunch;
+	private boolean checkedDinner;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(	name = "senior_menus", 
+				joinColumns = @JoinColumn(name = "senior_id",nullable=false), 
+				inverseJoinColumns = @JoinColumn(name = "menu_id",nullable=false))
+	private Set<Menu> menus = new HashSet<>();
 	
 	public Senior() {
 		
@@ -64,6 +79,38 @@ public class Senior implements Serializable{
 		this.centerOfInterest = centerOfInterest;
 		this.fileId = fileid;
 	}
+
+
+
+
+	public Senior(Set<Menu> menus) {
+		super();
+		this.menus = menus;
+	}
+	
+
+
+
+
+
+
+	public Senior(String name, String lastname, String dateOfBirth, String sex, String cin, String telephone,
+			 String fileId, boolean checkedBreakfast,
+			boolean checkedLunch, boolean checkedDinner) {
+		super();
+		this.name = name;
+		this.lastname = lastname;
+		this.dateOfBirth = dateOfBirth;
+		this.sex = sex;
+		this.cin = cin;
+		this.telephone = telephone;
+		this.fileId = fileId;
+		this.checkedBreakfast = checkedBreakfast;
+		this.checkedLunch = checkedLunch;
+		this.checkedDinner = checkedDinner;
+	}
+
+
 
 
 
@@ -180,6 +227,88 @@ public class Senior implements Serializable{
 	public void setFile(String fileId) {
 		this.fileId = fileId;
 	}
+
+
+
+
+
+
+	
+
+
+
+
+
+
+	public Set<Menu> getMenus() {
+		return menus;
+	}
+
+
+
+
+
+
+	public void setMenus(Set<Menu> menus) {
+		this.menus = menus;
+	}
+
+
+
+
+
+
+	public boolean isCheckedBreakfast() {
+		return checkedBreakfast;
+	}
+
+
+
+
+
+
+	public void setCheckedBreakfast(boolean checkedBreakfast) {
+		this.checkedBreakfast = checkedBreakfast;
+	}
+
+
+
+
+
+
+	public boolean isCheckedLunch() {
+		return checkedLunch;
+	}
+
+
+
+
+
+
+	public void setCheckedLunch(boolean checkedLunch) {
+		this.checkedLunch = checkedLunch;
+	}
+
+
+
+
+
+
+	public boolean isCheckedDinner() {
+		return checkedDinner;
+	}
+
+
+
+
+
+
+	public void setCheckedDinner(boolean checkedDinner) {
+		this.checkedDinner = checkedDinner;
+	}
+	
+	
+	
 	
 
 

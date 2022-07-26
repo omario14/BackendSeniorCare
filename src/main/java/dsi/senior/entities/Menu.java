@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,11 +16,11 @@ public class Menu {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private Date date;
-	@OneToMany(targetEntity=Meal.class, fetch=FetchType.EAGER)
+	@OneToMany
 	private Set<Meal> breakfastMenu;
-	@OneToMany(targetEntity=Meal.class, fetch=FetchType.EAGER)
+	@OneToMany
 	private Set<Meal> lunchMenu;
-	@OneToMany(targetEntity=Meal.class, fetch=FetchType.EAGER)
+	@OneToMany
 	private Set<Meal> dinnerMenu;
 	
 	public Menu() {

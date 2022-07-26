@@ -20,6 +20,8 @@ import dsi.senior.entities.EMealType;
 import dsi.senior.entities.Ingredients;
 import dsi.senior.entities.Meal;
 import dsi.senior.entities.MealType;
+import dsi.senior.repositories.IngredientsDAO;
+import dsi.senior.repositories.MealDAO;
 import dsi.senior.repositories.MealTypeDao;
 import dsi.senior.services.IIngredientsService;
 import dsi.senior.services.IMealService;
@@ -34,7 +36,12 @@ public class MealController {
 	IMealService mealService;
 	
 	@Autowired
+	MealDAO mealrepository;
+	@Autowired
 	MealTypeDao  mealTypeDao;
+	
+	@Autowired
+	IngredientsDAO ingredientsDao;
 	
 	@Autowired
 	IIngredientsService ingredientsService;
@@ -58,7 +65,6 @@ public class MealController {
 		Meal meal=new Meal(
 				m.getLabel(),
 				m.getDescription(),
-				m.isChecked(),
 				m.getImage(),
 				ingredients);
 		String typeM = m.getType();
@@ -93,6 +99,7 @@ public class MealController {
 		}
 		meal.setType(type);
 		 mealService.addMeal(meal);
+		 ingredientsDao.mettreaZeroChecked();
 
 	}
 	 
@@ -101,11 +108,12 @@ public class MealController {
 	 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
 	 @ResponseBody
 		public void updateMeal(
-			@RequestBody Meal Meal,@PathVariable("idMeal")int idMeal) {
+			@RequestBody Meal Meal,@PathVariable("idMeal")long idMeal) {
 		 mealService.updateMeal(Meal,idMeal);
 		    
 			
 		}
+		
 	  //creating a delete mapping that delete data from database
 		@DeleteMapping("/delete-Meal/{idMeal}")
 		@Operation(security = {@SecurityRequirement(name = "bearer-key")})

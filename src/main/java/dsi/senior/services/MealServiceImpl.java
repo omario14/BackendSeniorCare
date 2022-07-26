@@ -26,7 +26,9 @@ public class MealServiceImpl implements IMealService {
 		meal.setLabel(m.getLabel());
 		meal.setDescription(m.getDescription());
 		meal.setType(m.getType());
-		meal.setChecked(m.isChecked());
+		meal.setCheckedBreakfast(m.isCheckedBreakfast());
+		meal.setCheckedLunch(m.isCheckedLunch());
+		meal.setCheckedDinner(m.isCheckedDinner());
 		meal.setImage(m.getImage());
 		meal.setIngredients(m.getIngredients());
 		mealRepository.save(meal);
@@ -47,8 +49,7 @@ public class MealServiceImpl implements IMealService {
 
 	@Override
 	public Meal getMealById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return mealRepository.findById(id).get();
 	}
 
 	@Override
