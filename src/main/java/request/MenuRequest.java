@@ -1,6 +1,5 @@
 package request;
 
-import java.util.Date;
 import java.util.Set;
 
 
@@ -8,7 +7,7 @@ import java.util.Set;
 public class MenuRequest {
 
 
-	private Date date;
+	private String date;
 	private Set<Long> breakfastMenu;
 	private Set<Long> lunchMenu;
 	private Set<Long> dinnerMenu;
@@ -17,7 +16,7 @@ public class MenuRequest {
 		
 	}
 	
-	public MenuRequest(Date date, Set<Long> breakfastMenu, Set<Long> lunchMenu, Set<Long> dinnerMenu) {
+	public MenuRequest(String date, Set<Long> breakfastMenu, Set<Long> lunchMenu, Set<Long> dinnerMenu) {
 		super();
 		this.date = date;
 		this.breakfastMenu = breakfastMenu;
@@ -26,12 +25,12 @@ public class MenuRequest {
 	}
 
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

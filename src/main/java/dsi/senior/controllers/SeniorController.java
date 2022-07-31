@@ -33,9 +33,6 @@ public class SeniorController {
 		@ResponseBody
 		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
 		public long addSenior(@RequestBody Senior s) throws Exception{
-			
-			 
-		      
 			return seniorServiceImpl.addSenior(s);
 			
 	}
@@ -122,6 +119,17 @@ public class SeniorController {
  			public void deleteAllSeniors() {
  				seniorServiceImpl.deleteAllSenior();
  			}
+ 			
+ 		
+ 		// http://localhost:8081/api/updateSenior
+ 		  	@PutMapping("/addMenuSenior/{idsenior}")
+ 		  	@ResponseBody
+ 			 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
+ 		  	public ResponseEntity<String> addMenuSenior(@PathVariable("idsenior")long idSenior) {
+ 		  		seniorServiceImpl.addMenuSenior(idSenior);
+ 		  	    return new ResponseEntity<String>("Senior updated successfully",HttpStatus.OK);
+ 		  		
+ 		  	}
   	
 	
 	

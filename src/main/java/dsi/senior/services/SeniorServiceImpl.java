@@ -1,11 +1,17 @@
 package dsi.senior.services;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dsi.senior.entities.Menu;
 import dsi.senior.entities.Senior;
+import dsi.senior.repositories.MenuDao;
 import dsi.senior.repositories.SeniorDao;
 
 @Service
@@ -13,6 +19,8 @@ public class SeniorServiceImpl implements ISeniorServiceImpl{
 	
 	@Autowired
 	SeniorDao seniorDao;
+	@Autowired
+	MenuDao menuDao;
 	
 	/********************** ADD method that insert Senior into database***************/
 	@Override
@@ -44,6 +52,25 @@ public class SeniorServiceImpl implements ISeniorServiceImpl{
 	@Override
 	public void updateSenior(Senior s, long idSenior) {
 		Senior sa = seniorDao.findById(idSenior).get();
+		
+		Date currentUtilDate = new Date();
+	    String strDateFormat = "yyyy-MM-dd";
+	    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+	    String formattedDate= dateFormat.format(currentUtilDate);
+	    
+	
+		Menu men = menuDao.findMenuByDate(formattedDate);
+		System.out.println(s.getMenus());
+		if (s.isCheckedBreakfast()&&s.isCheckedDinner()&&s.isCheckedLunch()) {
+			Set<Menu> menusList = s.getMenus();
+			menusList.add(men);
+			sa.setMenus(menusList);
+			
+		}else {
+			sa.setMenus(s.getMenus());
+		}
+		
+		
 		sa.setName(s.getName());
 		sa.setLastname(s.getLastname());
 		sa.setDateOfBirth(s.getDateOfBirth());
@@ -54,6 +81,7 @@ public class SeniorServiceImpl implements ISeniorServiceImpl{
 		sa.setCheckedBreakfast(s.isCheckedBreakfast());
 		sa.setCheckedLunch(s.isCheckedLunch());
 		sa.setCheckedDinner(s.isCheckedDinner());
+		
 		seniorDao.save(sa);
 		
 	}
@@ -95,6 +123,24 @@ public class SeniorServiceImpl implements ISeniorServiceImpl{
 	@Override
 	public void deleteAllSenior() {
 		seniorDao.deleteAll();
+		
+	}
+	@Override
+	public void addMenuSenior(long idSenior) {
+			Date currentUtilDate = new Date();
+		    String strDateFormat = "yyyy-MM-dd";
+		    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+		    String formattedDate= dateFormat.format(currentUtilDate);
+		    
+		System.out.println("Date of today"+formattedDate);
+		
+		Senior s = seniorDao.findById(idSenior).get();
+		Menu men = menuDao.findMenuByDate(formattedDate);
+		System.out.println("menu of today"+men);
+		Set<Menu> menusList = s.getMenus();
+		menusList.add(men);
+		s.setMenus(menusList);
+		seniorDao.save(s);
 		
 	}
 

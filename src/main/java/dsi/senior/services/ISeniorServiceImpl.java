@@ -9,6 +9,7 @@ public interface ISeniorServiceImpl   {
 	public void deleteSenior(long id);
 	public void updateSenior(Senior s,long idSenior);
 	public List<Senior> retrieveAllSenior();
+	public void  addMenuSenior(long idSenior);
 	public Senior retrieveSeniorById (long id);
 	public Senior findSeniorByName(String name);	
 	public List<Senior> findByResidance(String lieu_resid);

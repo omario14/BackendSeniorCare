@@ -1,6 +1,5 @@
 package dsi.senior.entities;
 
-import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -9,13 +8,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
 @Entity
 public class Menu {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private Date date;
+	@JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
+	private String date;
 	@OneToMany
 	private Set<Meal> breakfastMenu;
 	@OneToMany
@@ -28,7 +31,7 @@ public class Menu {
 	
 	
 
-	public Menu(Date date, Set<Meal> breakfastMenu, Set<Meal> lunchMenu, Set<Meal> dinnerMenu) {
+	public Menu(String date, Set<Meal> breakfastMenu, Set<Meal> lunchMenu, Set<Meal> dinnerMenu) {
 		super();
 		this.date = date;
 		this.breakfastMenu = breakfastMenu;
@@ -50,13 +53,13 @@ public class Menu {
 
 
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
 
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
