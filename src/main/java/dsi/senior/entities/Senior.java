@@ -57,6 +57,9 @@ public class Senior implements Serializable{
 				inverseJoinColumns = @JoinColumn(name = "menu_id",nullable=false))
 	private Set<Menu> menus = new HashSet<>();
 	
+	@OneToMany
+	private Set<Medication> meds;
+	
 	
 	public Senior() {
 		
@@ -110,6 +113,34 @@ public class Senior implements Serializable{
 		this.checkedBreakfast = checkedBreakfast;
 		this.checkedLunch = checkedLunch;
 		this.checkedDinner = checkedDinner;
+	}
+
+
+	
+
+
+
+
+	public Senior(long id, String name, String lastname, String dateOfBirth, String sex, String cin, String telephone,
+			String residance, String famillySituation, String centerOfInterest, String fileId, boolean checkedBreakfast,
+			boolean checkedLunch, boolean checkedDinner, Set<Menu> menus, Set<Medication> meds) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.lastname = lastname;
+		this.dateOfBirth = dateOfBirth;
+		this.sex = sex;
+		this.cin = cin;
+		this.telephone = telephone;
+		this.residance = residance;
+		this.famillySituation = famillySituation;
+		this.centerOfInterest = centerOfInterest;
+		this.fileId = fileId;
+		this.checkedBreakfast = checkedBreakfast;
+		this.checkedLunch = checkedLunch;
+		this.checkedDinner = checkedDinner;
+		this.menus = menus;
+		this.meds = meds;
 	}
 
 
@@ -307,6 +338,24 @@ public class Senior implements Serializable{
 
 	public void setCheckedDinner(boolean checkedDinner) {
 		this.checkedDinner = checkedDinner;
+	}
+
+
+
+
+
+
+	public Set<Medication> getMeds() {
+		return meds;
+	}
+
+
+
+
+
+
+	public void setMeds(Set<Medication> meds) {
+		this.meds = meds;
 	}
 
 

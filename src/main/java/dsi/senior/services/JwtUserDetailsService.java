@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import dsi.senior.entities.DAOUser;
 import dsi.senior.entities.ERole;
 import dsi.senior.entities.Role;
-import dsi.senior.entities.UserDTO;
 import dsi.senior.repositories.RoleDao;
 import dsi.senior.repositories.UserDao;
 

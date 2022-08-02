@@ -1,8 +1,13 @@
 package dsi.senior.entities;
 
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -20,6 +25,13 @@ public class ArchiveSenior {
 	private boolean checkedBreakfast;
 	private boolean checkedLunch;
 	private boolean checkedDinner;
+	
+	@ManyToMany
+	@JoinTable(
+	  name = "arch_meds", 
+	  joinColumns = @JoinColumn(name = "arch_id"), 
+	  inverseJoinColumns = @JoinColumn(name = "med_id"))
+		private Set<Medication> meds;
 	
 	@ManyToOne
 	private Senior senior;
@@ -45,7 +57,20 @@ public class ArchiveSenior {
 		this.checkedDinner = checkedDinner;
 		this.senior=senior;
 	}
+	
+	
 
+	public ArchiveSenior(String idArch, String date, boolean checkedBreakfast, boolean checkedLunch,
+			boolean checkedDinner, Set<Medication> meds, Senior senior) {
+		super();
+		this.idArch = idArch;
+		this.date = date;
+		this.checkedBreakfast = checkedBreakfast;
+		this.checkedLunch = checkedLunch;
+		this.checkedDinner = checkedDinner;
+		this.meds = meds;
+		this.senior = senior;
+	}
 	public String getIdArch() {
 		return idArch;
 	}
@@ -91,6 +116,20 @@ public class ArchiveSenior {
 	public void setSenior(Senior senior) {
 		this.senior=senior;
 	}
+	public Set<Medication> getMeds() {
+		return meds;
+	}
+	public void setMeds(Set<Medication> meds) {
+		this.meds = meds;
+	}
+	@Override
+	public String toString() {
+		return "ArchiveSenior [idArch=" + idArch + ", date=" + date + ", checkedBreakfast=" + checkedBreakfast
+				+ ", checkedLunch=" + checkedLunch + ", checkedDinner=" + checkedDinner + ", meds=" + meds + ", senior="
+				+ senior + "]";
+	}
+	
+	
 
 	
 

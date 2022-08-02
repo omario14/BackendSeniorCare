@@ -28,12 +28,7 @@ public class ArchiveSeniorServiceImpl implements IArchiveSeniorService {
 
 	@Override
 	public void updateArchive(ArchiveSenior arch,String idArch) {
-		
-		
-
-
-	   
-
+		System.out.println(arch.getMeds().toString());
 	 	    archDao.save(arch);
 	   
 	   
