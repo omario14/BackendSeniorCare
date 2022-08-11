@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import dsi.senior.entities.ArchiveSenior;
+import dsi.senior.services.ArchiveMedServiceImpl;
 import dsi.senior.services.IArchiveSeniorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -22,17 +23,21 @@ public class ArchiveController {
 
 	@Autowired
 	IArchiveSeniorService archiveServices;
+	@Autowired
+	ArchiveMedServiceImpl archmedService;
 	
-	// http://localhost:8081/api/updateArchive
-	  	@PutMapping("/updateArchive/{idArchive}")
+		// http://localhost:8081/api/updateArchive
+	  	@PutMapping("/updateArchive")
 	  	@ResponseBody
 		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
 	  	public ResponseEntity<String> updateArchive(
-	  		@RequestBody ArchiveSenior sa,@PathVariable("idArchive")String idArchive) {
-	  		archiveServices.updateArchive(sa,idArchive);
+	  		@RequestBody ArchiveSenior sa) {
+	  		archiveServices.updateArchive(sa);
 	  	    return new ResponseEntity<String>("Archive updated successfully",HttpStatus.OK);
 	  		
 	  	}
+	 
+	  	
 	  	
 	  	
 	  //creating a get mapping that retrieves all categories from database.
@@ -44,4 +49,7 @@ public class ArchiveController {
 	  		return archiveServices.getArchiveSeniorBySenior(idSenior);
 	  	}
 	  	
+	  	
+	  	
+	 
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import dsi.senior.entities.Senior;
+import dsi.senior.repositories.SeniorDao;
 import dsi.senior.services.ISeniorServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -26,13 +27,14 @@ public class SeniorController {
 	
 	@Autowired
 	ISeniorServiceImpl seniorServiceImpl;
-	
+	@Autowired
+	SeniorDao seniorDao;
 	
 	// http://localhost:8081/api/addSenior
 		@PostMapping("/addSenior")
 		@ResponseBody
 		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
-		public long addSenior(@RequestBody Senior s) throws Exception{
+		public Senior addSenior(@RequestBody Senior s) throws Exception{
 			return seniorServiceImpl.addSenior(s);
 			
 	}
@@ -131,6 +133,12 @@ public class SeniorController {
  		  		
  		  	}
   	
+ 			@GetMapping(value = "/senior-numbers")
+ 			@Operation(security = {@SecurityRequirement(name = "bearer-key")})
+ 			@ResponseBody
+ 			public long seniorNumber() {
+ 				return seniorDao.seniors();
+ 			}
 	
 	
 

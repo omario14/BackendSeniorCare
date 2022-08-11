@@ -5,7 +5,7 @@ import java.util.List;
 import dsi.senior.entities.Senior;
 
 public interface ISeniorServiceImpl   {
-	public long  addSenior(Senior s);
+	public Senior  addSenior(Senior s);
 	public void deleteSenior(long id);
 	public void updateSenior(Senior s,long idSenior);
 	public List<Senior> retrieveAllSenior();

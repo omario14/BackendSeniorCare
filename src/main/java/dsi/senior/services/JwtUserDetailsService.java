@@ -79,15 +79,21 @@ public class JwtUserDetailsService implements UserDetailsService {
 		return UserDetailsImpl.build(user);
 		
 	}
-	public void UpdateAccountUserByUsername(String username,DAOUser user) {
-		DAOUser role2 = userDao.findByUsername(username);
+	public DAOUser UpdateAccountUserByUsername(int id,DAOUser user) {
+		DAOUser role2 = userDao.findById(id).get();
+		
 		role2.setName(user.getName());
 		role2.setLastName(user.getLastName());
+		role2.setMobile(user.getMobile());
+		role2.setGender(user.getGender());
+		role2.setAdress(user.getAdress());
 		role2.setUsername(user.getUsername());
+		role2.setPicture(user.getPicture());
 		role2.setEmail(user.getEmail());
 		role2.setPassword(user.getPassword());
 		role2.setRoles(user.getRoles());
 		userDao.save(role2);
+		return role2;
 	}
 	
 	
@@ -118,6 +124,10 @@ public class JwtUserDetailsService implements UserDetailsService {
 			userDao.deleteById(id);
 			
 			
+		}
+		
+		public long userCount() {
+			return userDao.userCount();
 		}
 		
 	 

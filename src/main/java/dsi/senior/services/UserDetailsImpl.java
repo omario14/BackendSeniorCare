@@ -3,6 +3,7 @@ package dsi.senior.services;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import dsi.senior.entities.DAOUser;
+import dsi.senior.entities.FileDB;
+import dsi.senior.entities.Role;
 
 public class UserDetailsImpl implements UserDetails {
   private static final long serialVersionUID = 1L;
@@ -25,23 +28,30 @@ public class UserDetailsImpl implements UserDetails {
   private String username;
 
   private String email;
-
-  private String fileId;
+  private String mobile;
+  private String gender;
   
+  private String adress;
+  private FileDB picture;
+  private Set<Role> roles;
   @JsonIgnore
   private String password;
 
   private Collection<? extends GrantedAuthority> authorities;
 
-  public UserDetailsImpl(int id,String name,String lastName, String username, String email,String fileId, String password,
+  public UserDetailsImpl(int id,String name,String lastName, String username, String email,String mobile,String gender,String adress,FileDB picture, String password,Set<Role> roles,
       Collection<? extends GrantedAuthority> authorities) {
     this.id = id;
     this.name=name;
     this.lastName=lastName;
     this.username = username;
     this.email = email;
-    this.fileId=fileId;
+    this.mobile=mobile;
+    this.gender=gender;
+    this.adress=adress;
+    this.picture=picture;
     this.password = password;
+    this.roles=roles;
     this.authorities = authorities;
   }
 
@@ -55,8 +65,12 @@ System.out.println("TEST 1"+new UserDetailsImpl(
 		        user.getLastName(),
 		        user.getUsername(), 
 		        user.getEmail(),
-		        user.getFileId(),
+		        user.getMobile(),
+		        user.getGender(),
+		        user.getAdress(),
+		        user.getPicture(),
 		        user.getPassword(), 
+		        user.getRoles(),
 		        authorities));
 		    return new UserDetailsImpl(
 		    		user.getId(), 
@@ -64,8 +78,12 @@ System.out.println("TEST 1"+new UserDetailsImpl(
 			        user.getLastName(),
 			        user.getUsername(), 
 			        user.getEmail(),
-			        user.getFileId(),
+			        user.getMobile(),
+			        user.getGender(),
+			        user.getAdress(),
+			        user.getPicture(),
 			        user.getPassword(), 
+			        user.getRoles(),
 		        authorities);
   }
 
@@ -80,7 +98,15 @@ System.out.println("TEST 1"+new UserDetailsImpl(
   
   
 
-  public String getName() {
+  public Set<Role> getRoles() {
+	return roles;
+}
+
+public void setRoles(Set<Role> roles) {
+	this.roles = roles;
+}
+
+public String getName() {
 	return name;
 }
 
@@ -96,12 +122,37 @@ public void setLastName(String lastName) {
 	this.lastName = lastName;
 }
 
-public String getFileId() {
-	return fileId;
+public FileDB getPicture() {
+	return picture;
 }
 
-public void setFileId(String fileId) {
-	this.fileId = fileId;
+public void setPicture(FileDB picture) {
+	this.picture = picture;
+}
+
+
+public String getMobile() {
+	return mobile;
+}
+
+public void setMobile(String mobile) {
+	this.mobile = mobile;
+}
+
+public String getGender() {
+	return gender;
+}
+
+public void setGender(String gender) {
+	this.gender = gender;
+}
+
+public String getAdress() {
+	return adress;
+}
+
+public void setAdress(String adress) {
+	this.adress = adress;
 }
 
 public void setId(int id) {
@@ -133,6 +184,8 @@ public String getEmail() {
   public String getUsername() {
     return username;
   }
+  
+  
 
   @Override
   public boolean isAccountNonExpired() {

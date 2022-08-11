@@ -2,6 +2,7 @@ package dsi.senior.repositories;
 
 
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,5 +19,8 @@ public interface UserDao extends CrudRepository<DAOUser, Integer> {
 	Boolean existsByUsername(String username);
 	Boolean existsByEmail(String email);
 	Role findRoleByUsername(String username);
+	
+	@Query("SELECT count(usr) FROM DAOUser usr")
+	public long userCount(); 
 	
 }

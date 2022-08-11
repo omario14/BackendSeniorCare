@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -57,8 +56,7 @@ public class Senior implements Serializable{
 				inverseJoinColumns = @JoinColumn(name = "menu_id",nullable=false))
 	private Set<Menu> menus = new HashSet<>();
 	
-	@OneToMany
-	private Set<Medication> meds;
+	
 	
 	
 	public Senior() {
@@ -123,7 +121,7 @@ public class Senior implements Serializable{
 
 	public Senior(long id, String name, String lastname, String dateOfBirth, String sex, String cin, String telephone,
 			String residance, String famillySituation, String centerOfInterest, String fileId, boolean checkedBreakfast,
-			boolean checkedLunch, boolean checkedDinner, Set<Menu> menus, Set<Medication> meds) {
+			boolean checkedLunch, boolean checkedDinner, Set<Menu> menus) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -140,7 +138,7 @@ public class Senior implements Serializable{
 		this.checkedLunch = checkedLunch;
 		this.checkedDinner = checkedDinner;
 		this.menus = menus;
-		this.meds = meds;
+		
 	}
 
 
@@ -345,18 +343,8 @@ public class Senior implements Serializable{
 
 
 
-	public Set<Medication> getMeds() {
-		return meds;
-	}
 
 
-
-
-
-
-	public void setMeds(Set<Medication> meds) {
-		this.meds = meds;
-	}
 
 
 

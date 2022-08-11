@@ -2,7 +2,7 @@ package dsi.senior.repositories;
 
 import java.util.List;
 
-import org.springframework.data.jdbc.repository.query.Query;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -19,6 +19,9 @@ public interface SeniorDao extends CrudRepository<Senior,Long> {
 	@Query("SELECT sa from Senior sa WHERE sa.residance =:resid")
 	public List<Senior> findSeniorsByResidance(@Param("resid")String resid);
 
+
+	@Query("SELECT count(snr) FROM Senior snr")
+	public long seniors(); 
 	
 	
 }

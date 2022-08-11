@@ -6,13 +6,20 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import dsi.senior.entities.FileDB;
+
 public class SignupRequest {
+	
+	
+	private String mobile;
+	private String gender;
+	private String adress;
 	
 	private String name;
 	
 	private String lastName;
 	
-	private String fileId;
+	private FileDB picture;
 	
   @NotBlank
   @Size(min = 3, max = 20)
@@ -77,12 +84,45 @@ public void setLastName(String lastName) {
 	this.lastName = lastName;
 }
 
-public String getFileId() {
-	return fileId;
+public FileDB getPicture() {
+	return picture;
 }
 
-public void setFileId(String fileId) {
-	this.fileId = fileId;
+public void setPicture(FileDB picture) {
+	this.picture = picture;
 }
+
+public String getMobile() {
+	return mobile;
+}
+
+public void setMobile(String mobile) {
+	this.mobile = mobile;
+}
+
+public String getGender() {
+	return gender;
+}
+
+public void setGender(String gender) {
+	this.gender = gender;
+}
+
+public String getAdress() {
+	return adress;
+}
+
+public void setAdress(String adress) {
+	this.adress = adress;
+}
+
+@Override
+public String toString() {
+	return "SignupRequest [mobile=" + mobile + ", gender=" + gender + ", adress=" + adress + ", name=" + name
+			+ ", lastName=" + lastName + ", picture=" + picture + ", username=" + username + ", email=" + email
+			+ ", role=" + role + ", password=" + password + "]";
+}
+
+
   
 }

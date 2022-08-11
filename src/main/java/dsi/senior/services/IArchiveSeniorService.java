@@ -10,7 +10,7 @@ public interface IArchiveSeniorService {
 	void addArchive(ArchiveSenior arch);
 
 	/****************Creating update method that upgrade archive from database*****************/
-	void updateArchive(ArchiveSenior arch, String idArch);
+	void updateArchive(ArchiveSenior arch);
 
 	/*******************Creating deleting method that remove archive by id  from database
 	 * @return *********/
@@ -21,6 +21,7 @@ public interface IArchiveSeniorService {
 
 	/**************Creating getByid method that retrieve ArchiveSenior detail from database************/
 	Set<ArchiveSenior> getArchiveSeniorBySenior(long idSenior);
+	
 
 	/***************Creating getAll ArchiveSenior by category method from database **************/
 	List<ArchiveSenior> getArchiveSeniorByCategory(String categoryName); 

@@ -27,8 +27,8 @@ public class ArchiveSeniorServiceImpl implements IArchiveSeniorService {
 	}
 
 	@Override
-	public void updateArchive(ArchiveSenior arch,String idArch) {
-		System.out.println(arch.getMeds().toString());
+	public void updateArchive(ArchiveSenior arch) {
+		
 	 	    archDao.save(arch);
 	   
 	   
@@ -61,5 +61,7 @@ public class ArchiveSeniorServiceImpl implements IArchiveSeniorService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }

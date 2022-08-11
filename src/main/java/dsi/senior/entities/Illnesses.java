@@ -4,9 +4,13 @@ import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -25,7 +29,10 @@ public class Illnesses implements Serializable {
 	private String category;// Allergie
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy="illnesses")
+	@ManyToMany(fetch = FetchType.LAZY)
+			@JoinTable(	name = "Ilness_Symps", 
+			joinColumns = @JoinColumn(name = "Illness_id",nullable=false), 
+			inverseJoinColumns = @JoinColumn(name = "Symptom_id",nullable=false))
 	private Set<Symptoms> symptoms;
 
 	

@@ -9,8 +9,11 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dsi.senior.entities.ArchiveSenior;
 import dsi.senior.entities.Menu;
 import dsi.senior.entities.Senior;
+import dsi.senior.repositories.ArchiveDao;
+import dsi.senior.repositories.ArchiveMedsDao;
 import dsi.senior.repositories.MenuDao;
 import dsi.senior.repositories.SeniorDao;
 
@@ -21,10 +24,18 @@ public class SeniorServiceImpl implements ISeniorServiceImpl{
 	SeniorDao seniorDao;
 	@Autowired
 	MenuDao menuDao;
+	@Autowired
+	ArchiveDao archDao;
+	
+	@Autowired
+	ArchiveMedsDao archmedsDao;
+	
+	
 	
 	/********************** ADD method that insert Senior into database***************/
 	@Override
-	public long addSenior(Senior s) {
+	public Senior addSenior(Senior s) {
+	
 		Senior senior =new Senior(
 					s.getName(),
 					s.getLastname(),
@@ -37,11 +48,20 @@ public class SeniorServiceImpl implements ISeniorServiceImpl{
 					s.getCenterOfInterest(),
 					s.getFile());
 		seniorDao.save(senior);
-		return senior.getId();
+		return senior;
 	}
 	/********************** DELETE method that delete Senior from database***************/
 	@Override
 	public void deleteSenior(long id) {
+		Senior senior = seniorDao.findById(id).get();
+		
+		Set<ArchiveSenior> archives = archDao.findArchivesBySenior(senior);
+		
+		archives.forEach(d->{	
+			archmedsDao.deleteArchiveMedicationByArchive(d);
+			archDao.deleteById(d.getIdArch());
+		});
+		
 		seniorDao.deleteById(id);
 		
 	}

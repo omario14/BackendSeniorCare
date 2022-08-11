@@ -37,7 +37,12 @@ public class DAOUser {
 				joinColumns = @JoinColumn(name = "user_id",nullable=false), 
 				inverseJoinColumns = @JoinColumn(name = "role_id",nullable=false))
 	private Set<Role> roles = new HashSet<>();
-	private String fileId;
+	private String mobile;
+	private String gender;
+	private String adress;
+	
+	@OneToOne
+	private FileDB picture;
 	
 	
 	
@@ -48,19 +53,29 @@ public class DAOUser {
 	
 	
 	
-	public DAOUser(String name, String lastName,  String username,
-			 String email,  
-			String fileId,
-			String password) {
+
+
+
+	public DAOUser(String name, String lastName, String username,
+			 String email, String password,
+			String mobile, String gender, String adress, FileDB picture) {
 		super();
-		
 		this.name = name;
 		this.lastName = lastName;
 		this.username = username;
 		this.email = email;
-		this.fileId = fileId;
 		this.password = password;
+		this.mobile = mobile;
+		this.gender = gender;
+		this.adress = adress;
+		this.picture = picture;
 	}
+
+
+
+
+
+
 
 
 	public int getId() {
@@ -130,17 +145,66 @@ public class DAOUser {
 
 
 
-	public String getFileId() {
-		return fileId;
+	public FileDB getPicture() {
+		return picture;
 	}
 
 
 
 
 
-	public void setFileId(String fileId) {
-		this.fileId = fileId;
+	public void setPicture(FileDB picture) {
+		this.picture = picture;
 	}
+
+
+
+
+
+	public String getMobile() {
+		return mobile;
+	}
+
+
+
+
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+
+
+
+
+	public String getGender() {
+		return gender;
+	}
+
+
+
+
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+
+
+
+
+	public String getAdress() {
+		return adress;
+	}
+
+
+
+
+
+	public void setAdress(String adress) {
+		this.adress = adress;
+	}
+	
 	
 	
 }

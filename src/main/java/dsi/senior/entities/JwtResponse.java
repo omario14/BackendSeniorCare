@@ -2,6 +2,7 @@ package dsi.senior.entities;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 public class JwtResponse implements Serializable {
 
@@ -14,18 +15,27 @@ public class JwtResponse implements Serializable {
 	  private String lastName;
 	  private String username;
 	  private String email;
-	  private String fileId;
-	  private List<String> roles;
+	  private String mobile;
+	  private String gender;
+	  private String adress;
+	  private String password;
+	  
+	  private FileDB picture;
+	  private Set<Role> roles;
 
-	public JwtResponse(String accessToken, int id,String name,String lastName, String username, String email,String fileId, List<String> roles) {
+	public JwtResponse(String accessToken, int id,String name,String lastName, String username, String email,String mobile,String gender,String adress,FileDB picture, Set<Role> roles,String password) {
 	    this.token = accessToken;
 	    this.id = id;
 	    this.name=name;
 	    this.lastName=lastName;
 	    this.username = username;
 	    this.email = email;
-	    this.fileId=fileId;
+	    this.mobile=mobile;
+	    this.gender=gender;
+	    this.adress=adress;
+	    this.picture=picture;
 	    this.roles = roles;
+	    this.setPassword(password);
 	  }
 
 
@@ -69,7 +79,7 @@ public class JwtResponse implements Serializable {
 	    this.username = username;
 	  }
 
-	  public List<String> getRoles() {
+	  public Set<Role> getRoles() {
 	    return roles;
 	  }
 
@@ -94,13 +104,53 @@ public class JwtResponse implements Serializable {
 	}
 
 
-	public String getFileId() {
-		return fileId;
+	public FileDB getPicture() {
+		return picture;
 	}
 
 
-	public void setFileId(String fileId) {
-		this.fileId = fileId;
+	public void setPicture(FileDB picture) {
+		this.picture = picture;
+	}
+
+
+	public String getMobile() {
+		return mobile;
+	}
+
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+
+	public String getGender() {
+		return gender;
+	}
+
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+
+	public String getAdress() {
+		return adress;
+	}
+
+
+	public void setAdress(String adress) {
+		this.adress = adress;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	  
 	  

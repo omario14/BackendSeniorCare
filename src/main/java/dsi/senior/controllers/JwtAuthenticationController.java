@@ -71,7 +71,6 @@ public class JwtAuthenticationController {
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -87,8 +86,12 @@ public class JwtAuthenticationController {
 												 userDetails.getLastName(),
 												 userDetails.getUsername(),
 												 userDetails.getEmail(), 
-												 userDetails.getFileId(),
-												 roles));
+												 userDetails.getMobile(), 
+												 userDetails.getGender(),
+												 userDetails.getAdress(),
+												 userDetails.getPicture(),
+												 userDetails.getRoles(),
+												 userDetails.getPassword()));
 	}
 
 	
@@ -113,9 +116,13 @@ public class JwtAuthenticationController {
 	    		signUpRequest.getLastName(),	    		
 	    		signUpRequest.getUsername(), 
 	               signUpRequest.getEmail(),
-	               signUpRequest.getFileId(),
-	               encoder.encode(signUpRequest.getPassword()));
-	    System.out.println(signUpRequest);
+	               encoder.encode(signUpRequest.getPassword()),
+	               signUpRequest.getMobile(),
+	               signUpRequest.getGender(),
+	               signUpRequest.getAdress(),
+	               signUpRequest.getPicture()
+	               );
+	    System.out.println(signUpRequest.toString());
 
 	    Set<String> strRoles = signUpRequest.getRole();
 	    System.out.println("this is the set of rolesaaaaaaaaaaa "+strRoles);
@@ -179,14 +186,35 @@ public class JwtAuthenticationController {
 		return password;
 	}
 	@Operation(security = {@SecurityRequirement(name = "bearer-key")})
-	@PutMapping("/update-user")
+	@PutMapping("/update-user/{id}")
   	@ResponseBody
-  	public ResponseEntity<String> updateRentAnnonce(@RequestBody DAOUser user) {
+  	public ResponseEntity<String> updateUser(@PathVariable("id") int id, @RequestBody DAOUser user) {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = userDetails.getUsername();
-		userDetailsService.UpdateAccountUserByUsername(username, user);
-  		return new ResponseEntity<String>("Piece updated successfully",HttpStatus.OK);
+		userDetailsService.UpdateAccountUserByUsername(id, user);
+  		return new ResponseEntity<String>("User updated successfully",HttpStatus.OK);
   		
+  	}
+	@Operation(security = {@SecurityRequirement(name = "bearer-key")})
+	@PutMapping("/update-user-profile/{id}/{jwtokl}")
+  	@ResponseBody
+  	public ResponseEntity<?> updateUserProfile(@PathVariable("id") int id,@PathVariable("jwtokl") String jwtokl, @RequestBody DAOUser user) throws Exception {
+		DAOUser u =userDetailsService.UpdateAccountUserByUsername(id, user);
+		
+		
+		return ResponseEntity.ok(new JwtResponse(jwtokl,
+				 u.getId(),
+				 u.getName(),
+				 u.getLastName(),
+				 u.getUsername(),
+				 u.getEmail(), 
+				 u.getMobile(), 
+				 u.getGender(),
+				 u.getAdress(),
+				 u.getPicture(),
+				 u.getRoles(),
+				 u.getPassword()));
+
   	}
 	@CrossOrigin(origins = {"http://localhost:4200"} ,methods = {RequestMethod.GET})
 	@Operation(security = {@SecurityRequirement(name = "bearer-key")})
@@ -210,6 +238,12 @@ public class JwtAuthenticationController {
   	    return new ResponseEntity<String>("Piece deleted successfully",HttpStatus.ACCEPTED);
   		
   	}
+	@GetMapping(value = "/user-numbers")
+	@Operation(security = {@SecurityRequirement(name = "bearer-key")})
+	@ResponseBody
+	public long userNumber() {
+		return userDetailsService.userCount();
+	}
 	
 	
 

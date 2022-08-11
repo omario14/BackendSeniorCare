@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import dsi.senior.entities.Medication;
 import dsi.senior.entities.Senior;
+import dsi.senior.repositories.ArchiveMedsDao;
 import dsi.senior.repositories.MedicationDao;
 import dsi.senior.repositories.SeniorDao;
 
@@ -18,6 +19,9 @@ public class MedicationServiceImpl implements IMedicationService {
 	
 	@Autowired
 	MedicationDao medDao;
+	
+	@Autowired
+	ArchiveMedsDao archiveMedDao;
 	
 
 	@Override
@@ -44,7 +48,10 @@ public class MedicationServiceImpl implements IMedicationService {
 
 	@Override
 	public void deleteMedication(long idmed) {
+		Medication med= medDao.findById(idmed).get();
+		 archiveMedDao.deleteNombreEmployeJPQL(med);
 		medDao.deleteById(idmed);
+		
 		
 	}
 
