@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -27,7 +26,9 @@ public class Illnesses implements Serializable {
 	private long illness_id ;//12
 	private String label;//Airborne Allergens
 	private String category;// Allergie
-	
+	private long rate;
+	private String description;
+	private String treatment;
 	@JsonManagedReference
 	@ManyToMany(fetch = FetchType.LAZY)
 			@JoinTable(	name = "Ilness_Symps", 
@@ -40,11 +41,12 @@ public class Illnesses implements Serializable {
 		
 	}
 	
-	public Illnesses(String label, String category, Set<Symptoms> symptoms) {
+	public Illnesses(String label, String category, Set<Symptoms> symptoms,long rate) {
 		super();
 		this.label = label;
 		this.category = category;
 		this.symptoms = symptoms;
+		this.rate=rate;
 	}
 
 	public long getId() {
@@ -77,6 +79,30 @@ public class Illnesses implements Serializable {
 
 	public void setSymptoms(Set<Symptoms> symptoms) {
 		this.symptoms = symptoms;
+	}
+
+	public long getRate() {
+		return rate;
+	}
+
+	public void setRate(long rate) {
+		this.rate = rate;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getTreatment() {
+		return treatment;
+	}
+
+	public void setTreatment(String treatment) {
+		this.treatment = treatment;
 	}
 	
 	

@@ -65,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.cors();
 		httpSecurity.csrf().disable()
 				// dont authenticate this particular request
-				.authorizeRequests().antMatchers("/authenticate", "/signup","/addabc/**","/files/**","/retrieves-all-role", "/v3/api-docs/**","/swagger-ui/**","/configuration/ui","/swagger-resources/**","/configuration/security","/addSenior").permitAll().anyRequest().
+				.authorizeRequests().antMatchers("/authenticate", "/signup","/addabc/**","/updateSymptoms/**","/files/**","/retrieves-all-role", "/v3/api-docs/**","/swagger-ui/**","/configuration/ui","/swagger-resources/**","/configuration/security","/addSenior").permitAll().anyRequest().
 				// all other requests need to be authenticated
 				authenticated().and().
 				// make sure we use stateless session; session won't be used to
@@ -86,6 +86,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	                                   "/webjars/**",
 	                                   "/addabc/**",
 	                                   "/files/**",
+	                                   "/updateSymptoms/**",
 	                                   "/addSenior");
 	    }
 	 @Bean

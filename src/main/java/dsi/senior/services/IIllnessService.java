@@ -10,6 +10,7 @@ public interface IIllnessService {
 	public List<Illnesses> retreiveAllIllnesses ();
 	public Illnesses retrieveIllnessById (long id);
 	public Illnesses findIllnessByLabel(String label);	
+	public List<Illnesses>  checkerSymptom();	
 
 
 }

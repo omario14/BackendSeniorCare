@@ -2,7 +2,7 @@ package dsi.senior.repositories;
 
 import java.util.List;
 
-import org.springframework.data.jdbc.repository.query.Query;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -18,7 +18,11 @@ public interface SymptomsDao extends CrudRepository<Symptoms, Long> {
 	public Symptoms findSymptomByLabel(@Param("label")String label);
 	
 	/**********************************Find symptom bodyParts***************************/
-	@Query("SELECT symp from Symptoms symp WHERE symp.body_id =:bodyPart")
+	@Query("SELECT symp from Symptoms symp WHERE symp.bodyParts =:bodyPart")
 	public List<Symptoms> findSymptomByBodyParts(@Param("bodyPart")BodyParts bodyPart);
+	
+	/**********************************Find symptom ByEtat***************************/
+	@Query("SELECT symp from Symptoms symp WHERE symp.etat =true")
+	public List<Symptoms> findSymptomByEtat();
 
 }

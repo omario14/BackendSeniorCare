@@ -49,4 +49,15 @@ public class SymptomServiceImpl implements ISymptomsService {
 		return aa.findSymptomByBodyParts(bodyPart);
 	}
 
+	@Override
+	public Symptoms updateSymptoms(long symp) {
+		Symptoms symptoms  = aa.findById(symp).get();
+		System.out.println("symptoms"+symptoms);
+		symptoms.setEtat(true);
+			aa.save(symptoms);
+		
+		
+		return symptoms;
+	}
+
 }

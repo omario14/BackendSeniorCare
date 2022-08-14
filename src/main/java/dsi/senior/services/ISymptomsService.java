@@ -12,6 +12,7 @@ public interface ISymptomsService {
 	public Symptoms retrieveSymptomById (long id);
 	public Symptoms findSymptomByLabel(String label);	
 	public BodyParts findBodyPartById (long body_id);
+	public Symptoms updateSymptoms(long symp);
 	public List<Symptoms> findSymptomsByPartId (long body_id);
 
 }

@@ -30,7 +30,7 @@ public class ArchiveMedController {
   	public ResponseEntity<String> addArchMed(@PathVariable("idArch")String idArch,@PathVariable("idMed")long idMed,@PathVariable("done")boolean done) {
 		System.out.println("----------------------"+idMed);
   		archmedService.ajouterArchiveMedic(idArch,idMed,done);
-  	    return new ResponseEntity<String>("addabc updated successfully",HttpStatus.OK);
+  	    return new ResponseEntity<String>("add Medication to archive updated successfully",HttpStatus.OK);
   		
   	}
   	 //creating a get mapping that retrieves all categories from database.

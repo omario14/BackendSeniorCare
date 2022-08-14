@@ -24,10 +24,7 @@ public class Symptoms implements Serializable{
 	private long id ;
 	private String label;
 	private boolean etat;
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name="illness_id",nullable = false)
-	private Illnesses illnesses;
+	
 	
 	@JsonBackReference
 	@ManyToOne
@@ -68,24 +65,28 @@ public class Symptoms implements Serializable{
 	}
 
 
-	public boolean isCondition() {
+	public boolean isEtat() {
 		return etat;
 	}
 
 
-	public void setCondition(boolean etat) {
+	public void setEtat(boolean etat) {
 		this.etat = etat;
 	}
 
 
-	public Illnesses getIllnesses() {
-		return illnesses;
+	public BodyParts getBodyParts() {
+		return bodyParts;
 	}
 
 
-	public void setIllnesses(Illnesses illnesses) {
-		this.illnesses = illnesses;
+	public void setBodyParts(BodyParts bodyParts) {
+		this.bodyParts = bodyParts;
 	}
+
+
+	
+
 	
 	
 	

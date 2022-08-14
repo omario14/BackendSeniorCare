@@ -16,39 +16,46 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 public class IllnessController {
-	
+
 	@Autowired
 	private IIllnessService iIllnessService;
-	
+
 	// http://localhost:8081/api/getAllSymptoms
-  	@GetMapping("/retrieveAllIllnesses")
-  	@ResponseBody
-  	@Operation(security = {@SecurityRequirement(name = "bearer-key")})
-  	public List<Illnesses>  retrieveAllIllnesses() {
-  		List<Illnesses> illness = new ArrayList<>();
-  		for(Illnesses ill : iIllnessService.retreiveAllIllnesses()) {
-  			illness.add(ill);
-  			
-  		}
-  		
-  		return illness;
-  	}
-  	
-  	// http://localhost:8081/api/findIllnessById
-  	 @GetMapping("/findIllnessById/{idIllness}")
-  	@ResponseBody
- 	 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
-  		public Illnesses findIllnessById(@PathVariable("idIllness")int idIllness) {
-  			return iIllnessService.retrieveIllnessById(idIllness);
-  		}
-  	 
-  	 // http://localhost:8081/api/findSymptomByLabel
-		 @GetMapping("/findIllnessByLabel/{label}")
-		@ResponseBody
-	 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
-			public Illnesses findIllnessByLabel(@PathVariable("label")String label) {
-				return iIllnessService.findIllnessByLabel(label);
-			}
-		 
+	@GetMapping("/retrieveAllIllnesses")
+	@ResponseBody
+	@Operation(security = { @SecurityRequirement(name = "bearer-key") })
+	public List<Illnesses> retrieveAllIllnesses() {
+		List<Illnesses> illness = new ArrayList<>();
+		for (Illnesses ill : iIllnessService.retreiveAllIllnesses()) {
+			illness.add(ill);
+
+		}
+
+		return illness;
+	}
+
+	// http://localhost:8081/api/findIllnessById
+	@GetMapping("/findIllnessById/{idIllness}")
+	@ResponseBody
+	@Operation(security = { @SecurityRequirement(name = "bearer-key") })
+	public Illnesses findIllnessById(@PathVariable("idIllness") int idIllness) {
+		return iIllnessService.retrieveIllnessById(idIllness);
+	}
+
+	// http://localhost:8081/api/findSymptomByLabel
+	@GetMapping("/findIllnessByLabel/{label}")
+	@ResponseBody
+	@Operation(security = { @SecurityRequirement(name = "bearer-key") })
+	public Illnesses findIllnessByLabel(@PathVariable("label") String label) {
+		return iIllnessService.findIllnessByLabel(label);
+	}
+
+	// http://localhost:8081/api/checkIllnes
+	@GetMapping("/checkIllnes")
+	@ResponseBody
+	@Operation(security = { @SecurityRequirement(name = "bearer-key") })
+	public List<Illnesses> checkerSymptom() {
+		return iIllnessService.checkerSymptom();
+	}
 
 }

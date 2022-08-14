@@ -51,5 +51,7 @@ public class ArchiveMedServiceImpl {
 		return archiveMedDao.getarchMedsByIdArch(archive);
 	}
 	
+	
+	
 
 }
