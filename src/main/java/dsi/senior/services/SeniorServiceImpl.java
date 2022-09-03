@@ -43,7 +43,7 @@ public class SeniorServiceImpl implements ISeniorServiceImpl{
 					s.getSex(),
 					s.getCin(),
 					s.getTelephone(),
-					s.getResidance(),
+					s.getAdress(),
 					s.getFamillySituation(),
 					s.getCenterOfInterest(),
 					s.getFile());

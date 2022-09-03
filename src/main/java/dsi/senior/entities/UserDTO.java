@@ -13,6 +13,8 @@ public class UserDTO implements Serializable {
     private String password;
     private String email ;
     private String fileId;
+    
+    private Boolean connected;
 
 
     public String getEmail() {
@@ -67,6 +69,14 @@ public class UserDTO implements Serializable {
 
 	public void setFileId(String fileId) {
 		this.fileId = fileId;
+	}
+
+	public Boolean getConnected() {
+		return connected;
+	}
+
+	public void setConnected(Boolean connected) {
+		this.connected = connected;
 	}
     
     

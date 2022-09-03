@@ -40,6 +40,8 @@ public class DAOUser {
 	private String mobile;
 	private String gender;
 	private String adress;
+	private Boolean connected=false;
+	
 	
 	@OneToOne
 	private FileDB picture;
@@ -203,6 +205,28 @@ public class DAOUser {
 
 	public void setAdress(String adress) {
 		this.adress = adress;
+	}
+
+
+
+
+
+
+
+
+	public Boolean getConnected() {
+		return connected;
+	}
+
+
+
+
+
+
+
+
+	public void setConnected(Boolean connected) {
+		this.connected = connected;
 	}
 	
 	

@@ -19,12 +19,15 @@ public class JwtResponse implements Serializable {
 	  private String gender;
 	  private String adress;
 	  private String password;
+	  private long expiresIn;
 	  
 	  private FileDB picture;
 	  private Set<Role> roles;
+	  private Boolean connected;
 
-	public JwtResponse(String accessToken, int id,String name,String lastName, String username, String email,String mobile,String gender,String adress,FileDB picture, Set<Role> roles,String password) {
-	    this.token = accessToken;
+	public JwtResponse(long expiresIn ,String accessToken, int id,String name,String lastName, String username, String email,String mobile,String gender,String adress,FileDB picture, Set<Role> roles,Boolean connected,String password) {
+	    this.expiresIn=expiresIn;
+		this.token = accessToken;
 	    this.id = id;
 	    this.name=name;
 	    this.lastName=lastName;
@@ -35,8 +38,25 @@ public class JwtResponse implements Serializable {
 	    this.adress=adress;
 	    this.picture=picture;
 	    this.roles = roles;
+	    this.connected=connected;
 	    this.setPassword(password);
 	  }
+
+
+	
+	
+	public long getExpiresIn() {
+		return expiresIn;
+	}
+
+
+
+
+	public void setExpiresIn(long expiresIn) {
+		this.expiresIn = expiresIn;
+	}
+
+
 
 
 	public String getAccessToken() {
@@ -151,6 +171,20 @@ public class JwtResponse implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+
+
+
+	public Boolean getConnected() {
+		return connected;
+	}
+
+
+
+
+	public void setConnected(Boolean connected) {
+		this.connected = connected;
 	}
 	  
 	  

@@ -43,6 +43,11 @@ public class IllnessServiceImpl implements IIllnessService{
 	}
 	@Override
 	public List<Illnesses> checkerSymptom () {
+		List <Illnesses> il= (List<Illnesses>) illnessDao.findAll();
+		il.forEach(i->{
+			i.setRate(0);
+		});
+		
 		List<Symptoms> symptoms = sympDao.findSymptomByEtat();
 		
 		symptoms.forEach(s->{
@@ -51,6 +56,7 @@ public class IllnessServiceImpl implements IIllnessService{
 				i.setRate(i.getRate()+1);
 				illnessDao.save(i);
 			});
+			s.setEtat(false);
 		});
 		return (List<Illnesses>) illnessDao.findAll();
 		

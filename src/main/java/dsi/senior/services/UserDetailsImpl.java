@@ -34,12 +34,13 @@ public class UserDetailsImpl implements UserDetails {
   private String adress;
   private FileDB picture;
   private Set<Role> roles;
+  private Boolean connected;
   @JsonIgnore
   private String password;
 
   private Collection<? extends GrantedAuthority> authorities;
 
-  public UserDetailsImpl(int id,String name,String lastName, String username, String email,String mobile,String gender,String adress,FileDB picture, String password,Set<Role> roles,
+  public UserDetailsImpl(int id,String name,String lastName, String username, String email,String mobile,String gender,String adress,FileDB picture,Boolean connected, String password,Set<Role> roles,
       Collection<? extends GrantedAuthority> authorities) {
     this.id = id;
     this.name=name;
@@ -50,6 +51,7 @@ public class UserDetailsImpl implements UserDetails {
     this.gender=gender;
     this.adress=adress;
     this.picture=picture;
+    this.connected=connected;
     this.password = password;
     this.roles=roles;
     this.authorities = authorities;
@@ -69,6 +71,7 @@ System.out.println("TEST 1"+new UserDetailsImpl(
 		        user.getGender(),
 		        user.getAdress(),
 		        user.getPicture(),
+		        user.getConnected(),
 		        user.getPassword(), 
 		        user.getRoles(),
 		        authorities));
@@ -82,6 +85,7 @@ System.out.println("TEST 1"+new UserDetailsImpl(
 			        user.getGender(),
 			        user.getAdress(),
 			        user.getPicture(),
+			        user.getConnected(),
 			        user.getPassword(), 
 			        user.getRoles(),
 		        authorities);
@@ -216,4 +220,12 @@ public String getEmail() {
     UserDetailsImpl user = (UserDetailsImpl) o;
     return Objects.equals(id, user.id);
   }
+
+public Boolean getConnected() {
+	return connected;
+}
+
+public void setConnected(Boolean connected) {
+	this.connected = connected;
+}
 }

@@ -2,6 +2,7 @@ package dsi.senior.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dsi.senior.entities.Symptoms;
 import dsi.senior.services.ISymptomsService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
@@ -60,11 +62,11 @@ public class SymptomController {
 	}
 
 	// http://localhost:8081/api/updateSenior
-	@PutMapping("/updateSymptoms/{symptomId}")
+	@PutMapping("/updateSymptoms/{symptomsIDs}")
 	@ResponseBody
-	public Symptoms updateSymptoms(@PathVariable("symptomId") long symptomId) {
-		System.out.println("symptoms"+symptomId);
-		return iSymptomsService.updateSymptoms(symptomId);
+	public List<Symptoms> updateSymptoms(@PathVariable("symptomsIDs") List<String> symptomsIDs) {
+		System.out.println("Symptomsiii"+symptomsIDs);
+		return iSymptomsService.updateSymptoms(symptomsIDs);
 
 	}
 

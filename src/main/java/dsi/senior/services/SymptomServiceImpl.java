@@ -1,6 +1,7 @@
 package dsi.senior.services;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,14 +51,21 @@ public class SymptomServiceImpl implements ISymptomsService {
 	}
 
 	@Override
-	public Symptoms updateSymptoms(long symp) {
-		Symptoms symptoms  = aa.findById(symp).get();
-		System.out.println("symptoms"+symptoms);
-		symptoms.setEtat(true);
-			aa.save(symptoms);
+	public List<Symptoms> updateSymptoms(List<String> symptomsIDs) {
+		List<Symptoms> allSymptoms= (List<Symptoms>) aa.findAll();
+				allSymptoms.forEach(z->{
+			z.setEtat(false);
+		});
+				
+				symptomsIDs.forEach(symp->{
+			Symptoms s = aa.findById(Long.parseLong(symp)).get();
+			s.setEtat(true);
+			aa.save(s);
+		});
 		
 		
-		return symptoms;
+		
+		return (List<Symptoms>) aa.findAll();
 	}
 
 }

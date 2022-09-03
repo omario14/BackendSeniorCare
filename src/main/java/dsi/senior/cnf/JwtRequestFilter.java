@@ -15,6 +15,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import dsi.senior.entities.DAOUser;
+import dsi.senior.repositories.UserDao;
 import dsi.senior.services.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 
@@ -26,6 +28,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+	
+	@Autowired
+	private UserDao userdao;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -39,11 +44,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		// only the Token
 		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
 			jwtToken = requestTokenHeader.substring(7);
+			String usame = jwtTokenUtil.getUsernameFromToken(jwtToken);
+			DAOUser usr = userdao.findByUsername(usame);
 			try {
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 			} catch (IllegalArgumentException e) {
 				System.out.println("Unable to get JWT Token");
 			} catch (ExpiredJwtException e) {
+				usr.setConnected(false);
+				userdao.save(usr);
 				System.out.println("JWT Token has expired");
 			}
 		} else {

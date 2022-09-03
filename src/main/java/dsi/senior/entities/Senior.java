@@ -38,7 +38,7 @@ public class Senior implements Serializable{
 	private String sex;
 	private String cin;
 	private String telephone;
-	private String residance;
+	private String adress;
 	@Column(name="fam_situation")
 	private String famillySituation;
 	@Column(name="interests")
@@ -69,7 +69,7 @@ public class Senior implements Serializable{
 
 
 	public Senior(String name, String lastname, String dateOfBirth, String sex, String cin, String telephone,
-			String residance, String famillySituation, String centerOfInterest ,String fileid) {
+			String adress, String famillySituation, String centerOfInterest ,String fileid) {
 		super();
 		this.name = name;
 		this.lastname = lastname;
@@ -77,7 +77,7 @@ public class Senior implements Serializable{
 		this.sex = sex;
 		this.cin = cin;
 		this.telephone = telephone;
-		this.residance = residance;
+		this.adress = adress;
 		this.famillySituation = famillySituation;
 		this.centerOfInterest = centerOfInterest;
 		this.fileId = fileid;
@@ -120,7 +120,7 @@ public class Senior implements Serializable{
 
 
 	public Senior(long id, String name, String lastname, String dateOfBirth, String sex, String cin, String telephone,
-			String residance, String famillySituation, String centerOfInterest, String fileId, boolean checkedBreakfast,
+			String adress, String famillySituation, String centerOfInterest, String fileId, boolean checkedBreakfast,
 			boolean checkedLunch, boolean checkedDinner, Set<Menu> menus) {
 		super();
 		this.id = id;
@@ -130,7 +130,7 @@ public class Senior implements Serializable{
 		this.sex = sex;
 		this.cin = cin;
 		this.telephone = telephone;
-		this.residance = residance;
+		this.adress = adress;
 		this.famillySituation = famillySituation;
 		this.centerOfInterest = centerOfInterest;
 		this.fileId = fileId;
@@ -216,13 +216,13 @@ public class Senior implements Serializable{
 	}
 
 
-	public String getResidance() {
-		return residance;
+	public String getAdress() {
+		return adress;
 	}
 
 
-	public void setResidance(String residance) {
-		this.residance = residance;
+	public void setAdress(String adress) {
+		this.adress = adress;
 	}
 
 

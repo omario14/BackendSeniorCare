@@ -1,13 +1,17 @@
 package dsi.senior.controllers;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,9 +43,11 @@ import dsi.senior.message.ResponseMessage;
 import dsi.senior.repositories.RoleDao;
 import dsi.senior.repositories.UserDao;
 import dsi.senior.services.JwtUserDetailsService;
+import dsi.senior.services.MailService;
 import dsi.senior.services.UserDetailsImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import request.MailRequest;
 import request.SignupRequest;
 
 @CrossOrigin
@@ -65,22 +71,28 @@ public class JwtAuthenticationController {
 	
 	@Autowired
 	PasswordEncoder encoder;
-	
-
+	@Autowired
+	MailService mailservice;
+ 
 	
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtTokenUtil.generateToken(authentication);
-		
+		DAOUser userr= userDao.findByUsername(authenticationRequest.getUsername());
+		userr.setConnected(true);
+		userDao.save(userr);
+		long expiresIn = (jwtTokenUtil.getExpirationDateFromToken(jwt).getTime()-(System.currentTimeMillis()));
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
-		return ResponseEntity.ok(new JwtResponse(jwt,
+		return ResponseEntity.ok(new JwtResponse(expiresIn,
+												 jwt,
 												 userDetails.getId(),
 												 userDetails.getName(),
 												 userDetails.getLastName(),
@@ -91,6 +103,7 @@ public class JwtAuthenticationController {
 												 userDetails.getAdress(),
 												 userDetails.getPicture(),
 												 userDetails.getRoles(),
+												 userr.getConnected(),
 												 userDetails.getPassword()));
 	}
 
@@ -157,7 +170,14 @@ public class JwtAuthenticationController {
 
 	    user.setRoles(roles);
 	    userDao.save(user);
-
+	    MailRequest request = new MailRequest(signUpRequest.getUsername(),signUpRequest.getEmail(),"omar.benamor@esprit.tn","Welcome");
+	    
+	    Map<String, Object> model = new HashMap<>();
+		model.put("Name", request.getName());
+		model.put("body", signUpRequest.getPassword());
+		model.put("firstName", signUpRequest.getName());
+	
+	    mailservice.sendEmail(request, model);
 	    return ResponseEntity.ok(new ResponseMessage("User registered successfully!"));
 	  }
 
@@ -200,9 +220,10 @@ public class JwtAuthenticationController {
   	@ResponseBody
   	public ResponseEntity<?> updateUserProfile(@PathVariable("id") int id,@PathVariable("jwtokl") String jwtokl, @RequestBody DAOUser user) throws Exception {
 		DAOUser u =userDetailsService.UpdateAccountUserByUsername(id, user);
+		long expiresIn = (jwtTokenUtil.getExpirationDateFromToken(jwtokl).getTime()-(System.currentTimeMillis()));
 		
-		
-		return ResponseEntity.ok(new JwtResponse(jwtokl,
+		return ResponseEntity.ok(new JwtResponse(expiresIn,
+				jwtokl,
 				 u.getId(),
 				 u.getName(),
 				 u.getLastName(),
@@ -213,6 +234,7 @@ public class JwtAuthenticationController {
 				 u.getAdress(),
 				 u.getPicture(),
 				 u.getRoles(),
+				 u.getConnected(),
 				 u.getPassword()));
 
   	}

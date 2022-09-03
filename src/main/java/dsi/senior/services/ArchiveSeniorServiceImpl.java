@@ -1,5 +1,7 @@
 package dsi.senior.services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 
@@ -52,6 +54,20 @@ public class ArchiveSeniorServiceImpl implements IArchiveSeniorService {
 	@Override
 	public Set<ArchiveSenior> getArchiveSeniorBySenior(long idSenior) {
 		Senior s = seniorDao.findById(idSenior).get();
+		LocalDate dateObj = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String date = dateObj.format(formatter);
+        String idA="arch-"+idSenior+"-"+date;
+        if ( !archDao.existsById(idA)) {
+        	ArchiveSenior arch = new ArchiveSenior();
+        	
+        	arch.setIdArch("arch-"+idSenior+"-"+date);
+        	arch.setDate(date);
+        	arch.setSenior(s);
+        	archDao.save(arch);
+        	
+        }
+        
 		return archDao.findArchivesBySenior(s);
 		 
 	}
