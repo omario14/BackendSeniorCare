@@ -1,6 +1,7 @@
 package dsi.senior.controllers;
 
 import java.io.File;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -176,8 +177,10 @@ public class JwtAuthenticationController {
 		model.put("Name", request.getName());
 		model.put("body", signUpRequest.getPassword());
 		model.put("firstName", signUpRequest.getName());
+		
 	
 	    mailservice.sendEmail(request, model);
+	   
 	    return ResponseEntity.ok(new ResponseMessage("User registered successfully!"));
 	  }
 

@@ -6,7 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -19,11 +21,23 @@ public class Menu {
 	private long id;
 	@JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	private String date;
-	@OneToMany
+	@ManyToMany
+	@JoinTable(
+			  name = "breakfastMenu", 
+			  joinColumns = @JoinColumn(name = "menu_id"), 
+			  inverseJoinColumns = @JoinColumn(name = "meal_id"))
 	private Set<Meal> breakfastMenu;
-	@OneToMany
+	@ManyToMany
+	@JoinTable(
+			  name = "lunchMenu", 
+			  joinColumns = @JoinColumn(name = "menu_id"), 
+			  inverseJoinColumns = @JoinColumn(name = "meal_id"))
 	private Set<Meal> lunchMenu;
-	@OneToMany
+	@ManyToMany
+	@JoinTable(
+			  name = "dinnerMenu", 
+			  joinColumns = @JoinColumn(name = "menu_id"), 
+			  inverseJoinColumns = @JoinColumn(name = "meal_id"))
 	private Set<Meal> dinnerMenu;
 	
 	public Menu() {
