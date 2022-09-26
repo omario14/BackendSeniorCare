@@ -35,6 +35,16 @@ public class Calendar implements Serializable {
 
 	}
 
+	public Calendar(String id,String name, String color, String type, String date,Senior senior) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.color = color;
+		this.type = type;
+		this.date = date;
+		this.senior = senior;
+	}
+	
 	public Calendar(String name, String color, String type, String date,Senior senior) {
 		super();
 		this.name = name;
@@ -42,6 +52,21 @@ public class Calendar implements Serializable {
 		this.type = type;
 		this.date = date;
 		this.senior = senior;
+	}
+	public Calendar(String id,String name, String color, String type, String date) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.color = color;
+		this.type = type;
+		this.date = date;
+	}
+	public Calendar(String name, String color, String type, String date) {
+		super();
+		this.name = name;
+		this.color = color;
+		this.type = type;
+		this.date = date;
 	}
 
 	public String getId() {

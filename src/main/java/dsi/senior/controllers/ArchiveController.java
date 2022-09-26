@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dsi.senior.entities.ArchiveSenior;
 import dsi.senior.entities.Calendar;
+import dsi.senior.repositories.CalendarDao;
 import dsi.senior.services.ArchiveMedServiceImpl;
 import dsi.senior.services.IArchiveSeniorService;
-import dsi.senior.services.ICalendarService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
@@ -27,8 +27,7 @@ public class ArchiveController {
 	IArchiveSeniorService archiveServices;
 	@Autowired
 	ArchiveMedServiceImpl archmedService;
-	@Autowired
-	ICalendarService calendarService;
+	
 		
 		// http://localhost:8081/api/updateArchive
 	  	@PutMapping("/updateArchive")
@@ -37,8 +36,8 @@ public class ArchiveController {
 	  	public ResponseEntity<String> updateArchive(
 	  		@RequestBody ArchiveSenior sa) {
 	  		archiveServices.updateArchive(sa);
-	  		Calendar calendar = new Calendar("food","#00bcd4","food",sa.getDate(),sa.getSenior());
-	  		calendarService.addToCalendar(calendar);
+	  		 
+	        
 	  	    return new ResponseEntity<String>("Archive updated successfully",HttpStatus.OK);
 	  		
 	  	}

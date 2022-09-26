@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dsi.senior.entities.ArchiveSenior;
+import dsi.senior.entities.Calendar;
 import dsi.senior.entities.Senior;
 import dsi.senior.repositories.ArchiveDao;
+import dsi.senior.repositories.CalendarDao;
 import dsi.senior.repositories.SeniorDao;
 
 @Service
@@ -21,6 +23,8 @@ public class ArchiveSeniorServiceImpl implements IArchiveSeniorService {
 	ArchiveDao archDao;
 	@Autowired
 	SeniorDao seniorDao;
+	@Autowired
+	CalendarDao calendarDao;
 	
 	@Override
 	public void addArchive(ArchiveSenior arch) {
@@ -30,13 +34,12 @@ public class ArchiveSeniorServiceImpl implements IArchiveSeniorService {
 
 	@Override
 	public void updateArchive(ArchiveSenior arch) {
-		
-	 	    archDao.save(arch);
-	   
-	   
-	    
-	    
-	    
+		 if ( !archDao.existsById(arch.getIdArch())) {
+			 Calendar calendar = new Calendar("food","#565656","food",arch.getDate(),arch.getSenior());
+		  		calendarDao.save(calendar);
+		 }
+		  		archDao.save(arch);
+
 		
 	}
 
@@ -65,6 +68,8 @@ public class ArchiveSeniorServiceImpl implements IArchiveSeniorService {
         	arch.setDate(date);
         	arch.setSenior(s);
         	archDao.save(arch);
+        	Calendar calendar = new Calendar("food","#565656","food",arch.getDate(),arch.getSenior());
+	  		calendarDao.save(calendar);
         	
         }
         

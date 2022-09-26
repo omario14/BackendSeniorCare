@@ -106,7 +106,6 @@ public class SeniorController {
 		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
  		public ResponseEntity<?> deleteByIds(@PathVariable("ids") List<String> ids){
  			 ids.forEach(d->{
- 				 System.out.println(" hedhi id array list " +d);
  				 if(seniorServiceImpl.existByid(Long.parseLong(d))){
  					seniorServiceImpl.deleteSenior(Long.parseLong(d));
  				 }

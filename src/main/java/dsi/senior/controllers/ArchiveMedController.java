@@ -28,7 +28,7 @@ public class ArchiveMedController {
  	@PutMapping("/addabc/{idArch}/{idMed}/{done}")
   	@ResponseBody
   	public ResponseEntity<String> addArchMed(@PathVariable("idArch")String idArch,@PathVariable("idMed")long idMed,@PathVariable("done")boolean done) {
-		System.out.println("----------------------"+idMed);
+		
   		archmedService.ajouterArchiveMedic(idArch,idMed,done);
   	    return new ResponseEntity<String>("add Medication to archive updated successfully",HttpStatus.OK);
   		

@@ -17,7 +17,10 @@ public class MenuServiceImpl  {
 	
 	
 	public void addToMenu(Menu m) {
-		menurepository.save(m);
+		if (menurepository.findMenuByDate(m.getDate())==null) {
+			menurepository.save(m);
+		}
+		
 		
 	}
 	
@@ -31,11 +34,15 @@ public class MenuServiceImpl  {
 	
 	public void updateMenu(Menu m,long idMenu) {
 		Menu menu= menurepository.findById(idMenu).get();
-		 System.out.println("this is menu"+m.toString());
+		 
 		menu.setBreakfastMenu(m.getBreakfastMenu());
 		menurepository.save(menu);
 		 
 	
+	}
+	public Menu getMenuByDate(String date){
+		
+		return  menurepository.findMenuByDate(date.substring(1, 11));
 	}
 	
 	

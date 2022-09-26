@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import dsi.senior.entities.Calendar;
 import dsi.senior.entities.Meal;
 import dsi.senior.entities.Menu;
+import dsi.senior.repositories.CalendarDao;
 import dsi.senior.repositories.MealDAO;
 import dsi.senior.services.MealServiceImpl;
 import dsi.senior.services.MenuServiceImpl;
@@ -32,6 +34,8 @@ public class MenuController {
 	MealServiceImpl mealservice;
 	@Autowired
 	MealDAO mealrepository;
+	@Autowired
+	CalendarDao calendarDao;
 
 	// creating post mapping method that insert Menu into database
 	@PostMapping("/add-Menu")
@@ -40,8 +44,7 @@ public class MenuController {
 		Set<Long> breakFastMenuIds = m.getBreakfastMenu();
 		Set<Long> lunchMenuIds = m.getLunchMenu();
 		Set<Long> dinnerMenuIds = m.getDinnerMenu();
-		
-		
+
 		System.out.println("from frontEnd" + breakFastMenuIds);
 		Set<Meal> breakFastMenu = new HashSet<>();
 		Set<Meal> lunchMenu = new HashSet<>();
@@ -59,15 +62,12 @@ public class MenuController {
 			Meal meal = mealservice.getMealById(mealId);
 			dinnerMenu.add(meal);
 		});
-		
-		Menu menu=new Menu(
-				m.getDate(),
-				breakFastMenu,
-				lunchMenu,
-				dinnerMenu);
+
+		Menu menu = new Menu(m.getDate(), breakFastMenu, lunchMenu, dinnerMenu);
 		menuservice.addToMenu(menu);
-		 mealrepository.mettreaZeroChecked();
-		    
+		mealrepository.mettreaZeroChecked();
+		Calendar calendar = new Calendar("menu", "#FFB85F", "all", menu.getDate());
+		calendarDao.save(calendar);
 		return menuservice.getMenus();
 	}
 
@@ -93,5 +93,14 @@ public class MenuController {
 	public void updateMenu(@RequestBody Menu Menu, @PathVariable("idMenu") int idMenu) {
 		menuservice.updateMenu(Menu, idMenu);
 
+	}
+
+	// creating a get mapping that retrieves menu by date from the database
+	@GetMapping("/get-Menu-ByDate/{date}")
+	@Operation(security = { @SecurityRequirement(name = "bearer-key") })
+	@ResponseBody
+	public Menu getMenuByDate(@PathVariable("date") String date) {
+		System.out.println(menuservice.getMenuByDate(date));
+		return menuservice.getMenuByDate(date);
 	}
 }
