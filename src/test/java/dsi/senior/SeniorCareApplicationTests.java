@@ -1,6 +1,8 @@
 package dsi.senior;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -11,10 +13,8 @@ import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.junit.runner.Runner;
+import org.junit.Assert;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
@@ -72,7 +72,7 @@ public class SeniorCareApplicationTests {
 	public void testAddSenior() {
 		Senior s = seniorServiceImpl.addSenior(senior3);
 		l.info("Senior added");
-		Assertions.assertTrue(  seniorDao.findById(s.getId()).isPresent(),"ADD SENIOR FAILED !");
+		Assert.assertTrue("ADD SENIOR FAILED !",seniorDao.findById(s.getId()).isPresent());
 	}
 
 	@Test
@@ -80,7 +80,7 @@ public class SeniorCareApplicationTests {
 		
 		
 		List<Senior> seniors = seniorServiceImpl.findByResidance("Centre D'accueil Gammath");
-		Assertions.assertTrue((seniors.size())>0,"seniors residance not founded");
+		assertThat(seniors).size().isGreaterThan(0);
 		if (seniors.size()>0) {
 			 
 			 l.info("seniors residance founded"); } else { l.warn("warning check your method");
@@ -92,10 +92,10 @@ public class SeniorCareApplicationTests {
 	public void testDeleteSenior() {
 		Senior s = seniorServiceImpl.addSenior(senior2);
 		l.info("Senior added");
-		Assertions.assertTrue(  seniorDao.findById(s.getId()).isPresent(),"ADD SENIOR FAILED !");
+		Assert.assertTrue( "ADD SENIOR FAILED !" ,seniorDao.findById(s.getId()).isPresent());
 		seniorServiceImpl.deleteSenior(s.getId());
 		l.info("Senior deleted");
-		Assertions.assertFalse(  seniorDao.findById(s.getId()).isPresent(),"DELETE SENIOR FAILED !");
+		Assert.assertFalse("DELETE SENIOR FAILED !", seniorDao.findById(s.getId()).isPresent());
 	
 	}
 
@@ -116,7 +116,7 @@ public class SeniorCareApplicationTests {
 		archiveMedServiceImpl.ajouterArchiveMedic(idA, medic.getIdmed(), false);
 		l.info("Senior med affected to his archive ");
 		Set<ArchiveMedication> archMeds = archiveMedServiceImpl.getAllMedsByArchive(idA);
-		Assertions.assertTrue( archMeds.size() > 0,"assignment Med to archive fail");
+		Assert.assertTrue( "assignment Med to archive fail",archMeds.size() > 0);
 		if (archMeds.size() > 0) {
 			l.info("Medication found in Archive");
 		} else {
@@ -129,7 +129,7 @@ public class SeniorCareApplicationTests {
 	@Test
 	public void testgetAllCategories() {
 		List<IngredientsCategories> ingCatList = ingCategoryImpl.getAllCategories();
-		assertEquals(8, ingCatList.size());
+		assertTrue(ingCatList.size()==8);
 		if (ingCatList.size() == 8) {
 			l.info("Ingredients Category is 8");
 		} else {
@@ -143,7 +143,7 @@ public class SeniorCareApplicationTests {
 		meal.setDescription("new Description Test");
 		mealService.updateMeal(meal, meal.getId());
 		Meal updatedMeal = mealService.getMealById(7);
-		Assertions.assertTrue((updatedMeal.getDescription())==("new Description Test"));
+		assertTrue((updatedMeal.getDescription())==("new Description Test"));
 		if (updatedMeal.getDescription() == "new Description Test") {
 			l.info("Meal updated succesfully");
 		} else {
