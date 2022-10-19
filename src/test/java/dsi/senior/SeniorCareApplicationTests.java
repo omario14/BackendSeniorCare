@@ -32,23 +32,27 @@ import dsi.senior.entities.Senior;
 import dsi.senior.repositories.ArchiveDao;
 import dsi.senior.repositories.SeniorDao;
 import dsi.senior.services.ArchiveMedServiceImpl;
+import dsi.senior.services.ArchiveSeniorServiceImpl;
 import dsi.senior.services.IArchiveSeniorService;
 import dsi.senior.services.IMealService;
 import dsi.senior.services.IMedicationService;
 import dsi.senior.services.ISeniorServiceImpl;
 import dsi.senior.services.IngredientsCategoriesServiceImpl;
+import dsi.senior.services.MealServiceImpl;
+import dsi.senior.services.MedicationServiceImpl;
+import dsi.senior.services.SeniorServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SeniorCareApplicationTests {
 
 	@InjectMocks
-	ISeniorServiceImpl seniorServiceImpl;
+	SeniorServiceImpl seniorServiceImpl;
 	@InjectMocks
-	IArchiveSeniorService archSeniorService;
+	ArchiveSeniorServiceImpl archSeniorService;
 	@InjectMocks
-	IMedicationService medicationService;
+	MedicationServiceImpl medicationService;
 	@InjectMocks
-	IMealService mealService;
+	MealServiceImpl mealService;
 
 	@InjectMocks
 	ArchiveMedServiceImpl archiveMedServiceImpl;
@@ -76,11 +80,10 @@ public class SeniorCareApplicationTests {
 	}
 	
 	@Test
-	void testaddSenior() {
-		Senior s = seniorServiceImpl.addSenior(senior3);
-		when(seniorServiceImpl.addSenior(ArgumentMatchers.any(Senior.class))).thenReturn(senior3);
+	public void testaddSenior() {
+		when(seniorDao.save(ArgumentMatchers.any(Senior.class))).thenReturn(senior3);
 		l.info("Senior added");
-		assertThat(seniorDao.findById(s.getId()).isPresent());
+		assertThat(seniorDao.findById(seniorServiceImpl.addSenior(senior3).getId()).isPresent());
 	}
 /*
 	@Test
