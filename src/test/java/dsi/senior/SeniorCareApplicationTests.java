@@ -37,7 +37,7 @@ import dsi.senior.services.IngredientsCategoriesServiceImpl;
 
 @SpringBootTest
 @Transactional
-class SeniorCareApplicationTests {
+public class SeniorCareApplicationTests {
 
 	@Autowired
 	ISeniorServiceImpl seniorServiceImpl;

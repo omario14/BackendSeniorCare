@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>dsi.senior</groupId>
 	<artifactId>SeniorCare</artifactId>
-	<version>1.0</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>SeniorCare</name>
 	<description>Backend SeniorCare</description>
 	<properties>
