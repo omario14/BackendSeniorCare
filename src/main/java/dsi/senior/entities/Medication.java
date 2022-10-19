@@ -1,5 +1,6 @@
 package dsi.senior.entities;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,12 +19,16 @@ public class Medication {
 	private String label;
 	private int dose;
 	private String doseType;
+	
 
 	@JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	private String startDate;
 
 	@JsonFormat(pattern = "yyyy-MM-dd",shape = Shape.STRING)
 	private String endDate;
+	
+	
+	
 	@ManyToOne
 	private Senior senior;
 	
@@ -114,6 +119,7 @@ public class Medication {
 	}
 
 
+	
 	@Override
 	public String toString() {
 		return "Medication [idmed=" + idmed + ", label=" + label + ", dose=" + dose + ", doseType=" + doseType

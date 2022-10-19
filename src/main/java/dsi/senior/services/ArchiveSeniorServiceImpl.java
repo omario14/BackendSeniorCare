@@ -10,9 +10,13 @@ import org.springframework.stereotype.Service;
 
 import dsi.senior.entities.ArchiveSenior;
 import dsi.senior.entities.Calendar;
+import dsi.senior.entities.DoseTime;
+import dsi.senior.entities.Medication;
 import dsi.senior.entities.Senior;
 import dsi.senior.repositories.ArchiveDao;
 import dsi.senior.repositories.CalendarDao;
+import dsi.senior.repositories.DoseTimeDao;
+import dsi.senior.repositories.MedicationDao;
 import dsi.senior.repositories.SeniorDao;
 
 @Service
@@ -25,6 +29,10 @@ public class ArchiveSeniorServiceImpl implements IArchiveSeniorService {
 	SeniorDao seniorDao;
 	@Autowired
 	CalendarDao calendarDao;
+	@Autowired
+	DoseTimeDao doseTimeDao;
+	@Autowired
+	MedicationDao medDao;
 	
 	@Override
 	public void addArchive(ArchiveSenior arch) {
@@ -82,6 +90,34 @@ public class ArchiveSeniorServiceImpl implements IArchiveSeniorService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public List<DoseTime> getAllDoseTime() {
+		
+		return (List<DoseTime>) doseTimeDao.findAll();
+	}
+	
+
+	@Override
+	public void newDoseTime(DoseTime dose) {
+		doseTimeDao.save(dose);
+	}
+
+	@Override
+	public Set<DoseTime> getDoseTimeByArchive(String idarch,long idmed) {
+		ArchiveSenior archive = archDao.findById(idarch).get();
+		Medication medic = medDao.findById(idmed).get(); 
+		
+		return doseTimeDao.findDoseTimeByArchAndMed(archive,medic);
+	}
+	
+	@Override
+	public void doseTimeDone(long idDose,boolean done) {
+		DoseTime dose= doseTimeDao.findById(idDose).get();
+		dose.setDone(done);
+		doseTimeDao.save(dose);
+	}
+	
 
 	
 

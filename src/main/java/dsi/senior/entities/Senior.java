@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -45,7 +47,9 @@ public class Senior implements Serializable{
 	@JsonProperty("centerOfInterest")
 	private String centerOfInterest;
 	private String fileId;
-	
+	private double weight;
+	private double height;
+	private double bmi;
 	private boolean checkedBreakfast;
 	private boolean checkedLunch;
 	private boolean checkedDinner;
@@ -56,6 +60,8 @@ public class Senior implements Serializable{
 				inverseJoinColumns = @JoinColumn(name = "menu_id",nullable=false))
 	private Set<Menu> menus = new HashSet<>();
 	
+	@OneToMany(mappedBy="senior", cascade=CascadeType.ALL)
+	private Set<Calendar> calendar;
 	
 	
 	
@@ -69,7 +75,7 @@ public class Senior implements Serializable{
 
 
 	public Senior(String name, String lastname, String dateOfBirth, String sex, String cin, String telephone,
-			String adress, String famillySituation, String centerOfInterest ,String fileid) {
+			String adress, String famillySituation, String centerOfInterest ,String fileid,double weight,double height) {
 		super();
 		this.name = name;
 		this.lastname = lastname;
@@ -81,6 +87,8 @@ public class Senior implements Serializable{
 		this.famillySituation = famillySituation;
 		this.centerOfInterest = centerOfInterest;
 		this.fileId = fileid;
+		this.weight = weight;
+		this.height = height;
 	}
 
 
@@ -336,6 +344,60 @@ public class Senior implements Serializable{
 
 	public void setCheckedDinner(boolean checkedDinner) {
 		this.checkedDinner = checkedDinner;
+	}
+
+
+
+
+
+
+	public double getWeight() {
+		return weight;
+	}
+
+
+
+
+
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
+
+
+
+
+
+	public double getHeight() {
+		return height;
+	}
+
+
+
+
+
+
+	public void setHeight(double height) {
+		this.height = height;
+	}
+
+
+
+
+
+
+	public double getBmi() {
+		return bmi;
+	}
+
+
+
+
+
+
+	public void setBmi(double bmi) {
+		this.bmi = bmi;
 	}
 
 

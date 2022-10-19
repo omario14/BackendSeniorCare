@@ -1,18 +1,14 @@
 package dsi.senior.controllers;
 
-import java.io.File;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,10 +42,12 @@ import dsi.senior.repositories.UserDao;
 import dsi.senior.services.JwtUserDetailsService;
 import dsi.senior.services.MailService;
 import dsi.senior.services.UserDetailsImpl;
+import dsi.senior.services.TwilioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import request.MailRequest;
 import request.SignupRequest;
+import request.SmsRequest;
 
 @CrossOrigin
 @RestController
@@ -74,6 +72,15 @@ public class JwtAuthenticationController {
 	PasswordEncoder encoder;
 	@Autowired
 	MailService mailservice;
+	
+	
+	 private final TwilioService twilioService;
+
+	    @Autowired
+	    public JwtAuthenticationController(TwilioService twilioService) {
+	        this.twilioService = twilioService;
+	    }
+   
  
 	
 
@@ -89,9 +96,9 @@ public class JwtAuthenticationController {
 		userDao.save(userr);
 		long expiresIn = (jwtTokenUtil.getExpirationDateFromToken(jwt).getTime()-(System.currentTimeMillis()));
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
-		List<String> roles = userDetails.getAuthorities().stream()
+		/*List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
-				.collect(Collectors.toList());
+				.collect(Collectors.toList());*/
 		return ResponseEntity.ok(new JwtResponse(expiresIn,
 												 jwt,
 												 userDetails.getId(),
@@ -136,10 +143,10 @@ public class JwtAuthenticationController {
 	               signUpRequest.getAdress(),
 	               signUpRequest.getPicture()
 	               );
-	    System.out.println(signUpRequest.toString());
+	    
 
 	    Set<String> strRoles = signUpRequest.getRole();
-	    System.out.println("this is the set of rolesaaaaaaaaaaa "+strRoles);
+	    
 	    Set<Role> roles = new HashSet<>();
 
 	    if (strRoles.isEmpty()) {
@@ -178,7 +185,10 @@ public class JwtAuthenticationController {
 		model.put("body", signUpRequest.getPassword());
 		model.put("firstName", signUpRequest.getName());
 		
-	
+		SmsRequest smsRequest = new SmsRequest("+216"+signUpRequest.getMobile(),"Welcome to Seniguard");
+		
+		  
+		twilioService.sendSms(smsRequest);
 	    mailservice.sendEmail(request, model);
 	   
 	    return ResponseEntity.ok(new ResponseMessage("User registered successfully!"));
@@ -212,8 +222,8 @@ public class JwtAuthenticationController {
 	@PutMapping("/update-user/{id}")
   	@ResponseBody
   	public ResponseEntity<String> updateUser(@PathVariable("id") int id, @RequestBody DAOUser user) {
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = userDetails.getUsername();
+		/*UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = userDetails.getUsername();*/
 		userDetailsService.UpdateAccountUserByUsername(id, user);
   		return new ResponseEntity<String>("User updated successfully",HttpStatus.OK);
   		

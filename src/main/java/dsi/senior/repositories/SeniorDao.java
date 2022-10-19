@@ -19,7 +19,12 @@ public interface SeniorDao extends CrudRepository<Senior,Long> {
 	@Query("SELECT sa from Senior sa WHERE sa.adress =:resid")
 	public List<Senior> findSeniorsByResidance(@Param("resid")String resid);
 
-
+	@Query("SELECT centerOfInterest FROM Senior")
+	public List<String> centreDinteretseniors(); 
+	
+	@Query("SELECT dateOfBirth FROM Senior")
+	public List<String> birthDateSeniors(); 
+	
 	@Query("SELECT count(snr) FROM Senior snr")
 	public long seniors(); 
 	

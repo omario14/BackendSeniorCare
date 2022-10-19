@@ -33,6 +33,8 @@ public class MedicationController {
 				
 			}
 			
+			
+			
 			// http://localhost:8081/api/getAllMedications
 		  	@GetMapping("/getAllMedications")
 		  	@ResponseBody
@@ -41,11 +43,13 @@ public class MedicationController {
 		  		return medicationService.getAllMedication();
 		  	}
 		  	
+		
+		  	
 		 // http://localhost:8081/api/getMedicationsBySenior
 		  	@GetMapping("/getMedicationsBySenior/{idSenior}")
 		  	@ResponseBody
 		  	@Operation(security = {@SecurityRequirement(name = "bearer-key")})
-		  	public Set<Medication>  getMedicationsBySenior(@PathVariable long idSenior) {
+		  	public Set<Medication>  getMedicationsBySenior(@PathVariable("idSenior") long idSenior) {
 		  		System.out.println("idSenior"+idSenior);
 		  		return medicationService.getMedicationBySenior(idSenior);
 		  	}

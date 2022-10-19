@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import dsi.senior.entities.ArchiveSenior;
+import dsi.senior.entities.DoseTime;
 
 public interface IArchiveSeniorService {
 	/**********************Creating add method that insert Archive into database***************/
@@ -24,6 +25,13 @@ public interface IArchiveSeniorService {
 	
 
 	/***************Creating getAll ArchiveSenior by category method from database **************/
-	List<ArchiveSenior> getArchiveSeniorByCategory(String categoryName); 
+	List<ArchiveSenior> getArchiveSeniorByCategory(String categoryName);
+
+	void newDoseTime(DoseTime dose);
+	Set<DoseTime> getDoseTimeByArchive(String idarch,long idmed);
+
+	void doseTimeDone(long idDose, boolean done);
+
+	List<DoseTime> getAllDoseTime(); 
 
 }

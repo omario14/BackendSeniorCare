@@ -2,6 +2,7 @@ package dsi.senior.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -138,7 +139,20 @@ public class SeniorController {
  			public long seniorNumber() {
  				return seniorDao.seniors();
  			}
-	
+ 			
+ 			@GetMapping(value = "/calcul-bmi/{weight}/{height}")
+ 			@Operation(security = {@SecurityRequirement(name = "bearer-key")})
+ 			@ResponseBody
+ 			public double calculBMI(@PathVariable("weight")double weight,@PathVariable("height")double height) {
+ 				return seniorServiceImpl.calculBMI(weight,height);
+ 			}
+ 			
+ 			@GetMapping(value = "/count-interests")
+ 			@Operation(security = {@SecurityRequirement(name = "bearer-key")})
+ 			@ResponseBody
+ 			public Map<String, Long> centreDinteret() {
+ 				return seniorServiceImpl.centreDinteret();
+ 			}
 	
 
 }
