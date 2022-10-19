@@ -31,5 +31,9 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       #Run Tests
+      - name: echo "test"
+        run: echo "TESTTTTTTTTTTT"
       - name: Run Tests
-        run: echo "TESTTTTTTTTTTT" mvn -B test echo "TESTTTTTTTTTTT5"
+        run: mvn -B test 
+      - name: echo "test2"
+        run: echo "TESTTTTTTTTTTT2"
