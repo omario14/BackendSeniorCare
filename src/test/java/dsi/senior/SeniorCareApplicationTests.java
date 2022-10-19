@@ -34,7 +34,6 @@ import dsi.senior.services.IMedicationService;
 import dsi.senior.services.ISeniorServiceImpl;
 import dsi.senior.services.IngredientsCategoriesServiceImpl;
 
-@RunWith(Runner.class)
 @SpringBootTest
 @Transactional
 public class SeniorCareApplicationTests {
