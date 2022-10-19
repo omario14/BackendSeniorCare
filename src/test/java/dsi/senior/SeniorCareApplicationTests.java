@@ -1,9 +1,7 @@
 package dsi.senior;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +12,9 @@ import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Assert.*;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
@@ -36,7 +36,7 @@ import dsi.senior.services.IngredientsCategoriesServiceImpl;
 
 @SpringBootTest
 @Transactional
-class SeniorCareApplicationTests {
+public class SeniorCareApplicationTests {
 
 
 	@Autowired
@@ -81,7 +81,7 @@ class SeniorCareApplicationTests {
 		
 		
 		List<Senior> seniors = seniorServiceImpl.findByResidance("Centre D'accueil Gammath");
-		assertThat(seniors.size()).isGreaterThan(0);
+		assertTrue( "seniors residance not founded", seniors.size()>0);
 		if (seniors.size()>0) {
 			 
 			 l.info("seniors residance founded"); } else { l.warn("warning check your method");
@@ -89,66 +89,4 @@ class SeniorCareApplicationTests {
 	}
 	}
 	
-	@Test
-	public void testDeleteSenior() {
-		Senior s = seniorServiceImpl.addSenior(senior2);
-		l.info("Senior added");
-		assertTrue( "ADD SENIOR FAILED !", seniorDao.findById(s.getId()).isPresent());
-		seniorServiceImpl.deleteSenior(s.getId());
-		l.info("Senior deleted");
-		assertFalse( "DELETE SENIOR FAILED !", seniorDao.findById(s.getId()).isPresent());
-	
-	}
-
-	@Test
-	public void testajouterMedicToArchive() {
-		Senior s1 = seniorServiceImpl.addSenior(senior1);
-		l.info("Senior added with id :  " + s1.getId());
-		LocalDate dateObj = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		String date = dateObj.format(formatter);
-		String idA = "arch-" + s1.getId() + "-" + date;
-		ArchiveSenior archSenior = new ArchiveSenior(idA, date, false, false, false, s1);
-		archSeniorService.updateArchive(archSenior);
-		l.info("Senior archive added with id :  " + idA);
-		Medication medic = new Medication("Medic1", 3, "pills", date, date, s1);
-		medicationService.newMedication(medic);
-		l.info("Senior archive added with id :  " + idA);
-		archiveMedServiceImpl.ajouterArchiveMedic(idA, medic.getIdmed(), false);
-		l.info("Senior med affected to his archive ");
-		Set<ArchiveMedication> archMeds = archiveMedServiceImpl.getAllMedsByArchive(idA);
-		assertTrue("assignment Med to archive fail", archMeds.size() > 0);
-		if (archMeds.size() > 0) {
-			l.info("Medication found in Archive");
-		} else {
-			l.warn("warning check your method : AjouterMedicToArchive");
-		}
-	}
-
-	/*********************** CHEF TESTS **************************/
-
-	@Test
-	public void testgetAllCategories() {
-		List<IngredientsCategories> ingCatList = ingCategoryImpl.getAllCategories();
-		assertEquals(8, ingCatList.size());
-		if (ingCatList.size() == 8) {
-			l.info("Ingredients Category is 8");
-		} else {
-			l.warn("warning check your method : getAllCategories");
-		}
-	}
-	@Test
-	public void testupdateMeal() {
-		Meal meal = mealService.getMealById(7);
-		meal.setDescription("new Description Test");
-		mealService.updateMeal(meal, meal.getId());
-		Meal updatedMeal = mealService.getMealById(7);
-		assertThat(updatedMeal.getDescription()).isEqualTo("new Description Test");
-		if (updatedMeal.getDescription() == "new Description Test") {
-			l.info("Meal updated succesfully");
-		} else {
-			l.warn("warning check your method : updateMeal");
-		}
-	}
-
 }
