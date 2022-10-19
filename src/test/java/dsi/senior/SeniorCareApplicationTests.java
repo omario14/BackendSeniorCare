@@ -105,7 +105,6 @@ public class SeniorCareApplicationTests {
 	}
 
 	@Test
-	@Rollback(true)
 	void testajouterMedicToArchive() {
 		Senior s1 = seniorServiceImpl.addSenior(senior1);
 		l.info("Senior added with id :  " + s1.getId());
