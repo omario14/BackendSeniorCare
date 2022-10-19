@@ -16,9 +16,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import dsi.senior.entities.ArchiveMedication;
 import dsi.senior.entities.ArchiveSenior;
@@ -35,8 +37,8 @@ import dsi.senior.services.IMedicationService;
 import dsi.senior.services.ISeniorServiceImpl;
 import dsi.senior.services.IngredientsCategoriesServiceImpl;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
-@Transactional
 public class SeniorCareApplicationTests {
 
 	@Autowired
@@ -70,8 +72,6 @@ public class SeniorCareApplicationTests {
 			"Centre D'accueil Gammath", "single", "watching", "1ce79e29-11bd-4ca1-a268-ad094f711ecf", 86, 185);
 
 	@Test
-	@Rollback(true)
-	@Order(1)
 	void testaddSenior() {
 		Senior s = seniorServiceImpl.addSenior(senior3);
 		l.info("Senior added");
@@ -79,7 +79,6 @@ public class SeniorCareApplicationTests {
 	}
 
 	@Test
-	@Order(2)
 	void testfindByResidance() {
 
 		List<Senior> seniors = seniorServiceImpl.findByResidance("Centre D'accueil Gammath");
@@ -106,8 +105,6 @@ public class SeniorCareApplicationTests {
 	}
 
 	@Test
-	@Rollback(true)
-	@Order(4)
 	void testajouterMedicToArchive() {
 		Senior s1 = seniorServiceImpl.addSenior(senior1);
 		l.info("Senior added with id :  " + s1.getId());
@@ -141,7 +138,6 @@ public class SeniorCareApplicationTests {
 	/*********************** CHEF TESTS **************************/
 
 	@Test
-	@Order(5)
 	void testgetAllCategories() {
 		List<IngredientsCategories> ingCatList = ingCategoryImpl.getAllCategories();
 		assertEquals(8, ingCatList.size());
@@ -156,7 +152,6 @@ public class SeniorCareApplicationTests {
 	}
 
 	@Test
-	@Order(6)
 	void testupdateMeal() {
 		Meal meal = mealService.getMealById(7);
 		meal.setDescription("new Description Test");
