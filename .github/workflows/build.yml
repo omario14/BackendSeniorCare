@@ -32,4 +32,4 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       #Run Tests
       - name: Run Tests
-        run: mvn clean test
+        run: mvn test
