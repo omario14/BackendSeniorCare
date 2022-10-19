@@ -10,14 +10,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 
-import javax.transaction.Transactional;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.annotation.Rollback;
 
 import dsi.senior.entities.ArchiveMedication;
@@ -35,43 +35,44 @@ import dsi.senior.services.IMedicationService;
 import dsi.senior.services.ISeniorServiceImpl;
 import dsi.senior.services.IngredientsCategoriesServiceImpl;
 
-@SpringBootTest
-@Transactional
+@RunWith(MockitoJUnitRunner.class)
 public class SeniorCareApplicationTests {
 
-	@Autowired
+	@InjectMocks
 	ISeniorServiceImpl seniorServiceImpl;
-	@Autowired
+	@InjectMocks
 	IArchiveSeniorService archSeniorService;
-	@Autowired
+	@InjectMocks
 	IMedicationService medicationService;
-	@Autowired
+	@InjectMocks
 	IMealService mealService;
 
-	@Autowired
+	@InjectMocks
 	ArchiveMedServiceImpl archiveMedServiceImpl;
-	@Autowired
+	@InjectMocks
 	IngredientsCategoriesServiceImpl ingCategoryImpl;
 
-	@Autowired
+	@Mock
 	SeniorDao seniorDao;
-	@Autowired
+	@Mock
 	ArchiveDao archiveDao;
 
 	private static final Logger l = LogManager.getLogger(SeniorCareApplicationTests.class);
 
-	Senior senior1 = new Senior("Hamdi", "mzoughi", "1997-05-3", "male", "09632455", "51236987", "houmet saboun",
+	Senior senior1,senior2,senior3;
+    @Before
+    public void setUp() throws Exception {
+	 senior1 = new Senior("Hamdi", "mzoughi", "1997-05-3", "male", "09632455", "51236987", "houmet saboun",
 			"single", "reading", "1ce79e29-11bd-4ca1-a268-ad094f711ecf", 76, 180);
 
-	Senior senior2 = new Senior("Chaima", "mzoughi", "1930-04-3", "female", "09632355", "21236987",
+	senior2 = new Senior("Chaima", "mzoughi", "1930-04-3", "female", "09632355", "21236987",
 			"Centre D'accueil Gammath", "single", "reading", "", 66, 170);
 
-	Senior senior3 = new Senior("Bilel", "rafii", "1933-04-3", "male", "09732355", "51116987",
+	senior3 = new Senior("Bilel", "rafii", "1933-04-3", "male", "09732355", "51116987",
 			"Centre D'accueil Gammath", "single", "watching", "1ce79e29-11bd-4ca1-a268-ad094f711ecf", 86, 185);
-
+	}
+	
 	@Test
-	@Rollback(true)
-	@Order(1)
 	void testaddSenior() {
 		Senior s = seniorServiceImpl.addSenior(senior3);
 		l.info("Senior added");
@@ -79,7 +80,6 @@ public class SeniorCareApplicationTests {
 	}
 
 	@Test
-	@Order(2)
 	void testfindByResidance() {
 
 		List<Senior> seniors = seniorServiceImpl.findByResidance("Centre D'accueil Gammath");
@@ -94,7 +94,6 @@ public class SeniorCareApplicationTests {
 	}
 
 	@Test
-	@Order(3)
 	void testdeleteSenior() {
 		Senior s = seniorServiceImpl.addSenior(senior2);
 		l.info("Senior added");
@@ -107,7 +106,6 @@ public class SeniorCareApplicationTests {
 
 	@Test
 	@Rollback(true)
-	@Order(4)
 	void testajouterMedicToArchive() {
 		Senior s1 = seniorServiceImpl.addSenior(senior1);
 		l.info("Senior added with id :  " + s1.getId());
@@ -141,7 +139,6 @@ public class SeniorCareApplicationTests {
 	/*********************** CHEF TESTS **************************/
 
 	@Test
-	@Order(5)
 	void testgetAllCategories() {
 		List<IngredientsCategories> ingCatList = ingCategoryImpl.getAllCategories();
 		assertEquals(8, ingCatList.size());
@@ -156,7 +153,6 @@ public class SeniorCareApplicationTests {
 	}
 
 	@Test
-	@Order(6)
 	void testupdateMeal() {
 		Meal meal = mealService.getMealById(7);
 		meal.setDescription("new Description Test");
