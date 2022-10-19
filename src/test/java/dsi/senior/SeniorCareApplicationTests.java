@@ -33,10 +33,6 @@ import dsi.senior.repositories.ArchiveDao;
 import dsi.senior.repositories.SeniorDao;
 import dsi.senior.services.ArchiveMedServiceImpl;
 import dsi.senior.services.ArchiveSeniorServiceImpl;
-import dsi.senior.services.IArchiveSeniorService;
-import dsi.senior.services.IMealService;
-import dsi.senior.services.IMedicationService;
-import dsi.senior.services.ISeniorServiceImpl;
 import dsi.senior.services.IngredientsCategoriesServiceImpl;
 import dsi.senior.services.MealServiceImpl;
 import dsi.senior.services.MedicationServiceImpl;
@@ -76,7 +72,7 @@ public class SeniorCareApplicationTests {
 			"Centre D'accueil Gammath", "single", "reading", "", 66, 170);
 
 	senior3 = new Senior("Bilel", "rafii", "1933-04-3", "male", "09732355", "51116987",
-			"Centre D'accueil Gammath", "single", "watching", "1ce79e29-11bd-4ca1-a268-ad094f711ecf", 86, 185);
+			"Centre D'accueil Gammath", "single", "watching", "", 86, 185);
 	}
 	
 	@Test
