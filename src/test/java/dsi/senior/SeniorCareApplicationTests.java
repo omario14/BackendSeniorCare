@@ -13,6 +13,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.junit.runner.Runner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
@@ -32,6 +34,7 @@ import dsi.senior.services.IMedicationService;
 import dsi.senior.services.ISeniorServiceImpl;
 import dsi.senior.services.IngredientsCategoriesServiceImpl;
 
+@RunWith(Runner.class)
 @SpringBootTest
 @Transactional
 public class SeniorCareApplicationTests {
