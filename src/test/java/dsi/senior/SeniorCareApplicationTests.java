@@ -72,7 +72,7 @@ class SeniorCareApplicationTests {
 	@Test
 	@Rollback(true)
 	@Order(1)
-	void testAddSenior() {
+	void testaddSenior() {
 		Senior s = seniorServiceImpl.addSenior(senior3);
 		l.info("Senior added");
 		assertTrue("ADD SENIOR FAILED !", seniorDao.findById(s.getId()).isPresent());
@@ -80,7 +80,7 @@ class SeniorCareApplicationTests {
 
 	@Test
 	@Order(2)
-	void testFindByResidance() {
+	void testfindByResidance() {
 
 		List<Senior> seniors = seniorServiceImpl.findByResidance("Centre D'accueil Gammath");
 		assertThat(seniors.size()).isGreaterThan(0);
@@ -95,7 +95,7 @@ class SeniorCareApplicationTests {
 
 	@Test
 	@Order(3)
-	void testDeleteSenior() {
+	void testdeleteSenior() {
 		Senior s = seniorServiceImpl.addSenior(senior2);
 		l.info("Senior added");
 		assertTrue("ADD SENIOR FAILED !", seniorDao.findById(s.getId()).isPresent());
@@ -108,7 +108,7 @@ class SeniorCareApplicationTests {
 	@Test
 	@Rollback(true)
 	@Order(4)
-	void testAjouterMedicToArchive() {
+	void testajouterMedicToArchive() {
 		Senior s1 = seniorServiceImpl.addSenior(senior1);
 		l.info("Senior added with id :  " + s1.getId());
 		LocalDate dateObj = LocalDate.now();
@@ -142,7 +142,7 @@ class SeniorCareApplicationTests {
 
 	@Test
 	@Order(5)
-	void testGetAllCategories() {
+	void testgetAllCategories() {
 		List<IngredientsCategories> ingCatList = ingCategoryImpl.getAllCategories();
 		assertEquals(8, ingCatList.size());
 
@@ -157,7 +157,7 @@ class SeniorCareApplicationTests {
 
 	@Test
 	@Order(6)
-	void testUpdateMeal() {
+	void testupdateMeal() {
 		Meal meal = mealService.getMealById(7);
 		meal.setDescription("new Description Test");
 		mealService.updateMeal(meal, meal.getId());
