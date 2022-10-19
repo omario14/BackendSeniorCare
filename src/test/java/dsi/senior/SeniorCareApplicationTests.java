@@ -12,22 +12,13 @@ import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-<<<<<<< HEAD
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-=======
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
->>>>>>> 2790e40120d555bb32ab59396bb4c87b54e82282
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import dsi.senior.entities.ArchiveMedication;
 import dsi.senior.entities.ArchiveSenior;
@@ -44,12 +35,7 @@ import dsi.senior.services.IMedicationService;
 import dsi.senior.services.ISeniorServiceImpl;
 import dsi.senior.services.IngredientsCategoriesServiceImpl;
 
-<<<<<<< HEAD
 @RunWith(MockitoJUnitRunner.class)
-=======
-@RunWith(SpringRunner.class)
-@SpringBootTest
->>>>>>> 2790e40120d555bb32ab59396bb4c87b54e82282
 public class SeniorCareApplicationTests {
 
 	@InjectMocks
@@ -119,10 +105,7 @@ public class SeniorCareApplicationTests {
 	}
 
 	@Test
-<<<<<<< HEAD
 	@Rollback(true)
-=======
->>>>>>> 2790e40120d555bb32ab59396bb4c87b54e82282
 	void testajouterMedicToArchive() {
 		Senior s1 = seniorServiceImpl.addSenior(senior1);
 		l.info("Senior added with id :  " + s1.getId());
