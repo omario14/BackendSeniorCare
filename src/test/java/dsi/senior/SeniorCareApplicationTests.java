@@ -36,6 +36,7 @@ import dsi.senior.services.IngredientsCategoriesServiceImpl;
 
 @RunWith(Runner.class)
 @SpringBootTest
+@Transactional
 public class SeniorCareApplicationTests {
 
 
@@ -137,6 +138,7 @@ public class SeniorCareApplicationTests {
 		}
 	}
 	@Test
+	@Rollback(true)
 	public void testupdateMeal() {
 		Meal meal = mealService.getMealById(7);
 		meal.setDescription("new Description Test");
