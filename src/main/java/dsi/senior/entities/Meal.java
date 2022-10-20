@@ -1,5 +1,6 @@
 package dsi.senior.entities;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +17,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Meal {
+public class Meal implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 721409495133592414L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +51,7 @@ public class Meal {
 	
 	
 	public Meal() {
-		
+		super();
 	}
 
 
