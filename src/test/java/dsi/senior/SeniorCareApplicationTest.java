@@ -39,7 +39,7 @@ import dsi.senior.services.IngredientsCategoriesServiceImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class SeniorCareApplicationTests {
+public class SeniorCareApplicationTest {
 
 
 	@Autowired
@@ -61,7 +61,7 @@ public class SeniorCareApplicationTests {
 	@MockBean
 	ArchiveDao archiveDao;
 	
-	private static final Logger l = LogManager.getLogger(SeniorCareApplicationTests.class);
+	private static final Logger l = LogManager.getLogger(SeniorCareApplicationTest.class);
 
 	Senior senior1 = new Senior("Hamdi","mzoughi","1997-05-3","male","09632455","51236987",
 			"houmet saboun","single","reading","",76,180);
