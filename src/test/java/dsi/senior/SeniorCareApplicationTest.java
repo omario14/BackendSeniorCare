@@ -130,7 +130,7 @@ public class SeniorCareApplicationTest {
 					 
 					l.info("\n "+ senior1.getName()+"'s birthday is ["+senior1.getDateOfBirth()+"] \n so he is ["+age+"] years old now !"); } else { l.warn("warning check your method Calculate Bmi");
 
-			}
+			} 
 			
 				
 			}
