@@ -118,6 +118,7 @@
   <configuration>
     <includes>
       <include>**/*Tests.java</include>
+      <include>**/SeniorCareApplicationTests.java</include>
     </includes>
   </configuration>
 </plugin>
