@@ -82,13 +82,14 @@ public class SeniorCareApplicationTest {
 					 senior3.setId(2022);
 		    }
 	
+			/*
 	@Test
 	public void retrieveAllSeniorTest() {
 		when(seniorDao.findAll()).thenReturn(Stream
 				.of(senior2,senior3).collect(Collectors.toList()));
 		assertEquals(2,seniorServiceImpl.retrieveAllSenior().size());
 	}
-	
+	*/
 	
 	
 	/*
