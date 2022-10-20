@@ -31,12 +31,8 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       #Run Tests
-      - name: echo "test"
-        run: echo "TESTTTTTTTTTTT"
       - name: Run Tests
-        run: mvn -B test 
-      - name: echo "test2"
-        run: echo "TESTTTTTTTTTTT2"
+        run: mvn -B test --file pom.xml
 #Sonar's Job
   sonar:
     #Depends on test's job
