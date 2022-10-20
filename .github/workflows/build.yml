@@ -68,6 +68,7 @@ jobs:
       #Analyze project with SonarCloud
       - name: Analyze with SonarCloud
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=omario14_BackendSeniorCare
+        
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
