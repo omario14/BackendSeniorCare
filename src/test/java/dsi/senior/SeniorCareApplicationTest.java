@@ -94,10 +94,10 @@ public class SeniorCareApplicationTest {
 				 senior1 = new Senior("Hamdi","mzoughi","1997-09-07","male","09632455","51236987",
 							"houmet saboun","single","reading","",76,180);
 					
-					 senior2 = new Senior("Chaima","mzoughi","1930-04-3","female","09632355","21236987",
+					 senior2 = new Senior("Chaima","mzoughi","1930-04-11","female","09632355","21236987",
 							"Centre D'accueil Gammath","single","reading","",66,170);
 					
-					 senior3 = new Senior("Bilel","Nafati","1933-04-3","male","09732355","51116987",
+					 senior3 = new Senior("Bilel","Nafati","1933-04-11","male","09732355","51116987",
 							"Centre D'accueil Gammath","single","watching","",86,185);
 					 
 					 senior1.setId(2023);

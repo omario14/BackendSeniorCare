@@ -122,16 +122,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: artifact
-      #Deploy the artifact (JAR) into AWS Beanstalk
-      - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v13 
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_session_token: ${{ secrets.AWS_SESSION_TOKEN }}
-          use_existing_version_if_available: true
-          application_name: Seniguard
-          environment_name: Seniguard-env
-          version_label: ${{github.SHA}}
-          region: us-east-1
-          deployment_package: SeniorCare-0.0.1-SNAPSHOT.jar
+      - name: Heroku Deploy
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run:  |
+              heroku plugins:install java
+              heroku deploy:SeniorCare-0.0.1-SNAPSHOT.jar --app backend-seniguard
+      
