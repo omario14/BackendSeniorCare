@@ -126,9 +126,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Install and Build
-        run:
-          mvn clean install -DskipTests=true  
       - name: Heroku Deploy
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
