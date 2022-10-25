@@ -107,7 +107,7 @@ jobs:
           #Set artifact name
           name: artifact
           #From this path
-          path: target/SeniorCare-0.0.1-SNAPSHOT.jar
+          path: target/BackendSeniorCare-0.0.1-SNAPSHOT.jar
 
           #Deploy's job
   deploy:
@@ -130,7 +130,7 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run:  |
-              heroku plugins:install java
-              heroku deploy:jar SeniorCare-0.0.1-SNAPSHOT.jar --app backend-seniguard
+              heroku plugins:install java 
+              heroku deploy:jar BackendSeniorCare-0.0.1-SNAPSHOT.jar --app backend-seniguard
       
    
