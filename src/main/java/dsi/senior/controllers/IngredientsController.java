@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import dsi.senior.entities.FileDB;
 import dsi.senior.entities.Ingredients;
+import dsi.senior.entities.IngredientsCategories;
 import dsi.senior.repositories.FileDBDao;
 import dsi.senior.repositories.IngredientsCategoriesDAO;
 import dsi.senior.services.IIngredientsService;
@@ -38,13 +40,21 @@ public class IngredientsController {
 		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
 		 @ResponseBody
 		 public void addIngredient(@RequestBody IngredientRequest ing) {
+			 FileDB file = new FileDB();
+			 if(fileDao.findById(ing.getFile()).isPresent()) {
+				 file=fileDao.findById(ing.getFile()).get();
+			 }
+			 IngredientsCategories ingredientCat = new IngredientsCategories();
+			 if(ingredientCatDao.findById(ing.getCategory()).isPresent()) {
+				ingredientCat= ingredientCatDao.findById(ing.getCategory()).get();
+			 }
 			 Ingredients ingredient = new Ingredients(
 					 ing.getId(),
 					 ing.getLabel(),
 					 ing.getDescription(),
 					 ing.isChecked(),
-					 fileDao.findById(ing.getFile()).get(),
-					 ingredientCatDao.findById(ing.getCategory()).get());
+					 file,
+					 ingredientCat);
 			    ingredientsServices.addIngredient(ingredient);
 	
 		}
@@ -55,13 +65,21 @@ public class IngredientsController {
 		 @ResponseBody
 			public void updateIngredient(
 				@RequestBody IngredientRequest ing,@PathVariable("idIngredient")int idIngredient) {
+			 FileDB file = new FileDB();
+			 if(fileDao.findById(ing.getFile()).isPresent()) {
+				 file=fileDao.findById(ing.getFile()).get();
+			 }
+			 IngredientsCategories ingredientCat = new IngredientsCategories();
+			 if(ingredientCatDao.findById(ing.getCategory()).isPresent()) {
+				ingredientCat= ingredientCatDao.findById(ing.getCategory()).get();
+			 }
 			 Ingredients ingredient = new Ingredients(
 					 ing.getId(),
 					 ing.getLabel(),
 					 ing.getDescription(),
 					 ing.isChecked(),
-					 fileDao.findById(ing.getFile()).get(),
-					 ingredientCatDao.findById(ing.getCategory()).get());
+					 file,
+					 ingredientCat);
 			    ingredientsServices.updateIngredient(ingredient,idIngredient);
 			    
 				

@@ -12,7 +12,7 @@ import com.twilio.Twilio;
 public class TwilioInitializer {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(TwilioInitializer.class);
-	private final TwilioConfig twilioConfig;
+	 final TwilioConfig twilioConfig;
 	
 	@Autowired
 	public TwilioInitializer(TwilioConfig twilioConfig) {

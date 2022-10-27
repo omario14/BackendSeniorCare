@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dsi.senior.entities.ArchiveSenior;
 import dsi.senior.entities.DoseTime;
+import dsi.senior.entities.Medication;
+import dsi.senior.entities.Senior;
 import dsi.senior.repositories.ArchiveDao;
 import dsi.senior.repositories.MedicationDao;
 import dsi.senior.repositories.SeniorDao;
@@ -48,13 +50,16 @@ public class ArchiveController {
 		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
 	  	public ResponseEntity<String> updateArchive(
 	  		@RequestBody ArchiveSeniorRequest sa) {
+	  		Senior s=new Senior();
+	  		if(seniorDao.findById(sa.getSenior()).isPresent()) {
+	  			s= seniorDao.findById(sa.getSenior()).get();}
 	  		ArchiveSenior archive = new ArchiveSenior(
 	  				sa.getIdArch(),
 	  				sa.getDate(),
 	  				sa.isCheckedBreakfast(),
 	  				sa.isCheckedLunch(),
 	  				sa.isCheckedDinner(),
-	  				seniorDao.findById(sa.getSenior()).get());
+	  				s);
 	  		archiveServices.updateArchive(archive);
 	  		 
 	        
@@ -89,8 +94,17 @@ public class ArchiveController {
 		@ResponseBody
 		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
 		public void addMedicationDose(@RequestBody DoseTimeRequest doseTime) throws Exception{
-	  		DoseTime  doseT = new DoseTime(doseTime.getTime(),medDao.findById(doseTime.getMed()).get(),
-	  				archiveDao.findById(doseTime.getArch()).get(),
+	  		ArchiveSenior archive = new ArchiveSenior();
+	  		if (archiveDao.findById(doseTime.getArch()).isPresent()) {
+	  			archive =archiveDao.findById(doseTime.getArch()).get();
+	  		}
+	  		Medication med = new Medication();
+	  		if (medDao.findById(doseTime.getMed()).isPresent()) {
+	  			med = medDao.findById(doseTime.getMed()).get();
+	  		}
+	  		
+	  		DoseTime  doseT = new DoseTime(doseTime.getTime(),med,
+	  				archive,
 	  				doseTime.getRdose(),
 	  				doseTime.isDone());
 			  archiveServices.newDoseTime(doseT);

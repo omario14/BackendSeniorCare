@@ -37,7 +37,6 @@ public class JwtTokenUtil implements Serializable {
 
 	//retrieve expiration date from jwt token
 	public Date getExpirationDateFromToken(String token) {
-		System.out.println("MS Expr"+(System.currentTimeMillis()+JWT_TOKEN_VALIDITY * 1000));
 		return getClaimFromToken(token, Claims::getExpiration);
 	}
 
