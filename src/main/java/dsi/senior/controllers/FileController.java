@@ -24,7 +24,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
-@CrossOrigin("http://localhost:8081")
+@CrossOrigin
 public class FileController {
   @Autowired
   private FileStorageService storageService;
