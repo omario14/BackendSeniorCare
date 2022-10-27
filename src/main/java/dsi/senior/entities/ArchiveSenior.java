@@ -5,7 +5,6 @@ package dsi.senior.entities;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
@@ -51,9 +50,9 @@ public class ArchiveSenior {
 		this.checkedBreakfast = checkedBreakfast;
 		this.checkedLunch = checkedLunch;
 		this.checkedDinner = checkedDinner;
-		
 		this.senior = senior;
 	}
+	
 	public String getIdArch() {
 		return idArch;
 	}

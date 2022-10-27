@@ -54,14 +54,11 @@ public class MealController {
 	 @ResponseBody
 	 public void addMeal(@RequestBody mealRequest m) {
 		 Set<Long> ingredientsIds =  m.getIngredients();
-		 System.out.println("from frontEnd"+ingredientsIds);
 		 Set<Ingredients> ingredients =  new HashSet<>();
 		 
 		 ingredientsIds.forEach(ingId-> {
 		 Ingredients ingred = ingredientsService.getIngredientById(ingId);
-		 System.out.println("from backend"+ingId);
 		 ingredients.add(ingred);
-		 System.out.println("from backend"+ingred);
 		 });
 		 
 		Meal meal=new Meal(
@@ -110,8 +107,52 @@ public class MealController {
 	 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
 	 @ResponseBody
 		public void updateMeal(
-			@RequestBody Meal Meal,@PathVariable("idMeal")long idMeal) {
-		 mealService.updateMeal(Meal,idMeal);
+			@RequestBody mealRequest m,@PathVariable("idMeal")long idMeal) {
+		 Set<Long> ingredientsIds =  m.getIngredients();
+		 Set<Ingredients> ingredients =  new HashSet<>();
+		 
+		 ingredientsIds.forEach(ingId-> {
+		 Ingredients ingred = ingredientsService.getIngredientById(ingId);
+		 ingredients.add(ingred);
+		 });
+		 
+		Meal meal=new Meal(
+				m.getLabel(),
+				m.getDescription(),
+				m.getImage(),
+				ingredients);
+		String typeM = m.getType();
+		MealType type=new MealType();
+		
+		switch (typeM) {
+		
+		case "BREAKFAST":
+			MealType mtype1 = mealTypeDao.findBylabel(EMealType.BREAKFAST);
+			type=mtype1;
+			break;
+		case "DESSERTS":
+			MealType mtype2 = mealTypeDao.findBylabel(EMealType.DESSERTS);
+			type=mtype2;
+			break;
+		case "LUNCH":
+			MealType mtype3 = mealTypeDao.findBylabel(EMealType.LUNCH);
+			type=mtype3;
+			break;
+		case "DINNER":
+			MealType mtype4 = mealTypeDao.findBylabel(EMealType.DINNER);
+			type=mtype4;
+			break;
+		case "DRINKS":
+			MealType mtype5 = mealTypeDao.findBylabel(EMealType.DRINKS);
+			type=mtype5;
+			break;
+		default:
+			MealType mtype = mealTypeDao.findBylabel(EMealType.OTHER);
+			type=mtype;
+			break;
+		}
+		meal.setType(type);
+		 mealService.updateMeal(meal,idMeal);
 		    
 			
 		}

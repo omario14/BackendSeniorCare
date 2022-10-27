@@ -47,7 +47,6 @@ public class MenuController {
 		Set<Long> lunchMenuIds = m.getLunchMenu();
 		Set<Long> dinnerMenuIds = m.getDinnerMenu();
 
-		System.out.println("from frontEnd" + breakFastMenuIds);
 		Set<Meal> breakFastMenu = new HashSet<>();
 		Set<Meal> lunchMenu = new HashSet<>();
 		Set<Meal> dinnerMenu = new HashSet<>();
@@ -92,8 +91,30 @@ public class MenuController {
 	@PutMapping("/update-Menu/{idMenu}")
 	@Operation(security = { @SecurityRequirement(name = "bearer-key") })
 	@ResponseBody
-	public void updateMenu(@RequestBody Menu Menu, @PathVariable("idMenu") int idMenu) {
-		menuservice.updateMenu(Menu, idMenu);
+	public void updateMenu(@RequestBody MenuRequest m, @PathVariable("idMenu") int idMenu) {
+		Set<Long> breakFastMenuIds = m.getBreakfastMenu();
+		Set<Long> lunchMenuIds = m.getLunchMenu();
+		Set<Long> dinnerMenuIds = m.getDinnerMenu();
+
+		Set<Meal> breakFastMenu = new HashSet<>();
+		Set<Meal> lunchMenu = new HashSet<>();
+		Set<Meal> dinnerMenu = new HashSet<>();
+
+		breakFastMenuIds.forEach(mealId -> {
+			Meal meal = mealservice.getMealById(mealId);
+			breakFastMenu.add(meal);
+		});
+		lunchMenuIds.forEach(mealId -> {
+			Meal meal = mealservice.getMealById(mealId);
+			lunchMenu.add(meal);
+		});
+		dinnerMenuIds.forEach(mealId -> {
+			Meal meal = mealservice.getMealById(mealId);
+			dinnerMenu.add(meal);
+		});
+
+		Menu menu = new Menu(m.getDate(), breakFastMenu, lunchMenu, dinnerMenu);
+		menuservice.updateMenu(menu, idMenu);
 
 	}
 

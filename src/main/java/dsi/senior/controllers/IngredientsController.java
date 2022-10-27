@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import dsi.senior.entities.Ingredients;
+import dsi.senior.repositories.FileDBDao;
+import dsi.senior.repositories.IngredientsCategoriesDAO;
 import dsi.senior.services.IIngredientsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import request.IngredientRequest;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -25,13 +28,24 @@ public class IngredientsController {
 	
 	@Autowired
 	IIngredientsService ingredientsServices;
+	@Autowired
+	IngredientsCategoriesDAO ingredientCatDao;
+	@Autowired
+	FileDBDao fileDao;
 	
 	//creating post mapping method that insert ingredient into database
 		 @PostMapping("/add-ingredient")
 		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
 		 @ResponseBody
-		 public void addIngredient(@RequestBody Ingredients ing) {
-			    ingredientsServices.addIngredient(ing);
+		 public void addIngredient(@RequestBody IngredientRequest ing) {
+			 Ingredients ingredient = new Ingredients(
+					 ing.getId(),
+					 ing.getLabel(),
+					 ing.getDescription(),
+					 ing.isChecked(),
+					 fileDao.findById(ing.getFile()).get(),
+					 ingredientCatDao.findById(ing.getCategory()).get());
+			    ingredientsServices.addIngredient(ingredient);
 	
 		}
 		 
@@ -40,7 +54,14 @@ public class IngredientsController {
 		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
 		 @ResponseBody
 			public void updateIngredient(
-				@RequestBody Ingredients ingredient,@PathVariable("idIngredient")int idIngredient) {
+				@RequestBody IngredientRequest ing,@PathVariable("idIngredient")int idIngredient) {
+			 Ingredients ingredient = new Ingredients(
+					 ing.getId(),
+					 ing.getLabel(),
+					 ing.getDescription(),
+					 ing.isChecked(),
+					 fileDao.findById(ing.getFile()).get(),
+					 ingredientCatDao.findById(ing.getCategory()).get());
 			    ingredientsServices.updateIngredient(ingredient,idIngredient);
 			    
 				

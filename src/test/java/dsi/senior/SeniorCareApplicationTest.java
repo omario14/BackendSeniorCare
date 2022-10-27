@@ -2,38 +2,19 @@ package dsi.senior;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
 
 import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Order;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import dsi.senior.controllers.SeniorController;
-import dsi.senior.entities.ArchiveMedication;
-import dsi.senior.entities.ArchiveSenior;
-import dsi.senior.entities.EMealType;
-import dsi.senior.entities.IngredientsCategories;
 import dsi.senior.entities.Meal;
 import dsi.senior.entities.MealType;
 import dsi.senior.entities.Medication;
@@ -51,7 +32,6 @@ import dsi.senior.services.SeniorServiceImpl;
 import dsi.senior.services.SeniorServiceImpl.*;
 
 
-@DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class SeniorCareApplicationTest {
 

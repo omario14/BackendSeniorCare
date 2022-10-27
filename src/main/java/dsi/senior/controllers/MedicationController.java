@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import dsi.senior.entities.Medication;
+import dsi.senior.repositories.SeniorDao;
 import dsi.senior.services.IMedicationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import request.MedicationRequest;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -24,13 +26,22 @@ public class MedicationController {
 	
 	@Autowired
 	IMedicationService medicationService;
+	@Autowired
+	SeniorDao seniorDao;
 	
 	
 			// http://localhost:8081/api/addMedication
 			@PostMapping("/addMedication")
 			@ResponseBody
 			 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
-			public Medication addMedication(@RequestBody Medication medication) throws Exception{
+			public Medication addMedication(@RequestBody MedicationRequest m) throws Exception{
+				Medication medication = new Medication(
+						m.getLabel(),
+						m.getDose(),
+						m.getDoseType(),
+						m.getStartDate(),
+						m.getEndDate(),
+						seniorDao.findById(m.getSenior()).get());
 				 return medicationService.newMedication(medication);
 				
 			}
