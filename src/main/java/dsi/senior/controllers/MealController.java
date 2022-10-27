@@ -161,9 +161,9 @@ public class MealController {
 		@DeleteMapping("/delete-Meal/{idMeal}")
 		@Operation(security = {@SecurityRequirement(name = "bearer-key")})
 		@ResponseBody
-		public ResponseEntity<String>  deleteProduct(@PathVariable("idMeal")long idMeal) {
+		public ResponseEntity<String>  deleteMeal(@PathVariable("idMeal")long idMeal) {
 			mealService.deleteMeal(idMeal);
-		    return new ResponseEntity<String>("Meal deleted successfully",HttpStatus.ACCEPTED);
+		    return new ResponseEntity<>("Meal deleted successfully",HttpStatus.ACCEPTED);
 			
 		}
 		//creating a get mapping that retrieves all the Meal details from the database   
