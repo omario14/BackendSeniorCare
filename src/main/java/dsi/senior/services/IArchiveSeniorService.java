@@ -32,6 +32,9 @@ public interface IArchiveSeniorService {
 
 	void doseTimeDone(long idDose, boolean done);
 
-	List<DoseTime> getAllDoseTime(); 
+	List<DoseTime> getAllDoseTime();
+	
+	/***************Creating reminderDose method to change IsReminded Status in the database **************/
+	void reminderDose(long idDose, boolean remind); 
 
 }

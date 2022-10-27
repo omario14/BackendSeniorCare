@@ -100,6 +100,7 @@ public class ArchiveSeniorServiceImpl implements IArchiveSeniorService {
 
 	@Override
 	public void newDoseTime(DoseTime dose) {
+		dose.setReminded(false);
 		doseTimeDao.save(dose);
 	}
 
@@ -117,7 +118,13 @@ public class ArchiveSeniorServiceImpl implements IArchiveSeniorService {
 		dose.setDone(done);
 		doseTimeDao.save(dose);
 	}
-	
+
+	@Override
+	public void reminderDose(long idDose,boolean remind) {
+		DoseTime dose= doseTimeDao.findById(idDose).get();
+		dose.setReminded(remind);
+		doseTimeDao.save(dose);
+	}
 
 	
 

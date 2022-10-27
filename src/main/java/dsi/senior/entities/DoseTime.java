@@ -19,6 +19,7 @@ public class DoseTime {
 	private Medication med;
 	private int rdose;
 	public boolean isDone;
+	private boolean isReminded;
 	
 	public DoseTime() {
 		
@@ -82,6 +83,14 @@ public class DoseTime {
 
 	public void setDone(boolean isDone) {
 		this.isDone = isDone;
+	}
+
+	public boolean isReminded() {
+		return isReminded;
+	}
+
+	public void setReminded(boolean isReminded) {
+		this.isReminded = isReminded;
 	}
 
 	

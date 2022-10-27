@@ -84,7 +84,6 @@ public class ArchiveController {
 	  	
 	  	@PutMapping("/doseTimeDone/{idDose}/{done}")
 	  	@ResponseBody
-		
 	  	public ResponseEntity<String> doseTimeDone(@PathVariable("idDose")long idDose,@PathVariable("done") boolean done) {
 			
 	  		archiveServices.doseTimeDone(idDose,done);
@@ -92,6 +91,16 @@ public class ArchiveController {
 	  		
 	  	}
 	  	
+	  	
+	  	@PutMapping("/reminderDose/{idDose}/{remind}")
+	  	@ResponseBody
+	  	@Operation(security = {@SecurityRequirement(name = "bearer-key")})
+	  	public ResponseEntity<String> reminderDose(@PathVariable("idDose")long idDose,@PathVariable("remind") boolean remind) {
+			
+	  		archiveServices.reminderDose(idDose,remind);
+	  	    return new ResponseEntity<String>("This dose is Reminded",HttpStatus.OK);
+	  		
+	  	}
 	  	
 	 
 }
