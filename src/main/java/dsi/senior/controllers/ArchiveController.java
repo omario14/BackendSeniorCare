@@ -17,12 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dsi.senior.entities.ArchiveSenior;
 import dsi.senior.entities.DoseTime;
+import dsi.senior.repositories.ArchiveDao;
+import dsi.senior.repositories.MedicationDao;
 import dsi.senior.repositories.SeniorDao;
 import dsi.senior.services.ArchiveMedServiceImpl;
 import dsi.senior.services.IArchiveSeniorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import request.ArchiveSeniorRequest;
+import request.DoseTimeRequest;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -32,6 +35,10 @@ public class ArchiveController {
 	IArchiveSeniorService archiveServices;
 	@Autowired
 	ArchiveMedServiceImpl archmedService;
+	@Autowired
+	ArchiveDao archiveDao;
+	@Autowired
+	MedicationDao medDao;
 	@Autowired
 	SeniorDao  seniorDao;
 		
@@ -81,8 +88,12 @@ public class ArchiveController {
 	  	@PostMapping("/addDoseTime")
 		@ResponseBody
 		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
-		public void addMedicationDose(@RequestBody DoseTime doseTime) throws Exception{
-			  archiveServices.newDoseTime(doseTime);
+		public void addMedicationDose(@RequestBody DoseTimeRequest doseTime) throws Exception{
+	  		DoseTime  doseT = new DoseTime(doseTime.getTime(),medDao.findById(doseTime.getMed()).get(),
+	  				archiveDao.findById(doseTime.getArch()).get(),
+	  				doseTime.getRdose(),
+	  				doseTime.isDone());
+			  archiveServices.newDoseTime(doseT);
 			
 		}
 	  	
