@@ -22,7 +22,7 @@ import dsi.senior.services.IArchiveSeniorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class ArchiveController {
 

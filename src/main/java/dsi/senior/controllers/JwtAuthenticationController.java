@@ -49,7 +49,7 @@ import request.MailRequest;
 import request.SignupRequest;
 import request.SmsRequest;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping
 public class JwtAuthenticationController {
