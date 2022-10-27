@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dsi.senior.entities.ArchiveSenior;
 import dsi.senior.entities.DoseTime;
+import dsi.senior.repositories.SeniorDao;
 import dsi.senior.services.ArchiveMedServiceImpl;
 import dsi.senior.services.IArchiveSeniorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import request.ArchiveSeniorRequest;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -30,15 +32,23 @@ public class ArchiveController {
 	IArchiveSeniorService archiveServices;
 	@Autowired
 	ArchiveMedServiceImpl archmedService;
-	
+	@Autowired
+	SeniorDao  seniorDao;
 		
 		// http://localhost:8081/api/updateArchive
 	  	@PutMapping("/updateArchive")
 	  	@ResponseBody
 		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
 	  	public ResponseEntity<String> updateArchive(
-	  		@RequestBody ArchiveSenior sa) {
-	  		archiveServices.updateArchive(sa);
+	  		@RequestBody ArchiveSeniorRequest sa) {
+	  		ArchiveSenior archive = new ArchiveSenior(
+	  				sa.getIdArch(),
+	  				sa.getDate(),
+	  				sa.isCheckedBreakfast(),
+	  				sa.isCheckedLunch(),
+	  				sa.isCheckedDinner(),
+	  				seniorDao.findById(sa.getSenior()).get());
+	  		archiveServices.updateArchive(archive);
 	  		 
 	        
 	  	    return new ResponseEntity<String>("Archive updated successfully",HttpStatus.OK);
