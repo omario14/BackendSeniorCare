@@ -46,12 +46,18 @@ public class SymptomServiceImpl implements ISymptomsService {
 
 	@Override
 	public BodyParts findBodyPartById(long body_id) {
-		return  bodypartsRepo.findById(body_id).get();
+		BodyParts bd = new BodyParts();
+		if(!bodypartsRepo.findById(body_id).isPresent()) {
+			bd =bodypartsRepo.findById(body_id).get();
+		}else{
+			throw new RuntimeException("Body Part not found"); 
+		}
+		return  bd;
 	}
 
 	@Override
 	public List<Symptoms> findSymptomsByPartId(long body_id) {
-		BodyParts bodyPart = bodypartsRepo.findById(body_id).get();
+		BodyParts bodyPart = findBodyPartById(body_id);
 		return aa.findSymptomByBodyParts(bodyPart);
 	}
 

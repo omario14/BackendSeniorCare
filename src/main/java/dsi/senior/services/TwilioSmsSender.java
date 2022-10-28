@@ -44,7 +44,7 @@ public class TwilioSmsSender implements SmsSender {
 	}
 
 	public boolean isPhoneNumberValid(String phoneNumber) {
-		if (8<phoneNumber.length() && phoneNumber.length() < 16) {
+		if (7<phoneNumber.length() && phoneNumber.length() < 16) {
 		return true;
 		}else {
 			return false;
