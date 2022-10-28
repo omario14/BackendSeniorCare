@@ -12,7 +12,7 @@ public class TwilioConfig {
 	private String trialNumber;
 	
 	public TwilioConfig() {
-		
+		//this is a constructor
 	}
 	public String getAccountSid() {
 		return accountSid;
