@@ -2,6 +2,7 @@ package dsi.senior;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.text.DecimalFormat;
 
@@ -12,6 +13,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import dsi.senior.entities.Meal;
 import dsi.senior.entities.Senior;
@@ -21,7 +23,7 @@ import dsi.senior.repositories.SeniorDao;
 import dsi.senior.services.SeniorServiceImpl;
 import dsi.senior.services.TwilioSmsSender;
 
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@SpringBootTest
 public class SeniorCareApplicationTest {
 
 	SeniorServiceImpl seniorServiceImpls = new SeniorServiceImpl();
@@ -54,7 +56,7 @@ public class SeniorCareApplicationTest {
 
 		senior1.setId(2023);
 		senior3.setId(2022);
-
+		senior3.setTelephone("51589453");
 		meal = new Meal();
 		meal.setId(2022);
 		meal.setLabel("Ma9rounna");
@@ -110,7 +112,7 @@ public class SeniorCareApplicationTest {
 	@Order(6)
 	public void testIsPhoneNumberValid() {
 			boolean isNum = twilioSmsSender.isPhoneNumberValid(senior3.getTelephone());		 
-		assertEquals(true,isNum);
+		assertTrue(isNum);
 		
 		if (isNum=true) {
 			 
