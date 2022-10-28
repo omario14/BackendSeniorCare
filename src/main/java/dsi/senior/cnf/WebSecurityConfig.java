@@ -30,9 +30,6 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-
-	@Autowired
 	private UserDetailsService jwtUserDetailsService;
 
 	@Autowired
