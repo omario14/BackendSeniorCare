@@ -2,7 +2,6 @@ package dsi.senior;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.text.DecimalFormat;
 
@@ -111,7 +110,7 @@ public class SeniorCareApplicationTest {
 	@Order(6)
 	public void testIsPhoneNumberValid() {
 			boolean isNum = twilioSmsSender.isPhoneNumberValid(senior3.getTelephone());		 
-		assertTrue(isNum);
+		assertEquals(true,isNum);
 		
 		if (isNum=true) {
 			 
