@@ -211,15 +211,23 @@ public String getEmail() {
     return true;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-    if (o == null || getClass() != o.getClass())
-      return false;
-    UserDetailsImpl user = (UserDetailsImpl) o;
-    return Objects.equals(id, user.id);
-  }
+  
+  
+
+@Override
+public int hashCode() {
+	return Objects.hash(adress, authorities, connected, email, gender, id, lastName, mobile, name, password, picture,
+			roles, username);
+}
+@Override
+public boolean equals(Object o) {
+  if (this == o)
+    return true;
+  if (o == null || getClass() != o.getClass())
+    return false;
+  UserDetailsImpl user = (UserDetailsImpl) o;
+  return Objects.equals(id, user.id);
+}
 
 public Boolean getConnected() {
 	return connected;

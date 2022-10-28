@@ -26,7 +26,13 @@ public class SymptomServiceImpl implements ISymptomsService {
 
 	@Override
 	public Symptoms retrieveSymptomById(long id) {
-		Symptoms symp = aa.findById(id).get();
+		Symptoms symp =new Symptoms();
+		if(!aa.findById(id).isEmpty()) {
+			 symp = aa.findById(id).get();
+		}else {
+			throw new RuntimeException("Symptom not found");
+		}
+	
 		return symp;
 	}
 

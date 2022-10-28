@@ -43,8 +43,11 @@ public class TwilioSmsSender implements SmsSender {
 		
 	}
 
-	private boolean isPhoneNumberValid(String phoneNumber) {
-		//TODO: Implement phone number validator
+	public boolean isPhoneNumberValid(String phoneNumber) {
+		if (8<phoneNumber.length() && phoneNumber.length() < 16) {
 		return true;
+		}else {
+			return false;
+		}
 	}
 }
