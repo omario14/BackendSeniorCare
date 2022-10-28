@@ -1,23 +1,17 @@
 package dsi.senior.services;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import dsi.senior.entities.ArchiveSenior;
-import dsi.senior.entities.Menu;
 import dsi.senior.entities.Senior;
 import dsi.senior.repositories.ArchiveDao;
 import dsi.senior.repositories.ArchiveMedsDao;
@@ -80,21 +74,7 @@ public class SeniorServiceImpl implements ISeniorServiceImpl {
 	public void updateSenior(Senior s, long idSenior) {
 		Senior sa = seniorDao.findById(idSenior).get();
 
-		Date currentUtilDate = new Date();
-		String strDateFormat = "yyyy-MM-dd";
-		DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
-		String formattedDate = dateFormat.format(currentUtilDate);
 
-		Menu men = menuDao.findMenuByDate(formattedDate);
-
-		if (s.isCheckedBreakfast() && s.isCheckedDinner() && s.isCheckedLunch()) {
-			Set<Menu> menusList = s.getMenus();
-			menusList.add(men);
-			sa.setMenus(menusList);
-
-		} else {
-			sa.setMenus(s.getMenus());
-		}
 
 		sa.setName(s.getName());
 		sa.setLastname(s.getLastname());
@@ -159,22 +139,7 @@ public class SeniorServiceImpl implements ISeniorServiceImpl {
 
 	}
 
-	@Override
-	public void addMenuSenior(long idSenior) {
-		Date currentUtilDate = new Date();
-		String strDateFormat = "yyyy-MM-dd";
-		DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
-		String formattedDate = dateFormat.format(currentUtilDate);
-
-		Senior s = seniorDao.findById(idSenior).get();
-		Menu men = menuDao.findMenuByDate(formattedDate);
-
-		Set<Menu> menusList = s.getMenus();
-		menusList.add(men);
-		s.setMenus(menusList);
-		seniorDao.save(s);
-
-	}
+	
 
 	@Override
 	public double calculBMI(double weight, double height) {

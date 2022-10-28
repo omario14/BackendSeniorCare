@@ -10,7 +10,6 @@ public interface ISeniorServiceImpl   {
 	public void deleteSenior(long id);
 	public void updateSenior(Senior s,long idSenior);
 	public List<Senior> retrieveAllSenior();
-	public void  addMenuSenior(long idSenior);
 	public Senior retrieveSeniorById (long id);
 	public double calculBMI (double weight,double height);
 	public Senior findSeniorByName(String name);	
