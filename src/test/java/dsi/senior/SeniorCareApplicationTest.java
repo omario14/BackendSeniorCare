@@ -110,12 +110,12 @@ public class SeniorCareApplicationTest {
 	
 	@Test
 	@Order(6)
-	public void testPhoneNumberValid() throws Exception {
+	public void testPhoneNumber() throws Exception {
 
 			boolean isNum = twilioSmsSender.isPhoneNumberValid("515894537");		 
 		assertTrue(isNum);
 		
-		if (isNum=true) {
+		if (isNum==true) {
 			 
 			l.info(senior3.getTelephone()+" isValid"); } else { l.warn(senior3.getTelephone()+" is inValid");
 
