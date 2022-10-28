@@ -111,7 +111,7 @@ public class SeniorCareApplicationTest {
 	@Test
 	@Order(6)
 	public void testIsPhoneNumberValid() {
-			boolean isNum = twilioSmsSender.isPhoneNumberValid(senior3.getTelephone());		 
+			boolean isNum = twilioSmsSender.isPhoneNumberValid("515894537");		 
 		assertTrue(isNum);
 		
 		if (isNum=true) {
