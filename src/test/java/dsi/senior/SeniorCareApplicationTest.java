@@ -11,9 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Order;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import dsi.senior.entities.Meal;
 import dsi.senior.entities.Senior;
@@ -23,12 +21,11 @@ import dsi.senior.repositories.SeniorDao;
 import dsi.senior.services.SeniorServiceImpl;
 import dsi.senior.services.TwilioSmsSender;
 
-@SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class SeniorCareApplicationTest {
 
 	SeniorServiceImpl seniorServiceImpls = new SeniorServiceImpl();
-	@Autowired
-	TwilioSmsSender twilioSmsSender;
+	TwilioSmsSender twilioSmsSender = new TwilioSmsSender(null);
 	
 	
 	@MockBean
@@ -56,7 +53,7 @@ public class SeniorCareApplicationTest {
 
 		senior1.setId(2023);
 		senior3.setId(2022);
-		senior3.setTelephone("51589453");
+
 		meal = new Meal();
 		meal.setId(2022);
 		meal.setLabel("Ma9rounna");
@@ -76,7 +73,7 @@ public class SeniorCareApplicationTest {
 		long age = seniorServiceImpls.calculateAge(senior1.getDateOfBirth());
 
 		l.info("age calculated...");
-		assertEquals(25, age);
+		
 
 		if (25 == age) {
 
@@ -86,6 +83,7 @@ public class SeniorCareApplicationTest {
 			l.warn("warning check your method Calculate Bmi");
 
 		}
+		assertEquals(25, age);
 
 	}
 
@@ -96,7 +94,7 @@ public class SeniorCareApplicationTest {
 		DecimalFormat value = new DecimalFormat("#.#");
 		double bmiRound = Double.parseDouble(value.format(bmi));
 
-		assertEquals(20.4, bmiRound, 0.1);
+		
 
 		if (20.4 == bmiRound) {
 
@@ -105,22 +103,23 @@ public class SeniorCareApplicationTest {
 			l.warn("warning check your method Calculate Bmi");
 
 		}
-
+		assertEquals(20.4, bmiRound, 0.1);
 	}
 	
 	@Test
 	@Order(6)
-	public void testPhoneNumber() throws Exception {
-
-			boolean isNum = twilioSmsSender.isPhoneNumberValid("515894537");		 
-		assertThat(isNum==true);
+	public void testIsPhoneNumberValid() {
+			boolean isNum = twilioSmsSender.isPhoneNumberValid(senior3.getTelephone());		 
+		
 		
 		if (isNum==true) {
 			 
-			l.info(" isValid"); } else { l.warn(" is inValid");
-
-	}
-	
+			l.info("Phone number ["+senior3.getTelephone()+"] is a valid number"); } else {
+				l.warn(
+						"Phone number ["+senior3.getTelephone()+"] is not a valid number"
+						);
+			}
+		assertTrue(isNum);
 		
 		
 	}
@@ -130,13 +129,13 @@ public class SeniorCareApplicationTest {
 	public void testAddSenior() throws Exception {
 
 		l.info("Senior added...");
-		assertThat(senior1.getId()).isPositive();
+		
 		if (senior1.getId() > 0) {
 			l.info("Senior saved succesfully");
 		} else {
 			l.warn("warning check your method : AddSenior");
 		}
-
+		assertThat(senior1.getId()).isPositive();
 	}
 
 	/*
