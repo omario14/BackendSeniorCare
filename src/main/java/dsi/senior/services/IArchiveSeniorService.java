@@ -19,13 +19,14 @@ public interface IArchiveSeniorService {
 	
 	/***************Creating getAll method that retrieve all ArchiveSenior from database **************/
 	List<ArchiveSenior> getAllArchives();
+	
 
 	/**************Creating getByid method that retrieve ArchiveSenior detail from database************/
 	Set<ArchiveSenior> getArchiveSeniorBySenior(long idSenior);
 	
 
 	/***************Creating getAll ArchiveSenior by category method from database **************/
-	List<ArchiveSenior> getArchiveSeniorByCategory(String categoryName);
+	ArchiveSenior getArchiveSeniorById(String id);
 
 	void newDoseTime(DoseTime dose);
 	Set<DoseTime> getDoseTimeByArchive(String idarch,long idmed);
@@ -36,5 +37,7 @@ public interface IArchiveSeniorService {
 	
 	/***************Creating reminderDose method to change IsReminded Status in the database **************/
 	void reminderDose(long idDose, boolean remind); 
+	
+	void deleteDoseTime (long idDose);
 
 }

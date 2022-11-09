@@ -22,7 +22,6 @@ import dsi.senior.repositories.SeniorDao;
 import dsi.senior.services.ISeniorServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import request.SeniorRequest;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -37,21 +36,9 @@ public class SeniorController {
 	@PostMapping("/addSenior")
 	@ResponseBody
 	@Operation(security = { @SecurityRequirement(name = "bearer-key") })
-	public Senior addSenior(@RequestBody SeniorRequest s) throws Exception {
-		Senior senior = new Senior(
-				s.getName(),
-				s.getLastname(),
-				s.getDateOfBirth(),
-				s.getSex(),
-				s.getCin(),
-				s.getTelephone(),
-				s.getAdress(),
-				s.getFamillySituation(),
-				s.getCenterOfInterest(),
-				s.getFileId(),
-				s.getWeight(),
-				s.getHeight());
-		return seniorServiceImpl.addSenior(senior);
+	public Senior addSenior(@RequestBody Senior s) throws Exception {
+	
+		return seniorServiceImpl.addSenior(s);
 
 	}
 
@@ -67,21 +54,8 @@ public class SeniorController {
 	@PutMapping("/updateSenior/{idSenior}")
 	@ResponseBody
 	@Operation(security = { @SecurityRequirement(name = "bearer-key") })
-	public ResponseEntity<String> updateSenior(@RequestBody SeniorRequest s, @PathVariable("idSenior") int idSenior) {
-		Senior senior = new Senior(
-				s.getName(),
-				s.getLastname(),
-				s.getDateOfBirth(),
-				s.getSex(),
-				s.getCin(),
-				s.getTelephone(),
-				s.getAdress(),
-				s.getFamillySituation(),
-				s.getCenterOfInterest(),
-				s.getFileId(),
-				s.getWeight(),
-				s.getHeight());
-		seniorServiceImpl.updateSenior(senior, idSenior);
+	public ResponseEntity<String> updateSenior(@RequestBody Senior s, @PathVariable("idSenior") long idSenior) {
+		seniorServiceImpl.updateSenior(s, idSenior);
 		return new ResponseEntity<>("Senior updated successfully", HttpStatus.OK);
 
 	}

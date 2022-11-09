@@ -42,6 +42,13 @@ public class mealRequest {
 	public void setIngredients(Set<Long> ingredients) {
 		this.ingredients = ingredients;
 	}
+	@Override
+	public String toString() {
+		return "mealRequest [label=" + label + ", description=" + description + ", image=" + image + ", ingredients="
+				+ ingredients + ", type=" + type + "]";
+	}
+	
+	
 	
 	
 

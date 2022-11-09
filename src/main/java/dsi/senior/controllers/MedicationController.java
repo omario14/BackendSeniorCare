@@ -18,7 +18,6 @@ import dsi.senior.repositories.SeniorDao;
 import dsi.senior.services.IMedicationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import request.MedicationRequest;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -34,17 +33,12 @@ public class MedicationController {
 			@PostMapping("/addMedication")
 			@ResponseBody
 			 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
-			public Medication addMedication(@RequestBody MedicationRequest m) throws Exception{
-				Medication medication = new Medication(
-						m.getLabel(),
-						m.getDose(),
-						m.getDoseType(),
-						m.getStartDate(),
-						m.getEndDate(),
-						seniorDao.findById(m.getSenior()).get());
+			public Medication addMedication(@RequestBody Medication medication) throws Exception{
 				 return medicationService.newMedication(medication);
 				
 			}
+			
+
 			
 			
 			
@@ -63,7 +57,6 @@ public class MedicationController {
 		  	@ResponseBody
 		  	@Operation(security = {@SecurityRequirement(name = "bearer-key")})
 		  	public Set<Medication>  getMedicationsBySenior(@PathVariable("idSenior") long idSenior) {
-		  		System.out.println("idSenior"+idSenior);
 		  		return medicationService.getMedicationBySenior(idSenior);
 		  	}
 		  	

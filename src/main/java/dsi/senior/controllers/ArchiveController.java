@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dsi.senior.entities.ArchiveSenior;
 import dsi.senior.entities.DoseTime;
-import dsi.senior.entities.Medication;
-import dsi.senior.entities.Senior;
 import dsi.senior.repositories.ArchiveDao;
 import dsi.senior.repositories.MedicationDao;
 import dsi.senior.repositories.SeniorDao;
@@ -26,8 +24,6 @@ import dsi.senior.services.ArchiveMedServiceImpl;
 import dsi.senior.services.IArchiveSeniorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import request.ArchiveSeniorRequest;
-import request.DoseTimeRequest;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -44,30 +40,30 @@ public class ArchiveController {
 	@Autowired
 	SeniorDao  seniorDao;
 		
-		// http://localhost:8081/api/updateArchive
-	  	@PutMapping("/updateArchive")
-	  	@ResponseBody
-		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
-	  	public ResponseEntity<String> updateArchive(
-	  		@RequestBody ArchiveSeniorRequest sa) {
-	  		Senior s=new Senior();
-	  		if(seniorDao.findById(sa.getSenior()).isPresent()) {
-	  			s= seniorDao.findById(sa.getSenior()).get();}
-	  		ArchiveSenior archive = new ArchiveSenior(
-	  				sa.getIdArch(),
-	  				sa.getDate(),
-	  				sa.isCheckedBreakfast(),
-	  				sa.isCheckedLunch(),
-	  				sa.isCheckedDinner(),
-	  				s);
-	  		archiveServices.updateArchive(archive);
-	  		 
-	        
-	  	    return new ResponseEntity<String>("Archive updated successfully",HttpStatus.OK);
-	  		
-	  	}
-	 
-	  	
+
+	// http://localhost:8081/api/updateArchive
+  	@PutMapping("/updateArchive")
+  	@ResponseBody
+	 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
+  	public ResponseEntity<String> updateArchive(
+  		@RequestBody ArchiveSenior sa) {
+  		archiveServices.updateArchive(sa);
+  		 
+        
+  	    return new ResponseEntity<String>("Archive updated successfully",HttpStatus.OK);
+  		
+  	}
+ 
+  	
+
+  //creating a get mapping that retrieves all categories from database.
+  	@GetMapping("/getarchives-byId/{idarch}")
+  	@ResponseBody
+  	public ArchiveSenior  getArchiveById(@PathVariable("idarch")String idarch) {
+  		
+  		
+  		return archiveServices.getArchiveSeniorById(idarch);
+  	}
 	  	
 	  	
 	  //creating a get mapping that retrieves all categories from database.
@@ -93,23 +89,11 @@ public class ArchiveController {
 	  	@PostMapping("/addDoseTime")
 		@ResponseBody
 		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
-		public void addMedicationDose(@RequestBody DoseTimeRequest doseTime) throws Exception{
-	  		ArchiveSenior archive = new ArchiveSenior();
-	  		if (archiveDao.findById(doseTime.getArch()).isPresent()) {
-	  			archive =archiveDao.findById(doseTime.getArch()).get();
-	  		}
-	  		Medication med = new Medication();
-	  		if (medDao.findById(doseTime.getMed()).isPresent()) {
-	  			med = medDao.findById(doseTime.getMed()).get();
-	  		}
-	  		
-	  		DoseTime  doseT = new DoseTime(doseTime.getTime(),med,
-	  				archive,
-	  				doseTime.getRdose(),
-	  				doseTime.isDone());
-			  archiveServices.newDoseTime(doseT);
+		public void addMedicationDose(@RequestBody DoseTime doseTime) throws Exception{
+			  archiveServices.newDoseTime(doseTime);
 			
 		}
+
 	  	
 	  	 // http://localhost:8081/api/getDoseTimeByArch
 	  	@GetMapping("/getDoseTimeByArch/{idarch}/{idmed}")
@@ -131,13 +115,22 @@ public class ArchiveController {
 	  	
 	  	@PutMapping("/reminderDose/{idDose}/{remind}")
 	  	@ResponseBody
-	  	@Operation(security = {@SecurityRequirement(name = "bearer-key")})
 	  	public ResponseEntity<String> reminderDose(@PathVariable("idDose")long idDose,@PathVariable("remind") boolean remind) {
 			
 	  		archiveServices.reminderDose(idDose,remind);
 	  	    return new ResponseEntity<String>("This dose is Reminded",HttpStatus.OK);
 	  		
 	  	}
+	  	
+	  	 // http://localhost:8081/api/deleteDoseTime
+	  	@GetMapping("/deleteDoseTime/{idDose}")
+	  	@ResponseBody
+	  	@Operation(security = {@SecurityRequirement(name = "bearer-key")})
+	  	public ResponseEntity<String>  deleteDoseTime(@PathVariable("idDose") long idDose) {
+	  		 archiveServices.deleteDoseTime(idDose);
+	  		return new ResponseEntity<String>("This dose is deleted",HttpStatus.OK);
+	  	}
+
 	  	
 	 
 }

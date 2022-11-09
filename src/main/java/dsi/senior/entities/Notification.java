@@ -1,22 +1,39 @@
 package dsi.senior.entities;
 
-public class Notification {
+import java.io.Serializable;
 
-	 private String senderName;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Notification implements Serializable{
+
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1085259957493505843L;
+	
+		@Id
+		@GeneratedValue(strategy = GenerationType.AUTO)
+		private long id;
+	 	private String senderName;
 	    private String receiverName;
 	    private String message;
 	    private String date;
+	    private String type;
 	    
 	    public Notification() {
 	    	
 	    }
 	    
-    public Notification(String senderName, String receiverName, String message, String date) {
+    public Notification(String senderName, String message, String date, String type) {
 			super();
 			this.senderName = senderName;
-			this.receiverName = receiverName;
 			this.message = message;
 			this.date = date;
+			this.setType(type);
 		}
 
     
@@ -50,6 +67,22 @@ public class Notification {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	

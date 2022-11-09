@@ -53,6 +53,7 @@ public class MealController {
 	 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
 	 @ResponseBody
 	 public void addMeal(@RequestBody mealRequest m) {
+		 System.out.println(m.toString()+"meme");
 		 Set<Long> ingredientsIds =  m.getIngredients();
 		 Set<Ingredients> ingredients =  new HashSet<>();
 		 
@@ -157,15 +158,7 @@ public class MealController {
 			
 		}
 		
-	  //creating a delete mapping that delete data from database
-		@DeleteMapping("/delete-Meal/{idMeal}")
-		@Operation(security = {@SecurityRequirement(name = "bearer-key")})
-		@ResponseBody
-		public ResponseEntity<String>  deleteMeal(@PathVariable("idMeal")long idMeal) {
-			mealService.deleteMeal(idMeal);
-		    return new ResponseEntity<>("Meal deleted successfully",HttpStatus.ACCEPTED);
-			
-		}
+	  
 		//creating a get mapping that retrieves all the Meal details from the database   
 		@GetMapping("/get-all-Meal")
 		@Operation(security = {@SecurityRequirement(name = "bearer-key")})

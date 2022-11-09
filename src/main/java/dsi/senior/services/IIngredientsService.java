@@ -25,15 +25,6 @@ public interface IIngredientsService  {
 	/***************Creating getAll Ingredient by category method from database **************/
 	List<Ingredients> getIngredientsByCategory(String categoryName);
 	
-	int checkExpirationDate(Ingredients p) ;
-
-	/***************Creating getAll method that retrieve all Ingredient from database **************/
-	List<Ingredients> getAllIngredients(int pageNo, int pageSize);
 	
-	public int findCategoryByIngredient(int idp);
-	
-	List<Ingredients> getAllIngredientsByPopularity();
-
-	boolean checkBarCode(String s);
 
 }

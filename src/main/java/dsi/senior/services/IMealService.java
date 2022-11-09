@@ -12,10 +12,7 @@ public interface IMealService {
 	/****************Creating update method that upgrade Meal from database*****************/
 	void updateMeal(Meal m, long idMeal);
 
-	/*******************Creating deleting method that remove Meal by id  from database
-	 * @return *********/
-	long deleteMeal(long idMeal);
-	
+
 	/***************Creating getAll method that retrieve all Meal from database **************/
 	List<Meal> getAllMeals();
 

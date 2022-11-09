@@ -60,34 +60,6 @@ public class IngredientsServiceImpl implements IIngredientsService {
 		
 	}
 
-	@Override
-	public int checkExpirationDate(Ingredients p) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
-	@Override
-	public List<Ingredients> getAllIngredients(int pageNo, int pageSize) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int findCategoryByIngredient(int idp) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<Ingredients> getAllIngredientsByPopularity() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean checkBarCode(String s) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 }

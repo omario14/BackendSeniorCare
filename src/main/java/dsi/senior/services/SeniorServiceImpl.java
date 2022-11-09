@@ -15,6 +15,8 @@ import dsi.senior.entities.ArchiveSenior;
 import dsi.senior.entities.Senior;
 import dsi.senior.repositories.ArchiveDao;
 import dsi.senior.repositories.ArchiveMedsDao;
+import dsi.senior.repositories.DoseTimeDao;
+import dsi.senior.repositories.MedicationDao;
 import dsi.senior.repositories.MenuDao;
 import dsi.senior.repositories.SeniorDao;
 
@@ -27,6 +29,10 @@ public class SeniorServiceImpl implements ISeniorServiceImpl {
 	MenuDao menuDao;
 	@Autowired
 	ArchiveDao archDao;
+	@Autowired
+	DoseTimeDao doseTimeDao;
+	@Autowired
+	MedicationDao medicationDao;
 	@Autowired
 	FileStorageService fileDao;
 	@Autowired
@@ -59,9 +65,11 @@ public class SeniorServiceImpl implements ISeniorServiceImpl {
 
 		archives.forEach(d -> {
 			archmedsDao.deleteArchiveMedicationByArchive(d);
+			medicationDao.deleteMedicationBySenior(d.getSenior());
+			doseTimeDao.deleteDoseTimeByArch(d);
 			archDao.deleteById(d.getIdArch());
 		});
-		if(!senior.getFile().isEmpty()) {
+		if(!senior.getFile().isEmpty()|| senior.getFile()!=null) {
 			fileDao.deleteFile(senior.getFile());
 		}
 		
@@ -184,11 +192,10 @@ public class SeniorServiceImpl implements ISeniorServiceImpl {
 			listAge.add(calculateAge(d));
 			
 		});
-		System.out.println("age" + listAge);
+		
 		Map<Integer, Long> frequencyMap = listAge.stream()
 				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
-		System.out.println("frequency" + frequencyMap);
 		return frequencyMap;
 
 	}

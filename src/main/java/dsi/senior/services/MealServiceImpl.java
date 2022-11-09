@@ -35,11 +35,7 @@ public class MealServiceImpl implements IMealService {
 		
 	}
 
-	@Override
-	public long deleteMeal(long idMeal) {
-		mealRepository.deleteById(idMeal);
-		return idMeal;
-	}
+	
 
 	@Override
 	public List<Meal> getAllMeals() {

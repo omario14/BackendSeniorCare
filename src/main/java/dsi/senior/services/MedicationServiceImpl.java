@@ -56,7 +56,9 @@ public class MedicationServiceImpl implements IMedicationService {
 	
 	@Override
 	public void deleteMedication(long idmed) {
+		
 		Medication med= medDao.findById(idmed).get();
+		doseTimeDao.deleteDoseTimeByMed(med);
 		 archiveMedDao.deleteNombreEmployeJPQL(med);
 		medDao.deleteById(idmed);
 		

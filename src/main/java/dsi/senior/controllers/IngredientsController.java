@@ -14,15 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import dsi.senior.entities.FileDB;
 import dsi.senior.entities.Ingredients;
-import dsi.senior.entities.IngredientsCategories;
 import dsi.senior.repositories.FileDBDao;
 import dsi.senior.repositories.IngredientsCategoriesDAO;
 import dsi.senior.services.IIngredientsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import request.IngredientRequest;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -39,23 +36,8 @@ public class IngredientsController {
 		 @PostMapping("/add-ingredient")
 		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
 		 @ResponseBody
-		 public void addIngredient(@RequestBody IngredientRequest ing) {
-			 FileDB file = new FileDB();
-			 if(fileDao.findById(ing.getFile()).isPresent()) {
-				 file=fileDao.findById(ing.getFile()).get();
-			 }
-			 IngredientsCategories ingredientCat = new IngredientsCategories();
-			 if(ingredientCatDao.findById(ing.getCategory()).isPresent()) {
-				ingredientCat= ingredientCatDao.findById(ing.getCategory()).get();
-			 }
-			 Ingredients ingredient = new Ingredients(
-					 ing.getId(),
-					 ing.getLabel(),
-					 ing.getDescription(),
-					 ing.isChecked(),
-					 file,
-					 ingredientCat);
-			    ingredientsServices.addIngredient(ingredient);
+		 public void addIngredient(@RequestBody Ingredients ing) {
+			 ingredientsServices.addIngredient(ing);
 	
 		}
 		 
@@ -64,26 +46,12 @@ public class IngredientsController {
 		 @Operation(security = {@SecurityRequirement(name = "bearer-key")})
 		 @ResponseBody
 			public void updateIngredient(
-				@RequestBody IngredientRequest ing,@PathVariable("idIngredient")int idIngredient) {
-			 FileDB file = new FileDB();
-			 if(fileDao.findById(ing.getFile()).isPresent()) {
-				 file=fileDao.findById(ing.getFile()).get();
-			 }
-			 IngredientsCategories ingredientCat = new IngredientsCategories();
-			 if(ingredientCatDao.findById(ing.getCategory()).isPresent()) {
-				ingredientCat= ingredientCatDao.findById(ing.getCategory()).get();
-			 }
-			 Ingredients ingredient = new Ingredients(
-					 ing.getId(),
-					 ing.getLabel(),
-					 ing.getDescription(),
-					 ing.isChecked(),
-					 file,
-					 ingredientCat);
+				@RequestBody Ingredients ingredient,@PathVariable("idIngredient")int idIngredient) {
 			    ingredientsServices.updateIngredient(ingredient,idIngredient);
 			    
 				
 			}
+
 		  //creating a delete mapping that delete data from database
 			@DeleteMapping("/delete-ingredient/{idIngredient}")
 			@Operation(security = {@SecurityRequirement(name = "bearer-key")})

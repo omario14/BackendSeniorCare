@@ -57,6 +57,36 @@ public class MailService {
 
 			return response;
 		}
+
+	 public MailResponse sendEmailMedication(MailRequest request, Map<String, Object> model) {
+			MailResponse response = new MailResponse();
+			MimeMessage message = mailSender.createMimeMessage();
+			try {
+				// set mediaType
+				MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+						StandardCharsets.UTF_8.name());
+				// add attachment
+				helper.addAttachment("logow.png", new ClassPathResource("logow.png"));
+
+				Template t = configuration.getTemplate("email-template2.ftl");
+				String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+
+				helper.setTo(request.getTo());
+				helper.setText(html, true);
+				helper.setSubject(request.getSubject());
+				helper.setFrom(request.getFrom());
+				mailSender.send(message);
+
+				response.setMessage("mail send to : " + request.getTo());
+				response.setStatus(Boolean.TRUE);
+
+			} catch (MessagingException | IOException | TemplateException e) {
+				response.setMessage("Mail Sending failure : "+e.getMessage());
+				response.setStatus(Boolean.FALSE);
+			}
+
+			return response;
+		}
 	 
 	 
 	 

@@ -27,6 +27,13 @@ public interface ArchiveMedsDao extends CrudRepository<ArchiveMedication, Long>{
 
 	@Transactional
 	@Modifying
+	@Query("DELETE FROM ArchiveMedication a  WHERE a.meds=:idMed AND a.archive=:idArch")
+	  void deleteArchiveMedicationBymeds(@Param("idMed")Medication idMed,@Param("idArch")ArchiveSenior idArch);
+
+
+	
+	@Transactional
+	@Modifying
 	@Query("DELETE FROM ArchiveMedication a  WHERE a.archive=:idArch")
 	  void deleteArchiveMedicationByArchive(@Param("idArch")ArchiveSenior idArch);
 

@@ -55,7 +55,8 @@ public class Senior implements Serializable{
 	private Set<Calendar> calendar;
 	
 	
-	
+	  @OneToMany(mappedBy = "senior",cascade = CascadeType.ALL, orphanRemoval = true)
+	    private Set<Medication> medication ;
 	public Senior() {
 		
 	}
@@ -91,7 +92,7 @@ public class Senior implements Serializable{
 
 
 	public Senior(String name, String lastname, String dateOfBirth, String sex, String cin, String telephone,
-			 String fileId, boolean checkedBreakfast,
+			String adress, String famillySituation, String centerOfInterest ,String fileId,double weight,double height, boolean checkedBreakfast,
 			boolean checkedLunch, boolean checkedDinner) {
 		super();
 		this.name = name;
@@ -100,7 +101,12 @@ public class Senior implements Serializable{
 		this.sex = sex;
 		this.cin = cin;
 		this.telephone = telephone;
+		this.adress = adress;
+		this.famillySituation = famillySituation;
+		this.centerOfInterest = centerOfInterest;
 		this.fileId = fileId;
+		this.weight = weight;
+		this.height = height;
 		this.checkedBreakfast = checkedBreakfast;
 		this.checkedLunch = checkedLunch;
 		this.checkedDinner = checkedDinner;

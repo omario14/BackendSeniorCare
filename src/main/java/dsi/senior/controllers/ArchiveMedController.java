@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -42,6 +43,16 @@ public class ArchiveMedController {
   		
   		 archmedService.deleteArchMeds(idMed);
   		return new ResponseEntity<String>("addabc updated successfully",HttpStatus.OK);
+  	}
+  	
+  	 //creating a get mapping that retrieves all categories from database.
+  	@DeleteMapping("/deleteArchMedsBymedAndArch/{idMed}/{idArch}")
+  	@ResponseBody
+	@Operation(security = {@SecurityRequirement(name = "bearer-key")})
+  	public ResponseEntity<String>  deleteArchMedsBymedAndArch(@PathVariable("idMed") long idMed,@PathVariable("idArch") String idArch) {
+  		
+  		 archmedService.deleteArchMedsBymedAndArch(idMed,idArch);
+  		return new ResponseEntity<String>("archmed deleted successfully",HttpStatus.OK);
   	}
   	
   	

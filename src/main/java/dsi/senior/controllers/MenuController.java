@@ -123,7 +123,6 @@ public class MenuController {
 	@Operation(security = { @SecurityRequirement(name = "bearer-key") })
 	@ResponseBody
 	public Menu getMenuByDate(@PathVariable("date") String date) {
-		System.out.println(menuservice.getMenuByDate(date));
 		return menuservice.getMenuByDate(date);
 	}
 }

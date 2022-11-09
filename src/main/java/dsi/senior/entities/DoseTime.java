@@ -18,22 +18,22 @@ public class DoseTime {
 	@ManyToOne
 	private Medication med;
 	private int rdose;
-	public boolean isDone;
+	private boolean isTaken;
 	private boolean isReminded;
 	
 	public DoseTime() {
 		
 	}
 	
-	public DoseTime(String time,Medication med, ArchiveSenior arch,int rdose,boolean isDone) {
+	public DoseTime(String time,Medication med, ArchiveSenior arch,int rdose,boolean isTaken) {
 		super();
 		this.time = time;
 		this.med = med;
 		this.arch = arch;
 		this.rdose = rdose;
-		this.isDone = isDone;
+		this.isTaken = isTaken;
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -48,17 +48,6 @@ public class DoseTime {
 
 	public void setTime(String time) {
 		this.time = time;
-	}
-
-	
-
-	
-	public int getRdose() {
-		return rdose;
-	}
-
-	public void setRdose(int rdose) {
-		this.rdose = rdose;
 	}
 
 	public ArchiveSenior getArch() {
@@ -77,12 +66,20 @@ public class DoseTime {
 		this.med = med;
 	}
 
-	public boolean isDone() {
-		return isDone;
+	public int getRdose() {
+		return rdose;
 	}
 
-	public void setDone(boolean isDone) {
-		this.isDone = isDone;
+	public void setRdose(int rdose) {
+		this.rdose = rdose;
+	}
+
+	public boolean isTaken() {
+		return isTaken;
+	}
+
+	public void setTaken(boolean isTaken) {
+		this.isTaken = isTaken;
 	}
 
 	public boolean isReminded() {
@@ -92,7 +89,8 @@ public class DoseTime {
 	public void setReminded(boolean isReminded) {
 		this.isReminded = isReminded;
 	}
-
+	
+	
 	
 	
 

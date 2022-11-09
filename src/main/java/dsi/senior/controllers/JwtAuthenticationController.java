@@ -37,7 +37,6 @@ import dsi.senior.entities.JwtRequest;
 import dsi.senior.entities.JwtResponse;
 import dsi.senior.entities.Role;
 import dsi.senior.message.ResponseMessage;
-import dsi.senior.repositories.FileDBDao;
 import dsi.senior.repositories.RoleDao;
 import dsi.senior.repositories.UserDao;
 import dsi.senior.services.JwtUserDetailsService;
@@ -46,7 +45,6 @@ import dsi.senior.services.UserDetailsImpl;
 import dsi.senior.services.TwilioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import request.DAOUserRequest;
 import request.MailRequest;
 import request.SignupRequest;
 import request.SmsRequest;
@@ -65,8 +63,6 @@ public class JwtAuthenticationController {
 	private UserDao userDao;
 	@Autowired
 	private RoleDao roleDao;
-	@Autowired
-	private FileDBDao fileDao;
 	@Autowired
 	private JwtUserDetailsService userDetailsService;
 	@Autowired
@@ -222,36 +218,18 @@ public class JwtAuthenticationController {
 	@Operation(security = {@SecurityRequirement(name = "bearer-key")})
 	@PutMapping("/update-user/{id}")
   	@ResponseBody
-  	public ResponseEntity<String> updateUser(@PathVariable("id") int id, @RequestBody DAOUserRequest userR) {
+  	public ResponseEntity<String> updateUser(@PathVariable("id") int id, @RequestBody DAOUser user) {
 		/*UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = userDetails.getUsername();*/
-		DAOUser user = new DAOUser(userR.getName(),
-					userR.getLastName(),
-					userR.getUsername(),
-					userR.getEmail(),
-					userR.getPassword(),
-					userR.getMobile(),
-					userR.getGender(),
-					userR.getAdress(),
-					fileDao.findById(userR.getPicture()).get());
 		userDetailsService.UpdateAccountUserByUsername(id, user);
   		return new ResponseEntity<String>("User updated successfully",HttpStatus.OK);
   		
   	}
+
 	@Operation(security = {@SecurityRequirement(name = "bearer-key")})
 	@PutMapping("/update-user-profile/{id}/{jwtokl}")
   	@ResponseBody
-  	public ResponseEntity<?> updateUserProfile(@PathVariable("id") int id,@PathVariable("jwtokl") String jwtokl, @RequestBody DAOUserRequest userR) throws Exception {
-		DAOUser user = new DAOUser(userR.getName(),
-				userR.getLastName(),
-				userR.getUsername(),
-				userR.getEmail(),
-				userR.getPassword(),
-				userR.getMobile(),
-				userR.getGender(),
-				userR.getAdress(),
-				fileDao.findById(userR.getPicture()).get());
-		
+  	public ResponseEntity<?> updateUserProfile(@PathVariable("id") int id,@PathVariable("jwtokl") String jwtokl, @RequestBody DAOUser user) throws Exception {
 		DAOUser u =userDetailsService.UpdateAccountUserByUsername(id, user);
 		long expiresIn = (jwtTokenUtil.getExpirationDateFromToken(jwtokl).getTime()-(System.currentTimeMillis()));
 		
@@ -271,6 +249,7 @@ public class JwtAuthenticationController {
 				 u.getPassword()));
 
   	}
+
 	@CrossOrigin(origins = {"http://localhost:4200"} ,methods = {RequestMethod.GET})
 	@Operation(security = {@SecurityRequirement(name = "bearer-key")})
 	@GetMapping(value = "/retrieves-all-users")

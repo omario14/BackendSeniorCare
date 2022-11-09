@@ -2,7 +2,9 @@ package dsi.senior.services;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import dsi.senior.entities.ArchiveSenior;
 import dsi.senior.entities.Calendar;
 import dsi.senior.entities.DoseTime;
+import dsi.senior.entities.ERole;
 import dsi.senior.entities.Medication;
 import dsi.senior.entities.Senior;
 import dsi.senior.repositories.ArchiveDao;
@@ -18,6 +21,8 @@ import dsi.senior.repositories.CalendarDao;
 import dsi.senior.repositories.DoseTimeDao;
 import dsi.senior.repositories.MedicationDao;
 import dsi.senior.repositories.SeniorDao;
+import dsi.senior.repositories.UserDao;
+import request.MailRequest;
 
 @Service
 public class ArchiveSeniorServiceImpl implements IArchiveSeniorService {
@@ -33,6 +38,10 @@ public class ArchiveSeniorServiceImpl implements IArchiveSeniorService {
 	DoseTimeDao doseTimeDao;
 	@Autowired
 	MedicationDao medDao;
+	@Autowired
+	UserDao userDao;
+	@Autowired
+	MailService mailservice;
 	
 	@Override
 	public void addArchive(ArchiveSenior arch) {
@@ -42,6 +51,7 @@ public class ArchiveSeniorServiceImpl implements IArchiveSeniorService {
 
 	@Override
 	public void updateArchive(ArchiveSenior arch) {
+		
 		 if ( !archDao.existsById(arch.getIdArch())) {
 			 Calendar calendar = new Calendar("food","#565656","food",arch.getDate(),arch.getSenior());
 		  		calendarDao.save(calendar);
@@ -86,10 +96,18 @@ public class ArchiveSeniorServiceImpl implements IArchiveSeniorService {
 	}
 
 	@Override
-	public List<ArchiveSenior> getArchiveSeniorByCategory(String categoryName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public ArchiveSenior getArchiveSeniorById(String id) {
+		if (archiveSeniorExist(id)) {
+			return archDao.findById(id).get();
+		}else {
+			ArchiveSenior arch = new ArchiveSenior();
+			return arch;
+		}
+			}
+	
+	private  boolean archiveSeniorExist (String id) {
+		
+		return archDao.existsById(id);	}
 	
 	@Override
 	public List<DoseTime> getAllDoseTime() {
@@ -115,15 +133,42 @@ public class ArchiveSeniorServiceImpl implements IArchiveSeniorService {
 	@Override
 	public void doseTimeDone(long idDose,boolean done) {
 		DoseTime dose= doseTimeDao.findById(idDose).get();
-		dose.setDone(done);
+		dose.setTaken(done);
 		doseTimeDao.save(dose);
 	}
 
 	@Override
 	public void reminderDose(long idDose,boolean remind) {
 		DoseTime dose= doseTimeDao.findById(idDose).get();
+		userDao.findAll().forEach(u->{
+			u.getRoles().forEach(r->{
+				
+				if(r.getName()==ERole.ROLE_ACCOMPAGNANT && u.getEmail().substring(0,6)!="exemple") {
+					MailRequest request = new MailRequest(u.getUsername(),u.getEmail(),"omar.benamor@esprit.tn","Alert Medication");
+				    
+				    Map<String, Object> model = new HashMap<>();
+					
+					model.put("body", dose.getRdose()+" of " +dose.getMed() +" "+dose.getTime());
+					model.put("firstName", dose.getArch().getSenior().getName()+" "+dose.getArch().getSenior().getLastname());
+					mailservice.sendEmailMedication(request, model);
+					   
+			
+			//SmsRequest smsRequest = new SmsRequest("+21651589453","Medication Reminder for "+dose.getArch().getSenior().getName()+" "+dose.getArch().getSenior().getLastname());
+			
+			  
+			//twilioService.sendSms(smsRequest);
+				}
+			});
+		});
+		
 		dose.setReminded(remind);
 		doseTimeDao.save(dose);
+	}
+
+	@Override
+	public void deleteDoseTime(long idDose) {
+		doseTimeDao.deleteById(idDose);
+		
 	}
 
 	

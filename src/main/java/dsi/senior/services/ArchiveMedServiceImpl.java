@@ -52,6 +52,13 @@ public class ArchiveMedServiceImpl {
 	}
 	
 	
+	public void deleteArchMedsBymedAndArch(long idMed,String idArch){
+		Medication med= medDao.findById(idMed).get();
+		ArchiveSenior archive = archDao.findById(idArch).get();
+		 archiveMedDao.deleteArchiveMedicationBymeds(med,archive);
+
+	}
+	
 	
 	
 
