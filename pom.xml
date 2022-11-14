@@ -143,6 +143,7 @@
 				</executions>
 			</plugin>
 		</plugins>
+		<finalName>backend-seniguard</finalName>
 	</build>
 
 </project>

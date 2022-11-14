@@ -109,14 +109,12 @@ jobs:
           #From this path
           path: target/SeniorCare-2.3.3.RELEASE.jar
 
-          #Deploy's job
 
-
-
-  build_deploy:
+#Docker's job
+  docker:
   #Depends on build's job
     needs: build
-    name: Deploy
+    name: Docker
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -130,13 +128,15 @@ jobs:
       - name: Install and Build
         run:
           mvn clean install -DskipTests=true
-      - name: Heroku Deploy
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run:  |
-              heroku plugins:install java
-              heroku deploy:jar target/*.jar --app backend-seniguard
-      
+      - name: Build & push Docker image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: omarbenamor14/seniguard
+          tags: latest
+          registry: docker.io
+          dockerfile: Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
       
    
