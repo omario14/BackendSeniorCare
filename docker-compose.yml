@@ -8,7 +8,7 @@ services:
       - MYSQL_DATABASE=seniorcare
     ports:
       - "3307:3306"
-  springboot-docker-container:
+  backend-seniguard:
     image: backend-seniguard
     ports:
       - "8080:8080"

@@ -42,7 +42,6 @@ import dsi.senior.repositories.UserDao;
 import dsi.senior.services.JwtUserDetailsService;
 import dsi.senior.services.MailService;
 import dsi.senior.services.UserDetailsImpl;
-import dsi.senior.services.TwilioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import request.MailRequest;
@@ -71,13 +70,7 @@ public class JwtAuthenticationController {
 	MailService mailservice;
 	
 	
-	 private final TwilioService twilioService;
-
-	    @Autowired
-	    public JwtAuthenticationController(TwilioService twilioService) {
-	        this.twilioService = twilioService;
-	    }
-   
+	
  
 	
 
@@ -182,10 +175,7 @@ public class JwtAuthenticationController {
 		model.put("body", signUpRequest.getPassword());
 		model.put("firstName", signUpRequest.getName());
 		
-		SmsRequest smsRequest = new SmsRequest("+216"+signUpRequest.getMobile(),"Welcome to Seniguard");
 		
-		  
-		twilioService.sendSms(smsRequest);
 	    mailservice.sendEmail(request, model);
 	   
 	    return ResponseEntity.ok(new ResponseMessage("User registered successfully!"));
